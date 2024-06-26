@@ -360,7 +360,6 @@ footer a {
     color: #090501;
     text-decoration: none;
     transition: color 0.3s;
-    text-align: left;
 }
 
 footer a:hover {
@@ -370,23 +369,18 @@ footer a:hover {
 .containerf {
     max-width: 100%;
     margin: 0 auto;
-    min-height: 350px;
-    justify-content: left;
-    text-align: left;
+    p1 min-height: 350px;
 }
 
 .footer-main {
     display: flex;
     margin-bottom: 4rem;
-    text-align: left;
-    justify-content: left;
 }
 
 .footer-colum {
     flex-basis: content;
     flex-grow: 1;
-    text-align: center;
-    justify-content: left;
+    text-align: left;
 }
 
 .footer-main h2 {
@@ -394,7 +388,6 @@ footer a:hover {
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 30px;
-    text-align: left;
 }
 
 .footer-main p {
@@ -419,13 +412,6 @@ footer a:hover {
     width: max-content;
     padding: 5px 10px;
     margin: 0 auto;
-    text-align: left;
-    justify-content: left;
-}
-
-.footer-main ul {
-    justify-content: left;
-    text-align: left;
 }
 
 @media only screen and ( max-width: 900px) {
