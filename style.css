@@ -254,16 +254,21 @@ body {
 }
 
 .container-touch {
-    background-color: #f0a608;
+    /* background-color: #F8E1DB; */
+    background: url(" background img/shape3.svg");
     min-width: 400px;
     height: auto;
     margin-left: 200px;
     margin-right: 200px;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 180px;
     display: flex;
     justify-content: center;
     border-radius: 20px;
+}
+
+.img-22 {
+    background: url(" background img/shape3.svg");
 }
 
 .card-toch {
@@ -350,7 +355,7 @@ body {
 }
 
 footer {
-    background-color: rgb(235, 187, 187);
+    background-color: #F8E1DB;
     color: #090501;
     padding: 2rem 1rem;
     border-top-left-radius: 150px;
