@@ -228,6 +228,7 @@
         .card-explore {
             min-width: 400px;
             margin: 10px 10px;
+            margin-right: 10px;
             align-items: center;
             border-radius: 10px;
             background-color: #fbf1f1;
@@ -243,7 +244,18 @@
             padding-top: 5px;
             padding-bottom: 8px;
             margin-left: -280px;
-            margin-top: -49px;
+            margin-top: -55px;
+        }
+        
+        .look {
+            border-radius: 13px;
+            justify-content: center;
+            text-align: center;
+            background-color: #ffffff;
+            width: 40px;
+            padding: 5px 5px 5px 5px;
+            margin-left: -110px;
+            margin-bottom: 300px;
         }
         
         .card-explore img {
