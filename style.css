@@ -6,6 +6,7 @@
 
 body {
   background-color: #FAF4F2;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 body .container {
   background-image: url(icon/header-bg.jpg);
@@ -59,33 +60,23 @@ body .container .logo-meno {
   }
 }
 body .container .btn {
-  text-align: center;
-  align-items: center;
-  padding: 10px 50px;
-  margin-right: 30px;
-  border: 0px;
-  outline: 50px;
-  border-color: #fff;
-  border-radius: 200px;
+  display: block;
+  width: 130px;
   background: none;
-  color: #fff;
-  font-weight: 0px;
-  cursor: pointer;
-  text-align: center;
+  border: none;
+  color: white;
+  margin-right: 30px;
 }
 body .container .btn2 {
-  text-align: center;
-  align-items: center;
-  padding: 10px 50px;
-  margin-right: 30px;
-  border-bottom-style: 4px;
-  outline: 50px;
-  border-color: #fff;
-  border-radius: 200px;
+  display: block;
+  width: 130px;
+  height: 50px;
   background: none;
-  color: #fff;
-  font-weight: 0px;
-  cursor: pointer;
+  border: solid 1px white;
+  border-radius: 30px;
+  color: white;
+  margin-right: 130px;
+  justify-content: center;
 }
 body .container .content {
   margin-top: 10%;
