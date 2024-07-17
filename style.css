@@ -22,6 +22,15 @@ body .container .logo {
   width: 60px;
   cursor: pointer;
   margin: 60px;
+  transition: 0.5s;
+}
+body .container .logo.logo:hover {
+  display: flex;
+  width: 80px;
+  height: 80px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 10px;
 }
 body .container nav {
   width: 100%;
@@ -39,9 +48,31 @@ body .container nav ul li {
   display: inline-block;
   margin: 10px 20px;
 }
+body .container nav ul li a:hover {
+  transition-timing-function: ease;
+  transition: 0.2s;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  font-weight: 500;
+  font-size: large;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  background: #E76F51;
+  border: solid 1px rgb(255, 255, 255);
+  color: #000000;
+  border-radius: 18px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding: 10px;
+}
 body .container nav ul li a {
   color: #fff;
   text-decoration: none;
+  transition: 0.2s;
 }
 body .container .logo-meno {
   display: block;
@@ -66,6 +97,22 @@ body .container .btn {
   border: none;
   color: white;
   margin-right: 30px;
+  transition: 0.4s;
+}
+body .container .btn.btn:hover {
+  background-color: #00c291;
+  border-radius: 30px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: 130px;
+  height: auto;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: 500;
+  padding: 12px;
+  color: #000000;
+  font-size: 20px;
+  border: solid 1px white;
 }
 body .container .btn2 {
   display: block;
@@ -77,6 +124,22 @@ body .container .btn2 {
   color: white;
   margin-right: 130px;
   justify-content: center;
+  transition: 0.3s;
+}
+body .container .btn2.btn2:hover {
+  background-color: #0094b9;
+  border-radius: 30px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: 130px;
+  height: auto;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: 500;
+  padding: 12px;
+  color: #000000;
+  font-size: 20px;
+  border: solid 1px white;
 }
 body .container .content {
   margin-top: 10%;
@@ -90,11 +153,19 @@ body .container .content h1 {
   font-size: 70px;
   text-align: center;
 }
+body .container .content h1 h1:hover {
+  color: #00c291;
+}
 body .container .content .p {
   align-items: center;
   text-align: center;
   padding-top: 30px;
   border-style: 4px;
+  transition: 0.4s;
+}
+body .container .content .p.p:hover {
+  color: #fbff00;
+  font-size: x-large;
 }
 body .container .content .Discover {
   background: #E76F51;
@@ -112,6 +183,13 @@ body .container .content .Discover {
   width: 205px;
   height: 55px;
   border: none;
+  transition: 0.4s;
+}
+body .container .content .Discover.Discover:hover {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  border: solid 1px white;
+  width: 250px;
+  background-color: #00c291;
 }
 @media only screen and (max-width: 1500px) {
   body .container nav ul li {
