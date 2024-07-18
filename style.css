@@ -152,20 +152,20 @@ body .container .content h1 {
   align-items: center;
   font-size: 70px;
   text-align: center;
+  transition: 2s;
 }
-body .container .content h1 h1:hover {
-  color: #00c291;
+body .container .content .ghhg:hover {
+  color: rgb(158, 0, 0);
 }
 body .container .content .p {
   align-items: center;
   text-align: center;
   padding-top: 30px;
   border-style: 4px;
-  transition: 0.4s;
+  transition: 1s;
 }
 body .container .content .p.p:hover {
-  color: #fbff00;
-  font-size: x-large;
+  font-weight: 600;
 }
 body .container .content .Discover {
   background: #E76F51;
@@ -236,7 +236,14 @@ body .card-container .card {
   align-items: center;
   border-radius: 10px;
   background-color: #ffffff;
-  shadow: #646363;
+  transition: 0.7s;
+}
+body .card-container .card.card:hover {
+  width: 440px;
+  height: 312px;
+  background-color: #fdd700;
+  border-radius: 50px;
+  box-shadow: 3px 3px 5px;
 }
 body .card-container .card img {
   width: 22%;
@@ -308,6 +315,7 @@ body .container-explore .card-explore {
   align-items: center;
   border-radius: 15px;
   background-color: #ffffff;
+  transition: 1s;
   shadow: #646363;
 }
 body .container-explore .card-explore img {
@@ -343,6 +351,11 @@ body .container-explore .card-explore button {
   margin-top: 20px;
   color: #8D8D8D;
   border-style: none;
+}
+body .container-explore .card-explore.card-explore:hover {
+  border-radius: 50px;
+  box-shadow: 3px 3px 5px;
+  background-color: #E76F51;
 }
 body .container-explore .coc {
   color: #E76F51;

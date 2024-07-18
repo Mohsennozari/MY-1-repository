@@ -184,19 +184,19 @@
                   align-items: center;
                   font-size: 70px;
                   text-align: center;
-                  h1:hover {
-                      color: #00c291;
-                  }
+                  transition: 2s;
+              }
+              .ghhg:hover {
+                  color: rgb(158, 0, 0);
               }
               .p {
                   align-items: center;
                   text-align: center;
                   padding-top: 30px;
                   border-style: 4px;
-                  transition: 0.4s;
+                  transition: 1s;
                   &.p:hover {
-                      color: #fbff00;
-                      font-size: x-large;
+                      font-weight: 600;
                   }
               }
               .Discover {
@@ -309,7 +309,14 @@
               align-items: center;
               border-radius: 10px;
               background-color: #ffffff;
-              shadow: #646363;
+              transition: 0.7s;
+              &.card:hover {
+                  width: 440px;
+                  height: 312px;
+                  background-color: #fdd700;
+                  border-radius: 50px;
+                  box-shadow: 3px 3px 5px;
+              }
               img {
                   width: 22%;
                   height: auto;
@@ -401,6 +408,7 @@
               align-items: center;
               border-radius: 15px;
               background-color: #ffffff;
+              transition: 1s;
               shadow: #646363;
               img {
                   width: 70%;
@@ -435,6 +443,11 @@
                   margin-top: 20px;
                   color: #8D8D8D;
                   border-style: none;
+              }
+              &.card-explore:hover {
+                  border-radius: 50px;
+                  box-shadow: 3px 3px 5px;
+                  background-color: #E76F51;
               }
           }
           .coc {
