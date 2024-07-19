@@ -82,15 +82,13 @@
                       margin: 10px 20px;
                       a:hover {
                           transition-timing-function: ease;
-                          transition: 0.2s;
+                          transition: 0.4s;
                           display: flex;
                           text-align: center;
                           justify-content: center;
                           width: fit-content;
                           height: fit-content;
                           font-weight: 500;
-                          font-size: large;
-                          font-family: Georgia, 'Times New Roman', Times, serif;
                           background: $button-color;
                           border: solid 1px rgb(255, 255, 255);
                           color: #000000;
@@ -102,7 +100,7 @@
                       a {
                           color: #fff;
                           text-decoration: none;
-                          transition: 0.2s;
+                          transition: 0.4s;
                       }
                   }
               }
@@ -145,6 +143,7 @@
                   color: #000000;
                   font-size: 20px;
                   border: solid 1px white;
+                  transform: none;
               }
           }
           .btn2 {
@@ -172,6 +171,7 @@
                   color: #000000;
                   font-size: 20px;
                   border: solid 1px white;
+                  transform: none;
               }
           }
           .content {
@@ -188,6 +188,7 @@
               }
               .ghhg:hover {
                   color: rgb(158, 0, 0);
+                  text-shadow: 3px 3px 5px;
               }
               .p {
                   align-items: center;
@@ -195,9 +196,6 @@
                   padding-top: 30px;
                   border-style: 4px;
                   transition: 1s;
-                  &.p:hover {
-                      font-weight: 600;
-                  }
               }
               .Discover {
                   background: #E76F51;
@@ -221,6 +219,7 @@
                       border: solid 1px white;
                       width: 250px;
                       background-color: #00c291;
+                      text-shadow: 3px 3px 5px black;
                   }
               }
           }
@@ -462,6 +461,11 @@
               padding-bottom: 8px;
               margin-left: -280px;
               margin-top: -40px;
+              transition: 0.6s;
+              &.coc:hover {
+                  background-color: #ffd000;
+                  color: #000000;
+              }
           }
           .look {
               color: #E76F51;
@@ -473,6 +477,9 @@
               padding: 5px 5px 6px 5px;
               margin-left: -110px;
               margin-bottom: 300px;
+              &.look:hover {
+                  background-color: #ffd000;
+              }
           }
           //////////////////////////////////////////////////////////////////////////
           /// 
@@ -525,6 +532,11 @@
           margin-bottom: 250px;
           color: #E76F51;
           border: solid 2px #E76F51;
+          transition: 1s;
+          &.viwe:hover {
+              background-color: #E76F51;
+              color: #090501;
+          }
       }
       /////////////////////////////////////////////////////////////////////////
       /// 
@@ -574,12 +586,17 @@
               background-repeat: no-repeat;
               height: auto;
               background-size: cover;
+              transition: 1s;
+              &.img-22:hover {
+                  background-color: #E76F51;
+                  color: #090501;
+                  border-radius: 30px;
+              }
           }
           .card-toch {
               align-items: center;
               border-radius: 10px;
               background-color: #F8E1DB;
-              shadow: #646363;
           }
           .card-touch h1 {
               margin-top: 50px;

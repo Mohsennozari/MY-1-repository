@@ -50,7 +50,7 @@ body .container nav ul li {
 }
 body .container nav ul li a:hover {
   transition-timing-function: ease;
-  transition: 0.2s;
+  transition: 0.4s;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -59,8 +59,6 @@ body .container nav ul li a:hover {
   height: -moz-fit-content;
   height: fit-content;
   font-weight: 500;
-  font-size: large;
-  font-family: Georgia, "Times New Roman", Times, serif;
   background: #E76F51;
   border: solid 1px rgb(255, 255, 255);
   color: #000000;
@@ -72,7 +70,7 @@ body .container nav ul li a:hover {
 body .container nav ul li a {
   color: #fff;
   text-decoration: none;
-  transition: 0.2s;
+  transition: 0.4s;
 }
 body .container .logo-meno {
   display: block;
@@ -113,6 +111,7 @@ body .container .btn.btn:hover {
   color: #000000;
   font-size: 20px;
   border: solid 1px white;
+  transform: none;
 }
 body .container .btn2 {
   display: block;
@@ -140,6 +139,7 @@ body .container .btn2.btn2:hover {
   color: #000000;
   font-size: 20px;
   border: solid 1px white;
+  transform: none;
 }
 body .container .content {
   margin-top: 10%;
@@ -156,6 +156,7 @@ body .container .content h1 {
 }
 body .container .content .ghhg:hover {
   color: rgb(158, 0, 0);
+  text-shadow: 3px 3px 5px;
 }
 body .container .content .p {
   align-items: center;
@@ -163,9 +164,6 @@ body .container .content .p {
   padding-top: 30px;
   border-style: 4px;
   transition: 1s;
-}
-body .container .content .p.p:hover {
-  font-weight: 600;
 }
 body .container .content .Discover {
   background: #E76F51;
@@ -190,6 +188,7 @@ body .container .content .Discover.Discover:hover {
   border: solid 1px white;
   width: 250px;
   background-color: #00c291;
+  text-shadow: 3px 3px 5px black;
 }
 @media only screen and (max-width: 1500px) {
   body .container nav ul li {
@@ -369,6 +368,11 @@ body .container-explore .coc {
   padding-bottom: 8px;
   margin-left: -280px;
   margin-top: -40px;
+  transition: 0.6s;
+}
+body .container-explore .coc.coc:hover {
+  background-color: #ffd000;
+  color: #000000;
 }
 body .container-explore .look {
   color: #E76F51;
@@ -380,6 +384,9 @@ body .container-explore .look {
   padding: 5px 5px 6px 5px;
   margin-left: -110px;
   margin-bottom: 300px;
+}
+body .container-explore .look.look:hover {
+  background-color: #ffd000;
 }
 @media only screen and (max-width: 1000px) {
   body .container-explore .card-explore {
@@ -412,6 +419,11 @@ body .viwe {
   margin-bottom: 250px;
   color: #E76F51;
   border: solid 2px #E76F51;
+  transition: 1s;
+}
+body .viwe.viwe:hover {
+  background-color: #E76F51;
+  color: #090501;
 }
 body * {
   margin: 0px;
@@ -442,12 +454,17 @@ body .container-touch .img-22 {
   background-repeat: no-repeat;
   height: auto;
   background-size: cover;
+  transition: 1s;
+}
+body .container-touch .img-22.img-22:hover {
+  background-color: #E76F51;
+  color: #090501;
+  border-radius: 30px;
 }
 body .container-touch .card-toch {
   align-items: center;
   border-radius: 10px;
   background-color: #F8E1DB;
-  shadow: #646363;
 }
 body .container-touch .card-touch h1 {
   margin-top: 50px;
@@ -569,6 +586,11 @@ body footer .containerf li {
   margin: 0 auto;
   margin-left: 20px;
   margin-right: 100px;
+}
+body footer .containerf li.a:hover {
+  background-color: #E76F51;
+  color: #d36d07;
+  border-radius: 30px;
 }
 body footer .containerf li a {
   text-decoration: none;
