@@ -219,7 +219,7 @@
                       border: solid 1px white;
                       width: 250px;
                       background-color: #00c291;
-                      text-shadow: 3px 3px 5px black;
+                      text-shadow: 5px 5px 10px rgb(255, 255, 255);
                   }
               }
           }
@@ -235,7 +235,50 @@
           /// 
           /// 
           /// 
+          /// /////////////////////////////////////////////////////////////////////////////////
           /// 
+          /// 
+          /// 
+          /// 
+          /// 
+          /// 
+          /// ///////////////////////////////////////////////////////////////////////////////
+          .dropdone-meno {
+              margin-top: -50px;
+              position: absolute;
+              width: 500;
+              background-image: url(pexels-alexandrep-junior-7736101.jpg);
+              border-radius: 20px;
+              margin-left: 5px;
+              ul {
+                  list-style: none;
+                  width: 100%;
+                  margin-top: 100px;
+                  margin-bottom: 100px;
+                  li {
+                      margin: 10px 20px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      margin-top: 20px;
+                      a {
+                          background-color: #E76F51;
+                          width: 300px;
+                          padding: 15px 4px;
+                          border-radius: 30px;
+                          color: #f0f0f0;
+                          text-align: center;
+                          text-decoration: none;
+                      }
+                  }
+              }
+          }
+          @media only screen and (min-width:1000px) {
+              .dropdone-meno {
+                  display: none;
+              }
+          }
+          /////////////////////////////////////////////////////////////////////////////////
       }
       @media only screen and ( max-width: 1500px) {
           .container nav ul li {
@@ -706,7 +749,7 @@
                       margin-left: 100px;
                       text-align: left;
                       min-width: 400px;
-                      margin-left: 100px;
+                      margin-left: 50px;
                       margin-right: 150px;
                   }
                   h1 {

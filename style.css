@@ -188,7 +188,42 @@ body .container .content .Discover.Discover:hover {
   border: solid 1px white;
   width: 250px;
   background-color: #00c291;
-  text-shadow: 3px 3px 5px black;
+  text-shadow: 5px 5px 10px rgb(255, 255, 255);
+}
+body .container .dropdone-meno {
+  margin-top: -50px;
+  position: absolute;
+  width: 500;
+  background-image: url(pexels-alexandrep-junior-7736101.jpg);
+  border-radius: 20px;
+  margin-left: 5px;
+}
+body .container .dropdone-meno ul {
+  list-style: none;
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+body .container .dropdone-meno ul li {
+  margin: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+body .container .dropdone-meno ul li a {
+  background-color: #E76F51;
+  width: 300px;
+  padding: 15px 4px;
+  border-radius: 30px;
+  color: #f0f0f0;
+  text-align: center;
+  text-decoration: none;
+}
+@media only screen and (min-width: 1000px) {
+  body .container .dropdone-meno {
+    display: none;
+  }
 }
 @media only screen and (max-width: 1500px) {
   body .container nav ul li {
@@ -566,7 +601,7 @@ body footer .containerf .footer-main p {
   margin-left: 100px;
   text-align: left;
   min-width: 400px;
-  margin-left: 100px;
+  margin-left: 50px;
   margin-right: 150px;
 }
 body footer .containerf .footer-main h1 {
@@ -586,11 +621,6 @@ body footer .containerf li {
   margin: 0 auto;
   margin-left: 20px;
   margin-right: 100px;
-}
-body footer .containerf li.a:hover {
-  background-color: #E76F51;
-  color: #d36d07;
-  border-radius: 30px;
 }
 body footer .containerf li a {
   text-decoration: none;
