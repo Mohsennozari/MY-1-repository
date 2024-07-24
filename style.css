@@ -1,9 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   background-color: #FAF4F2;
   font-family: Georgia, "Times New Roman", Times, serif;
@@ -190,28 +184,38 @@ body .container .content .Discover.Discover:hover {
   background-color: #00c291;
   text-shadow: 5px 5px 10px rgb(255, 255, 255);
 }
-body .container .dropdone-meno {
-  margin-top: -50px;
-  position: absolute;
-  width: 500;
-  background-image: url(pexels-alexandrep-junior-7736101.jpg);
-  border-radius: 20px;
-  margin-left: 5px;
+body .container .drop img {
+  width: 30px;
+  margin: 20px;
 }
-body .container .dropdone-meno ul {
+body .container .sidbar {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  background-color: rgba(25, 194, 180, 0.3);
+  -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(40px);
+  z-index: 999;
+  height: 100vh;
+  width: 300px;
+  display: none;
+}
+body .container .sidbar ul {
   list-style: none;
   width: 100%;
   margin-top: 100px;
   margin-bottom: 100px;
 }
-body .container .dropdone-meno ul li {
+body .container .sidbar ul li {
   margin: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
 }
-body .container .dropdone-meno ul li a {
+body .container .sidbar ul li a {
   background-color: #E76F51;
   width: 300px;
   padding: 15px 4px;
@@ -219,11 +223,41 @@ body .container .dropdone-meno ul li a {
   color: #f0f0f0;
   text-align: center;
   text-decoration: none;
+  transition: 0.2s;
 }
-@media only screen and (min-width: 1000px) {
-  body .container .dropdone-meno {
+body .container .sidbar ul li a:hover {
+  background-color: #00c291;
+  color: #000000;
+}
+body .container .show {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin-right: 20px;
+  width: 40px;
+  height: 40px;
+  transition: 0.2s;
+}
+body .container .show :hover {
+  background-color: #ffdd1f;
+  border-radius: 5px;
+}
+@media only screen and (min-width: 1500px) {
+  body .container .show {
     display: none;
   }
+}
+body .container .hide {
+  list-style: none;
+  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 40px;
+  height: 40px;
+  margin: 20px;
+  border-radius: 10px;
+}
+body .container .hide :hover {
+  background-color: #ffd000;
+  border-radius: 5px;
 }
 @media only screen and (max-width: 1500px) {
   body .container nav ul li {

@@ -1,0 +1,168 @@
+body {
+    margin: 0;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #4CAF50, #2196F3);
+}
+
+.poppins-regular {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container {
+    text-align: center;
+    font-size: large;
+}
+
+.weather-card {
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+    padding: 20px;
+    /* box-shadow: 13px 13px 13px rgb(12, 196, 125); */
+    transition: transform 0.3s ease-in-out;
+    width: 450px;
+}
+
+.weather-card h1 {
+    background-image: linear-gradient(to right, rgb(0, 255, 128), rgb(18, 196, 255));
+    border-radius: 20px;
+    /* box-shadow: 10px 10px 5px rgb(101, 100, 100); */
+    text-shadow: 5px 5px 5px rgb(74, 69, 69);
+    border: solid 1px rgb(179, 179, 179);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.weather-card:hover {}
+
+#city-input {
+    padding: 15px;
+    margin: 30px 0;
+    width: 80%;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#city-input:focus {
+    outline: none;
+    border-color: #2196F3;
+}
+
+#city-input::-moz-placeholder {
+    color: #aaa;
+}
+
+#city-input::placeholder {
+    color: #aaa;
+}
+
+#city-input-btn {
+    padding: 15px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    background-color: hsl(192, 96%, 40%);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 28px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    /* box-shadow: 1px 1px 2px rgb(101, 100, 100); */
+    text-shadow: 3px 3px 3px rgb(74, 69, 69);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+#city-input-btn:hover {
+    background-color: #1bd1ff;
+    transform: scale(1.02);
+}
+
+#weather-info {
+    display: none;
+}
+
+#weather-info img {
+    width: 100px;
+}
+
+#weather-icon {
+    width: 100px;
+    height: 100px;
+}
+
+#temperature {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+#description {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#wind-speed {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 25px;
+    color: rgb(243, 79, 79);
+    letter-spacing: 2px;
+    word-spacing: 10px;
+    margin-top: 0px;
+    text-shadow: 1px 1x 3px rgb(75, 74, 74);
+}
+
+#date {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 25px;
+    color: rgb(234, 69, 69);
+    letter-spacing: 2px;
+    word-spacing: 5px;
+    text-shadow: 1px 1x 3px rgb(75, 74, 74);
+}
+
+#weather-info {
+    width: 450px;
+    height: 300px;
+    background: rgb(255, 230, 0);
+    border-radius: 20px;
+}
+
+#city-name {
+    background-color: hsl(192, 96%, 40%);
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    radius: 20px;
+    height: 40px;
+    color: #ffee00;
+    letter-spacing: 5px;
+    text-shadow: 4px 4px 3px rgb(75, 74, 74);
+    font-weight: 300;
+}
+
+#temperature {
+    background-color: hsl(192, 96%, 40%);
+    height: 35px;
+    padding-top: 7px;
+    color: #ffee00;
+    letter-spacing: 5px;
+    text-shadow: 4px 4px 3px rgb(75, 73, 73);
+    font-weight: 200;
+}
+
+#description {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 900;
+}
+
+
+/*# sourceMappingURL=style.css.map */

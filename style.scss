@@ -27,12 +27,6 @@
   }
   
   ////////////////////////////////////////////////////////////////
-  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-  }
-  
   ///////////////////////////////////////////////////////////////
   /// 
   /// 
@@ -243,13 +237,24 @@
           /// 
           /// 
           /// ///////////////////////////////////////////////////////////////////////////////
-          .dropdone-meno {
-              margin-top: -50px;
-              position: absolute;
-              width: 500;
-              background-image: url(pexels-alexandrep-junior-7736101.jpg);
-              border-radius: 20px;
-              margin-left: 5px;
+          .drop img {
+              width: 30px;
+              margin: 20px;
+          }
+          .sidbar {
+              position: fixed;
+              display: flex;
+              flex-direction: column;
+              top: 0;
+              right: 0;
+              //   background-image: url(pexels-alexandrep-junior-7736101.jpg);
+              background-color: rgba($color: #19c2b4, $alpha: 0.30);
+              backdrop-filter: blur(40px);
+              //   border-top-left-radius: 50px;
+              z-index: 999;
+              height: 100vh;
+              width: 300px;
+              display: none;
               ul {
                   list-style: none;
                   width: 100%;
@@ -269,13 +274,44 @@
                           color: #f0f0f0;
                           text-align: center;
                           text-decoration: none;
+                          transition: 0.2s;
+                          &:hover {
+                              background-color: #00c291;
+                              color: #000000;
+                          }
                       }
                   }
               }
           }
-          @media only screen and (min-width:1000px) {
-              .dropdone-meno {
+          .show {
+              background-color: #f0f0f0;
+              border-radius: 5px;
+              margin-right: 20px;
+              width: 40px;
+              height: 40px;
+              transition: 0.2s;
+               :hover {
+                  background-color: #ffdd1f;
+                  border-radius: 5px;
+              }
+          }
+          @media only screen and (min-width:1500px) {
+              .show {
                   display: none;
+              }
+          }
+          .hide {
+              list-style: none;
+              background-color: #ffffff;
+              background-color: rgba($color: #ffffff, $alpha: 0.50);
+              //   backdrop-filter: blur(40px);
+              width: 40px;
+              height: 40px;
+              margin: 20px;
+              border-radius: 10px;
+               :hover {
+                  background-color: #ffd000;
+                  border-radius: 5px;
               }
           }
           /////////////////////////////////////////////////////////////////////////////////
@@ -1022,4 +1058,8 @@
   //       padding: 15px;
   //       margin-top: -70px;
   //   }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////
+  /// 
+  ///   pag 1
+  ///
