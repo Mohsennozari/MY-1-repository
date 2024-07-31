@@ -788,24 +788,25 @@
                   }
                   p {
                       max-width: 600px;
-                      margin-left: 80px;
+                      margin-left: 20px;
                       text-align: left;
                       min-width: 300px;
-                      margin-left: 50px;
+                      margin-left: 20px;
                       margin-right: 150px;
                   }
                   h1 {
-                      margin-left: 80px;
+                      margin-left: 20px;
                       margin-top: 50px;
                   }
                   .media {
-                      margin-left: 100px;
+                      margin-left: 20px;
                       margin-top: 15px;
                       margin-bottom: 30px;
                   }
               }
               li {
-                  display: block;
+                  display: flex;
+                  flex-direction: row;
                   width: max-content;
                   padding: 5px 10px;
                   margin: 0 auto;
@@ -818,6 +819,7 @@
               }
               h2 {
                   display: flex;
+                  flex-direction: row;
                   font-size: 26px;
                   // margin-bottom: 1rem;
                   margin-left: 31px;
@@ -844,9 +846,6 @@
       .footer-main {
           flex-direction: column;
       }
-      .gg {
-          display: none;
-      }
   }
   
   ///////////////////////////////////////////////////////////////
@@ -856,19 +855,17 @@
       padding-bottom: 50px;
   }
   
-  ///////////////////////////////////////////////////////////////
-  .gg {
-      margin-bottom: -1270px;
-      margin-left: -400px;
-  }
-  
-  ///////////////////////////////////////////////////////////////
-  .jj {
-      margin-bottom: -800px;
-      margin-left: 1450px;
-      height: 800px;
-  }
-  
+  //   ///////////////////////////////////////////////////////////////
+  //   .gg {
+  //       margin-bottom: -1270px;
+  //       margin-left: -400px;
+  //   }
+  //   ///////////////////////////////////////////////////////////////
+  //   .jj {
+  //       margin-bottom: -800px;
+  //       margin-left: 1450px;
+  //       height: 800px;
+  //   }
   //////////////////////////////////////////////////////////////
   .explore {
       align-items: center;

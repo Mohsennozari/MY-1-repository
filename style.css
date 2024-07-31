@@ -638,23 +638,24 @@ body footer .containerf .footer-main .footer-colum {
 }
 body footer .containerf .footer-main p {
   max-width: 600px;
-  margin-left: 80px;
+  margin-left: 20px;
   text-align: left;
   min-width: 300px;
-  margin-left: 50px;
+  margin-left: 20px;
   margin-right: 150px;
 }
 body footer .containerf .footer-main h1 {
-  margin-left: 80px;
+  margin-left: 20px;
   margin-top: 50px;
 }
 body footer .containerf .footer-main .media {
-  margin-left: 100px;
+  margin-left: 20px;
   margin-top: 15px;
   margin-bottom: 30px;
 }
 body footer .containerf li {
-  display: block;
+  display: flex;
+  flex-direction: row;
   width: -moz-max-content;
   width: max-content;
   padding: 5px 10px;
@@ -668,6 +669,7 @@ body footer .containerf li a {
 }
 body footer .containerf h2 {
   display: flex;
+  flex-direction: row;
   font-size: 26px;
   margin-left: 31px;
   margin-right: 100px;
@@ -678,25 +680,11 @@ body footer .containerf h2 {
   .footer-main {
     flex-direction: column;
   }
-  .gg {
-    display: none;
-  }
 }
 .footer-bottom {
   text-align: center;
   background-color: #F8E1DB;
   padding-bottom: 50px;
-}
-
-.gg {
-  margin-bottom: -1270px;
-  margin-left: -400px;
-}
-
-.jj {
-  margin-bottom: -800px;
-  margin-left: 1450px;
-  height: 800px;
 }
 
 .explore {
