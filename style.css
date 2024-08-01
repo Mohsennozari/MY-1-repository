@@ -251,7 +251,7 @@ body .Container-Heather .Hide {
   height: 40px;
   border-radius: 5px;
 }
-body .Container-Heather .Btn-Sidbar-sin {
+body .Container-Heather .Box-Btn-Sidbar {
   display: flex;
   flex-direction: column;
   position: absolute;
