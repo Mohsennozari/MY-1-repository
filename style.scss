@@ -44,7 +44,7 @@
   body {
       background-color: #FAF4F2;
       font-family: Georgia, 'Times New Roman', Times, serif;
-      .container {
+      .Container-Heather {
           background-image: url(icon/header-bg.jpg);
           width: 100%;
           min-height: 50vh;
@@ -53,19 +53,12 @@
           padding: 10px 8px;
           border-bottom-left-radius: 150px;
           border-bottom-right-radius: 150px;
-          .logo {
+          .Logo-Website {
               width: 60px;
               cursor: pointer;
               margin: 60px;
+              margin-left: 30px;
               transition: 0.5s;
-              &.logo:hover {
-                  display: flex;
-                  width: 80px;
-                  height: 80px;
-                  background-color: #ffffff;
-                  border-radius: 20px;
-                  padding: 10px;
-              }
           }
           nav {
               width: 100%;
@@ -121,7 +114,7 @@
                   display: none;
               }
           }
-          .btn {
+          .Btn-Up {
               display: block;
               width: 130px;
               background: none;
@@ -129,7 +122,7 @@
               color: white;
               margin-right: 30px;
               transition: 0.4s;
-              &.btn:hover {
+              &.Btn-Up:hover {
                   background-color: #00c291;
                   border-radius: 30px;
                   display: flex;
@@ -146,7 +139,7 @@
                   transform: none;
               }
           }
-          .btn2 {
+          .Btn-In {
               display: block;
               width: 130px;
               height: 50px;
@@ -157,7 +150,7 @@
               margin-right: 130px;
               justify-content: center;
               transition: 0.3s;
-              &.btn2:hover {
+              &.Btn-In:hover {
                   background-color: #0094b9;
                   border-radius: 30px;
                   display: flex;
@@ -174,7 +167,7 @@
                   transform: none;
               }
           }
-          .content {
+          .Content-Heather {
               margin-top: 10%;
               color: #fff;
               width: 100%;
@@ -186,18 +179,14 @@
                   text-align: center;
                   transition: 2s;
               }
-              .ghhg:hover {
-                  color: rgb(158, 0, 0);
-                  text-shadow: 3px 3px 5px;
-              }
-              .p {
+              .Description-Heather {
                   align-items: center;
                   text-align: center;
                   padding-top: 30px;
                   border-style: 4px;
                   transition: 1s;
               }
-              .Discover {
+              .Discover-Button {
                   background: #E76F51;
                   margin-top: 30px;
                   padding: 10px 40px;
@@ -214,7 +203,7 @@
                   height: 55px;
                   border: none;
                   transition: 0.4s;
-                  &.Discover:hover {
+                  &.Discover-Button:hover {
                       font-family: Georgia, 'Times New Roman', Times, serif;
                       border: solid 1px white;
                       width: 250px;
@@ -223,31 +212,13 @@
                   }
               }
           }
-          ///////////////////////////////////////////////////////////////////////////////////
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// /////////////////////////////////////////////////////////////////////////////////
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// ///////////////////////////////////////////////////////////////////////////////
+          ////////////////////////////////////////////////////////////////////////////////
+          ////////////////////////////////////////////////////////////////////////////////
           .drop img {
               width: 30px;
               margin: 20px;
           }
-          .sidbar {
+          .Sidbar {
               position: fixed;
               display: flex;
               flex-direction: column;
@@ -289,7 +260,7 @@
                   }
               }
           }
-          .show {
+          .Show-Sidbar {
               background-color: #f0f0f0;
               border-radius: 5px;
               margin-right: 20px;
@@ -302,39 +273,65 @@
               }
           }
           @media only screen and (min-width:1500px) {
-              .show {
+              .Show-Sidbar {
                   display: none;
               }
           }
-          .hide {
+          .Hide {
               list-style: none;
-              background-color: #ffffff;
               background-color: rgba($color: #ffffff, $alpha: 0.50);
-              //   backdrop-filter: blur(40px);
+              position: absolute;
+              top: 30px;
+              left: 30px;
               width: 40px;
               height: 40px;
-              margin: 20px;
+              border-radius: 5px;
+          }
+          .Box-Btn-Sidbar {
+              display: flex;
+              flex-direction: column;
+              position: absolute;
+              top: 30px;
+              right: 30px;
+          }
+          .Btn-Up-sidebar {
+              width: 60px;
+              height: 30px;
+              background: #E76F51;
+              border: none;
+              color: white;
               border-radius: 10px;
-               :hover {
-                  background-color: #ffd000;
-                  border-radius: 5px;
-              }
+              font-size: 15px;
+              padding: 4px;
+              margin-bottom: 5px;
+          }
+          .Btn-In-sidebar {
+              display: flex;
+              width: 60px;
+              height: 30px;
+              background: #E76F51;
+              border: none;
+              border-radius: 10px;
+              padding: 2px;
+              color: white;
+              justify-content: center;
+              font-size: 15px;
           }
           /////////////////////////////////////////////////////////////////////////////////
       }
       @media only screen and ( max-width: 1500px) {
-          .container nav ul li {
+          .Container-Heather nav ul li {
               display: none;
           }
       }
       @media only screen and ( max-width: 1000px) {
-          .container nav ul li {
+          .Container-Heather nav ul li {
               display: none;
           }
-          .container .btn {
+          .Container-Heather .Btn-In {
               display: none;
           }
-          .container .btn2 {
+          .Container-Heather .Btn-Up {
               display: none;
           }
       }

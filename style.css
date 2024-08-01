@@ -8,7 +8,7 @@ body {
   background-color: #FAF4F2;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
-body .container {
+body .Container-Heather {
   background-image: url(icon/header-bg.jpg);
   width: 100%;
   min-height: 50vh;
@@ -18,37 +18,30 @@ body .container {
   border-bottom-left-radius: 150px;
   border-bottom-right-radius: 150px;
 }
-body .container .logo {
+body .Container-Heather .Logo-Website {
   width: 60px;
   cursor: pointer;
   margin: 60px;
+  margin-left: 30px;
   transition: 0.5s;
 }
-body .container .logo.logo:hover {
-  display: flex;
-  width: 80px;
-  height: 80px;
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 10px;
-}
-body .container nav {
+body .Container-Heather nav {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 0;
 }
-body .container nav ul {
+body .Container-Heather nav ul {
   list-style: none;
   width: 100%;
   text-align: left;
 }
-body .container nav ul li {
+body .Container-Heather nav ul li {
   display: inline-block;
   margin: 10px 20px;
 }
-body .container nav ul li a:hover {
+body .Container-Heather nav ul li a:hover {
   transition-timing-function: ease;
   transition: 0.4s;
   display: flex;
@@ -67,12 +60,12 @@ body .container nav ul li a:hover {
   padding-right: 15px;
   padding: 10px;
 }
-body .container nav ul li a {
+body .Container-Heather nav ul li a {
   color: #fff;
   text-decoration: none;
   transition: 0.4s;
 }
-body .container .logo-meno {
+body .Container-Heather .logo-meno {
   display: block;
   justify-content: start;
   margin-left: auto;
@@ -84,11 +77,11 @@ body .container .logo-meno {
   padding: 10px;
 }
 @media only screen and (min-width: 1000px) {
-  body .container .logo-meno {
+  body .Container-Heather .logo-meno {
     display: none;
   }
 }
-body .container .btn {
+body .Container-Heather .Btn-Up {
   display: block;
   width: 130px;
   background: none;
@@ -97,7 +90,7 @@ body .container .btn {
   margin-right: 30px;
   transition: 0.4s;
 }
-body .container .btn.btn:hover {
+body .Container-Heather .Btn-Up.Btn-Up:hover {
   background-color: #00c291;
   border-radius: 30px;
   display: flex;
@@ -113,7 +106,7 @@ body .container .btn.btn:hover {
   border: solid 1px white;
   transform: none;
 }
-body .container .btn2 {
+body .Container-Heather .Btn-In {
   display: block;
   width: 130px;
   height: 50px;
@@ -125,7 +118,7 @@ body .container .btn2 {
   justify-content: center;
   transition: 0.3s;
 }
-body .container .btn2.btn2:hover {
+body .Container-Heather .Btn-In.Btn-In:hover {
   background-color: #0094b9;
   border-radius: 30px;
   display: flex;
@@ -141,31 +134,27 @@ body .container .btn2.btn2:hover {
   border: solid 1px white;
   transform: none;
 }
-body .container .content {
+body .Container-Heather .Content-Heather {
   margin-top: 10%;
   color: #fff;
   width: 100%;
   align-items: center;
 }
-body .container .content h1 {
+body .Container-Heather .Content-Heather h1 {
   font-style: inherit;
   align-items: center;
   font-size: 70px;
   text-align: center;
   transition: 2s;
 }
-body .container .content .ghhg:hover {
-  color: rgb(158, 0, 0);
-  text-shadow: 3px 3px 5px;
-}
-body .container .content .p {
+body .Container-Heather .Content-Heather .Description-Heather {
   align-items: center;
   text-align: center;
   padding-top: 30px;
   border-style: 4px;
   transition: 1s;
 }
-body .container .content .Discover {
+body .Container-Heather .Content-Heather .Discover-Button {
   background: #E76F51;
   margin-top: 30px;
   padding: 10px 40px;
@@ -183,18 +172,18 @@ body .container .content .Discover {
   border: none;
   transition: 0.4s;
 }
-body .container .content .Discover.Discover:hover {
+body .Container-Heather .Content-Heather .Discover-Button.Discover-Button:hover {
   font-family: Georgia, "Times New Roman", Times, serif;
   border: solid 1px white;
   width: 250px;
   background-color: #00c291;
   text-shadow: 5px 5px 10px rgb(255, 255, 255);
 }
-body .container .drop img {
+body .Container-Heather .drop img {
   width: 30px;
   margin: 20px;
 }
-body .container .sidbar {
+body .Container-Heather .Sidbar {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -208,20 +197,20 @@ body .container .sidbar {
   width: 300px;
   display: none;
 }
-body .container .sidbar ul {
+body .Container-Heather .Sidbar ul {
   list-style: none;
   width: 100%;
   margin-top: 100px;
   margin-bottom: 100px;
 }
-body .container .sidbar ul li {
+body .Container-Heather .Sidbar ul li {
   margin: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
 }
-body .container .sidbar ul li a {
+body .Container-Heather .Sidbar ul li a {
   background-color: #E76F51;
   width: 300px;
   padding: 15px 4px;
@@ -231,11 +220,11 @@ body .container .sidbar ul li a {
   text-decoration: none;
   transition: 0.2s;
 }
-body .container .sidbar ul li a:hover {
+body .Container-Heather .Sidbar ul li a:hover {
   background-color: #00c291;
   color: #000000;
 }
-body .container .show {
+body .Container-Heather .Show-Sidbar {
   background-color: #f0f0f0;
   border-radius: 5px;
   margin-right: 20px;
@@ -243,41 +232,68 @@ body .container .show {
   height: 40px;
   transition: 0.2s;
 }
-body .container .show :hover {
+body .Container-Heather .Show-Sidbar :hover {
   background-color: #ffdd1f;
   border-radius: 5px;
 }
 @media only screen and (min-width: 1500px) {
-  body .container .show {
+  body .Container-Heather .Show-Sidbar {
     display: none;
   }
 }
-body .container .hide {
+body .Container-Heather .Hide {
   list-style: none;
-  background-color: #ffffff;
   background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 30px;
+  left: 30px;
   width: 40px;
   height: 40px;
-  margin: 20px;
-  border-radius: 10px;
-}
-body .container .hide :hover {
-  background-color: #ffd000;
   border-radius: 5px;
 }
+body .Container-Heather .Btn-Sidbar-sin {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
+body .Container-Heather .Btn-Up-sidebar {
+  width: 60px;
+  height: 30px;
+  background: #E76F51;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 4px;
+  margin-bottom: 5px;
+}
+body .Container-Heather .Btn-In-sidebar {
+  display: flex;
+  width: 60px;
+  height: 30px;
+  background: #E76F51;
+  border: none;
+  border-radius: 10px;
+  padding: 2px;
+  color: white;
+  justify-content: center;
+  font-size: 15px;
+}
 @media only screen and (max-width: 1500px) {
-  body .container nav ul li {
+  body .Container-Heather nav ul li {
     display: none;
   }
 }
 @media only screen and (max-width: 1000px) {
-  body .container nav ul li {
+  body .Container-Heather nav ul li {
     display: none;
   }
-  body .container .btn {
+  body .Container-Heather .Btn-In {
     display: none;
   }
-  body .container .btn2 {
+  body .Container-Heather .Btn-Up {
     display: none;
   }
 }

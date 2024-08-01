@@ -1,10 +1,10 @@
-function showsidbar() {
-    const sidbar = document.querySelector('.sidbar')
-    sidbar.style.display = 'flex'
+function ShowSidbar() {
+    const Sidbar = document.querySelector('.Sidbar')
+    Sidbar.style.display = 'flex'
 }
 
-function hidesidbar() {
+function HideSidbar() {
 
-    const sidbar = document.querySelector('.sidbar')
-    sidbar.style.display = 'none'
+    const Sidbar = document.querySelector('.Sidbar')
+    Sidbar.style.display = 'none'
 }
