@@ -1,11 +1,3 @@
-  /////////////////////////////////////////////////////////////////
-  /// 
-  ///   
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
   ////////////////////////////////////////////////////////////////
   $button-color:#E76F51;
   $bac-color: #FAF4F2;
@@ -28,13 +20,6 @@
   
   ////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
   * {
       margin: 0;
       padding: 0;
@@ -336,15 +321,6 @@
           }
       }
       //////////////////////////////////////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
       * {
           margin: 0px;
           padding: 0px;
@@ -352,11 +328,6 @@
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
       //////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
       body {
           background-image: url("background img/shape2.svg");
           background-repeat: no-repeat;
@@ -364,13 +335,6 @@
           background-position-x: -500px;
       }
       /////////////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
       .Card-Services {
           width: 100%;
           height: fit-content;
@@ -428,14 +392,6 @@
           }
       }
       ////////////////////////////////////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
       .Section-Destination-Activities {
           width: 100%;
           height: fit-content;
@@ -556,16 +512,8 @@
               }
           }
           //////////////////////////////////////////////////////////////////////////
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
-          /// 
           @media only screen and ( max-width: 1000px) {
-              .card-explore {
+              .Card-Destination {
                   margin: 10px 10px;
                   padding: 0px 0px;
                   flex-direction: column;
@@ -585,17 +533,14 @@
           }
       }
       /////////////////////////////////////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
+      .Viwe-Button {
+          width: 100%;
+          height: fit-content;
+      }
       .viwe {
           align-items: center;
+          justify-content: center;
+          text-align: center;
           background: #f0a60800;
           padding: 10px 30px;
           margin: 0 auto;
@@ -613,15 +558,6 @@
           }
       }
       /////////////////////////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
       * {
           margin: 0px;
           padding: opx;
@@ -630,20 +566,12 @@
       }
       body {
           background-color: #fff;
-          /* background-image: url("background img/shape1.svg"); */
       }
-      /////////////////////////////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      .container-touch {
-          /* background-color: #F8E1DB; */
+      .All-Form {
+          width: 100%;
+          height: fit-content;
+      }
+      .Container-Form {
           background-color: #F8E1DB;
           height: auto;
           margin-left: 200px;
@@ -653,7 +581,7 @@
           display: flex;
           justify-content: center;
           border-radius: 20px;
-          .img-22 {
+          .Img-Form {
               background: url(" background img/shape3.svg");
               border-radius: 10px;
               background-color: #FFD2C6;
@@ -661,27 +589,27 @@
               height: auto;
               background-size: cover;
               transition: 1s;
-              &.img-22:hover {
+              &.Img-Form:hover {
                   background-color: #E76F51;
                   color: #090501;
                   border-radius: 30px;
               }
           }
-          .card-toch {
+          .Card-Form {
               align-items: center;
               border-radius: 10px;
               background-color: #F8E1DB;
           }
-          .card-touch h1 {
+          .Card-Form h1 {
               margin-top: 50px;
               margin-left: 80px;
           }
-          .card-touch p {
+          .Card-Form p {
               text-align: left;
               margin-left: 80px;
               margin-right: 20px;
           }
-          .card-touch form {
+          .Card-Form form {
               max-width: 500px;
               min-width: 20px;
               margin-top: 40px;
@@ -694,7 +622,7 @@
               border-radius: 20px;
               padding: 10px 20px;
           }
-          .card-touch input {
+          .Card-Form input {
               background: transparent;
               flex: 1;
               border: 0;
@@ -706,7 +634,7 @@
            ::placeholder {
               color: #090501;
           }
-          .card-touch img {
+          .cCard-Form img {
               align-items: center;
               border: 2px;
               width: 400px;
@@ -716,7 +644,7 @@
               border-color: #fbf1f1;
               margin-bottom: 28px;
           }
-          .card-touch button img {
+          .Card-Form button img {
               align-items: center;
               height: auto;
               border: 2px;
@@ -726,7 +654,7 @@
               margin-top: 8px;
               padding-right: 4px;
           }
-          .card-touch button {
+          .Card-Form button {
               border: 0;
               border-radius: 17px;
               width: 50px;
@@ -734,7 +662,7 @@
               background: #E76F51;
               cursor: pointer;
           }
-          .card-touch form img {
+          .Card-Form form img {
               width: 20px;
               align-items: center;
               justify-content: center;
@@ -743,18 +671,6 @@
           }
       }
       ////////////////////////////////////////////////////////////////////////////////
-      ////////////////////////////////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
       footer {
           height: 507;
           background-color: #F8E1DB;
