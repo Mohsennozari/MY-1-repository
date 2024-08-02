@@ -309,33 +309,35 @@ body body {
   background-position-y: 2500px;
   background-position-x: -500px;
 }
-body .card-container {
-  /* display: grid; */
-  /* grid-template-columns: repeat(4, 2fr); */
+body .Card-Services {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+  top: -80px;
   gap: 30px;
-  margin-top: -80px;
+  justify-self: center;
   align-items: center;
-  margin-bottom: 40px;
   justify-content: center;
 }
-body .card-container .card {
+body .Card-Services .Service {
   width: 360px;
   height: 312px;
   align-items: center;
   border-radius: 10px;
   background-color: #ffffff;
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
   transition: 0.7s;
 }
-body .card-container .card.card:hover {
-  width: 440px;
-  height: 312px;
-  background-color: #fdd700;
+body .Card-Services .Service.Service:hover {
   border-radius: 50px;
   box-shadow: 3px 3px 5px;
 }
-body .card-container .card img {
+body .Card-Services .Service img {
   width: 22%;
   height: auto;
   align-items: center;
@@ -345,7 +347,7 @@ body .card-container .card img {
   margin-bottom: 30px;
   margin-left: 40%;
 }
-body .card-container .card .pp {
+body .Card-Services .Service .Service-4 {
   width: 20%;
   height: auto;
   align-items: center;
@@ -356,39 +358,44 @@ body .card-container .card .pp {
   margin-left: 40%;
   padding: 10px;
 }
-body .card-container .card .ph3 {
+body .Card-Services .Service .Tittle-Servis {
   text-align: center;
 }
-body .card-container .card .pcard {
+body .Card-Services .Service .Service-Description {
   text-align: center;
   margin-bottom: 30px;
   padding: 10px;
 }
-body .explore {
+body .Section-Destination-Activities {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+body .Section-Destination-Activities .Destination-Activities {
   justify-content: center;
   align-items: center;
   margin-top: 100px;
   margin-bottom: 250px;
+  text-align: center;
 }
-body .explore .imgexplore {
-  margin-left: 48%;
+body .Section-Destination-Activities .Destination-Activities .Img-Destination-Activities {
   justify-content: center;
-}
-body .explore .pexplore {
   align-items: center;
   text-align: center;
+}
+body .Section-Destination-Activities .Destination-Activities .Description-Destination-Activities {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
   margin-top: 30px;
   justify-content: center;
 }
 @media only screen and (max-width: 1500px) {
-  body .explore {
+  body .Section-Destination-Activities .explore {
     margin-bottom: 30px;
   }
 }
-body .container-explore {
-  /* display: grid; */
-  /* grid-template-columns: repeat(4, 1fr); */
-  /* gap: 10px; */
+body .Container-Destinations {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -398,7 +405,7 @@ body .container-explore {
   align-items: center;
   margin-bottom: 40px;
 }
-body .container-explore .card-explore {
+body .Container-Destinations .Card-Destination {
   min-width: 400px;
   margin: 10px 10px;
   margin-right: 10px;
@@ -406,9 +413,9 @@ body .container-explore .card-explore {
   border-radius: 15px;
   background-color: #ffffff;
   transition: 1s;
-  shadow: #646363;
+  box-shadow: #646363;
 }
-body .container-explore .card-explore img {
+body .Container-Destinations .Card-Destination img {
   width: 70%;
   height: auto;
   border-radius: 15px;
@@ -419,17 +426,17 @@ body .container-explore .card-explore img {
   margin-bottom: 20px;
   margin-top: 40px;
 }
-body .container-explore .card-explore h4 {
+body .Container-Destinations .Card-Destination h4 {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-body .container-explore .card-explore p {
+body .Container-Destinations .Card-Destination p {
   max-width: 250px;
   text-align: center;
   margin-left: 75px;
 }
-body .container-explore .card-explore button {
+body .Container-Destinations .Card-Destination button {
   background: #f0f0f0;
   margin-top: 30px;
   padding: 10px 40px;
@@ -442,12 +449,12 @@ body .container-explore .card-explore button {
   color: #8D8D8D;
   border-style: none;
 }
-body .container-explore .card-explore.card-explore:hover {
+body .Container-Destinations .Card-Destination.Card-Destination:hover {
   border-radius: 50px;
   box-shadow: 3px 3px 5px;
   background-color: #E76F51;
 }
-body .container-explore .under-photo {
+body .Container-Destinations .under-photo {
   color: #E76F51;
   border-radius: 10px;
   justify-content: center;
@@ -461,11 +468,11 @@ body .container-explore .under-photo {
   margin-top: -40px;
   transition: 0.6s;
 }
-body .container-explore .under-photo.coc:hover {
+body .Container-Destinations .under-photo.coc:hover {
   background-color: #ffd000;
   color: #000000;
 }
-body .container-explore .heart {
+body .Container-Destinations .heart {
   color: #E76F51;
   border-radius: 13px;
   justify-content: center;
@@ -476,24 +483,24 @@ body .container-explore .heart {
   margin-left: -110px;
   margin-bottom: 300px;
 }
-body .container-explore .heart.look:hover {
+body .Container-Destinations .heart.look:hover {
   background-color: #ffd000;
 }
 @media only screen and (max-width: 1000px) {
-  body .container-explore .card-explore {
+  body .Container-Destinations .card-explore {
     margin: 10px 10px;
     padding: 0px 0px;
     flex-direction: column;
     width: 373px;
     box-shadow: #646363;
   }
-  body .container-explore .under-photo {
+  body .Container-Destinations .under-photo {
     display: none;
   }
-  body .container-explore .heart {
+  body .Container-Destinations .heart {
     display: none;
   }
-  body .container-explore .card-container {
+  body .Container-Destinations .card-container {
     margin: 0;
     padding: 0;
   }

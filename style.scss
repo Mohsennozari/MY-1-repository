@@ -371,30 +371,28 @@
       /// 
       /// 
       /// 
-      .card-container {
-          /* display: grid; */
-          /* grid-template-columns: repeat(4, 2fr); */
+      .Card-Services {
+          width: 100%;
+          height: fit-content;
           display: flex;
           flex-wrap: wrap;
-          // max-width: 100vh;
+          position: relative;
+          top: -80px;
           gap: 30px;
-          margin-top: -80px;
-          // margin-left: 180px;
-          // margin-right: 120px;
+          justify-self: center;
           align-items: center;
-          margin-bottom: 40px;
           justify-content: center;
-          .card {
+          .Service {
               width: 360px;
               height: 312px;
               align-items: center;
               border-radius: 10px;
               background-color: #ffffff;
+              justify-self: center;
+              align-items: center;
+              justify-content: center;
               transition: 0.7s;
-              &.card:hover {
-                  width: 440px;
-                  height: 312px;
-                  background-color: #fdd700;
+              &.Service:hover {
                   border-radius: 50px;
                   box-shadow: 3px 3px 5px;
               }
@@ -408,7 +406,7 @@
                   margin-bottom: 30px;
                   margin-left: 40%;
               }
-              .pp {
+              .Service-4 {
                   width: 20%;
                   height: auto;
                   align-items: center;
@@ -419,10 +417,10 @@
                   margin-left: 40%;
                   padding: 10px;
               }
-              .ph3 {
+              .Tittle-Servis {
                   text-align: center;
               }
-              .pcard {
+              .Service-Description {
                   text-align: center;
                   margin-bottom: 30px;
                   padding: 10px;
@@ -438,42 +436,36 @@
       /// 
       /// 
       /// 
-      .explore {
-          justify-content: center;
-          align-items: center;
-          margin-top: 100px;
-          margin-bottom: 250px;
-          .imgexplore {
-              margin-left: 48%;
+      .Section-Destination-Activities {
+          width: 100%;
+          height: fit-content;
+          .Destination-Activities {
               justify-content: center;
-          }
-          .pexplore {
               align-items: center;
+              margin-top: 100px;
+              margin-bottom: 250px;
               text-align: center;
-              margin-top: 30px;
-              justify-content: center;
+              .Img-Destination-Activities {
+                  justify-content: center;
+                  align-items: center;
+                  text-align: center;
+              }
+              .Description-Destination-Activities {
+                  align-items: center;
+                  text-align: center;
+                  justify-content: center;
+                  margin-top: 30px;
+                  justify-content: center;
+              }
           }
-      }
-      @media only screen and ( max-width: 1500px) {
-          .explore {
-              margin-bottom: 30px;
+          @media only screen and ( max-width: 1500px) {
+              .explore {
+                  margin-bottom: 30px;
+              }
           }
       }
       ///////////////////////////////////////////////////////////////////////////////
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      /// 
-      .container-explore {
-          /* display: grid; */
-          /* grid-template-columns: repeat(4, 1fr); */
-          /* gap: 10px; */
+      .Container-Destinations {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
@@ -482,7 +474,7 @@
           margin-right: 100px;
           align-items: center;
           margin-bottom: 40px;
-          .card-explore {
+          .Card-Destination {
               min-width: 400px;
               margin: 10px 10px;
               margin-right: 10px;
@@ -490,7 +482,7 @@
               border-radius: 15px;
               background-color: #ffffff;
               transition: 1s;
-              shadow: #646363;
+              box-shadow: #646363;
               img {
                   width: 70%;
                   height: auto;
@@ -525,7 +517,7 @@
                   color: #8D8D8D;
                   border-style: none;
               }
-              &.card-explore:hover {
+              &.Card-Destination:hover {
                   border-radius: 50px;
                   box-shadow: 3px 3px 5px;
                   background-color: #E76F51;
