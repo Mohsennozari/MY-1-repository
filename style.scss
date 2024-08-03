@@ -571,9 +571,16 @@
           width: 100%;
           height: fit-content;
       }
+      @media only screen and (max-width:500px){
+        .All-Form{
+          max-width: 350px;
+        
+        }
+      }
       .Container-Form {
           background-color: #F8E1DB;
           height: auto;
+         
           margin-left: 200px;
           margin-right: 200px;
           align-items: center;
@@ -581,12 +588,14 @@
           display: flex;
           justify-content: center;
           border-radius: 20px;
+      
           .Img-Form {
               background: url(" background img/shape3.svg");
               border-radius: 10px;
               background-color: #FFD2C6;
               background-repeat: no-repeat;
               height: auto;
+              width:fit-content;
               background-size: cover;
               transition: 1s;
               &.Img-Form:hover {
@@ -598,7 +607,9 @@
           .Card-Form {
               align-items: center;
               border-radius: 10px;
-              background-color: #F8E1DB;
+          
+            
+            
           }
           .Card-Form h1 {
               margin-top: 50px;
@@ -606,6 +617,8 @@
           }
           .Card-Form p {
               text-align: left;
+              justify-content:right;
+              justify-self:left;
               margin-left: 80px;
               margin-right: 20px;
           }
@@ -634,7 +647,7 @@
            ::placeholder {
               color: #090501;
           }
-          .cCard-Form img {
+          .Card-Form img {
               align-items: center;
               border: 2px;
               width: 400px;

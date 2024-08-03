@@ -544,6 +544,11 @@ body .All-Form {
   height: -moz-fit-content;
   height: fit-content;
 }
+@media only screen and (max-width: 500px) {
+  body .All-Form {
+    max-width: 350px;
+  }
+}
 body .Container-Form {
   background-color: #F8E1DB;
   height: auto;
@@ -561,6 +566,8 @@ body .Container-Form .Img-Form {
   background-color: #FFD2C6;
   background-repeat: no-repeat;
   height: auto;
+  width: -moz-fit-content;
+  width: fit-content;
   background-size: cover;
   transition: 1s;
 }
@@ -572,7 +579,6 @@ body .Container-Form .Img-Form.Img-Form:hover {
 body .Container-Form .Card-Form {
   align-items: center;
   border-radius: 10px;
-  background-color: #F8E1DB;
 }
 body .Container-Form .Card-Form h1 {
   margin-top: 50px;
@@ -580,6 +586,8 @@ body .Container-Form .Card-Form h1 {
 }
 body .Container-Form .Card-Form p {
   text-align: left;
+  justify-content: right;
+  justify-self: left;
   margin-left: 80px;
   margin-right: 20px;
 }
@@ -611,7 +619,7 @@ body .Container-Form ::-moz-placeholder {
 body .Container-Form ::placeholder {
   color: #090501;
 }
-body .Container-Form .cCard-Form img {
+body .Container-Form .Card-Form img {
   align-items: center;
   border: 2px;
   width: 400px;
