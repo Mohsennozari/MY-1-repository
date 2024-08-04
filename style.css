@@ -655,6 +655,7 @@ body .Container-Form .Card-Form form img {
   margin-right: 10px;
 }
 body footer {
+  display: flex;
   height: 507;
   background-color: #F8E1DB;
   color: #090501;
@@ -662,27 +663,27 @@ body footer {
   border-top-left-radius: 150px;
   border-top-right-radius: 150px;
 }
-body footer .containerf {
+body footer .Container-Footer {
   max-width: 100%;
   margin: 0 auto;
   min-height: 350px;
 }
-body footer .containerf .footer-main {
+body footer .Container-Footer .Container-Footer-Content {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 4rem;
 }
-body footer .containerf .footer-main .Links {
+body footer .Container-Footer .Container-Footer-Content .Content-Link {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
-body footer .containerf .footer-main .footer-colum {
-  flex-basis: content;
-  flex-grow: 1;
+body footer .Container-Footer .Container-Footer-Content .Content {
+  max-width: 700px;
   justify-content: left;
   text-align: justify;
 }
-body footer .containerf .footer-main p {
+body footer .Container-Footer .Container-Footer-Content p {
   max-width: 600px;
   margin-left: 20px;
   text-align: left;
@@ -690,16 +691,20 @@ body footer .containerf .footer-main p {
   margin-left: 20px;
   margin-right: 150px;
 }
-body footer .containerf .footer-main h1 {
+body footer .Container-Footer .Container-Footer-Content h1 {
   margin-left: 20px;
   margin-top: 50px;
 }
-body footer .containerf .footer-main .media {
+body footer .Container-Footer .Container-Footer-Content h3 {
+  margin-left: 20px;
+  margin-top: 30px;
+}
+body footer .Container-Footer .Container-Footer-Content .media {
   margin-left: 20px;
   margin-top: 15px;
   margin-bottom: 30px;
 }
-body footer .containerf .footer-main li {
+body footer .Container-Footer .Container-Footer-Content li {
   display: flex;
   flex-direction: row;
   width: -moz-max-content;
@@ -709,11 +714,11 @@ body footer .containerf .footer-main li {
   margin-left: 20px;
   margin-right: 30px;
 }
-body footer .containerf .footer-main li a {
+body footer .Container-Footer .Container-Footer-Content li a {
   text-decoration: none;
   color: #090501;
 }
-body footer .containerf .footer-main h2 {
+body footer .Container-Footer .Container-Footer-Content h2 {
   display: flex;
   flex-direction: row;
   font-size: 26px;
@@ -736,33 +741,34 @@ body footer .containerf .footer-main h2 {
     border-top-left-radius: 150px;
     border-top-right-radius: 150px;
   }
-  body footer .containerf {
+  body footer .Container-Footer {
     max-width: 100%;
     margin: 0 auto;
     min-height: 350px;
   }
-  body footer .containerf .footer-main {
+  body footer .Container-Footer .Container-Footer-Content {
     display: flex;
+    flex-wrap: wrap;
     overflow: hidden;
     margin-bottom: 4rem;
   }
-  body footer .containerf .footer-main ul {
+  body footer .Container-Footer .Container-Footer-Content ul {
     margin: 0;
     padding: 0;
   }
-  body footer .containerf .footer-main .Links {
+  body footer .Container-Footer .Container-Footer-Content .Links {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     overflow: hidden;
   }
-  body footer .containerf .footer-main .footer-colum {
+  body footer .Container-Footer .Container-Footer-Content .Content {
     flex-basis: content;
     flex-grow: 1;
     justify-content: left;
     text-align: justify;
   }
-  body footer .containerf .footer-main p {
+  body footer .Container-Footer .Container-Footer-Content p {
     max-width: 600px;
     margin-left: 20px;
     text-align: left;
@@ -770,17 +776,21 @@ body footer .containerf .footer-main h2 {
     margin-left: 20px;
     margin-right: 50px;
   }
-  body footer .containerf .footer-main h1 {
+  body footer .Container-Footer .Container-Footer-Content h1 {
     font-size: 25px;
     margin-left: 20px;
-    margin-top: 50px;
+    margin-top: 140px;
   }
-  body footer .containerf .footer-main .media {
+  body footer .Container-Footer .Container-Footer-Content h3 {
+    margin-left: 20px;
+    margin-top: 30px;
+  }
+  body footer .Container-Footer .Container-Footer-Content .media {
     margin-left: 20px;
     margin-top: 15px;
     margin-bottom: 30px;
   }
-  body footer .containerf .footer-main li {
+  body footer .Container-Footer .Container-Footer-Content li {
     display: flex;
     flex-direction: row;
     width: -moz-max-content;
@@ -791,11 +801,11 @@ body footer .containerf .footer-main h2 {
     margin-right: 30px;
     font-size: 17px;
   }
-  body footer .containerf .footer-main li a {
+  body footer .Container-Footer .Container-Footer-Content li a {
     text-decoration: none;
     color: #090501;
   }
-  body footer .containerf .footer-main h2 {
+  body footer .Container-Footer .Container-Footer-Content h2 {
     display: flex;
     flex-direction: row;
     font-size: 20px;
@@ -804,35 +814,11 @@ body footer .containerf .footer-main h2 {
     margin-top: 50px;
   }
 }
-@media only screen and (max-width: 1000px) {
-  .footer-main {
-    flex-direction: column;
-  }
-}
-.footer-bottom {
-  text-align: center;
-  background-color: #F8E1DB;
-  padding-bottom: 50px;
-}
-
-.explore {
-  align-items: center;
-  margin-bottom: 300px;
-}
-.explore .imgexplore {
-  margin-left: 47%;
-}
-.explore .pexplore {
-  align-items: center;
-  text-align: center;
-  margin-top: 30px;
-  justify-content: center;
-}
-
 .arrow {
   display: block;
   justify-content: center;
   margin-left: 90%;
+  margin-right: 100px;
   background-color: rgb(255, 255, 255);
   width: 60px;
   height: 60px;
@@ -841,8 +827,21 @@ body footer .containerf .footer-main h2 {
   margin-top: -70px;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1600px) {
   .arrow {
-    margin-left: 48%;
+    margin-left: 44%;
+    margin-top: -70px;
   }
+}
+@media only screen and (max-width: 500px) {
+  .arrow {
+    margin-left: 44%;
+    margin-top: -30px;
+  }
+}
+.footer-bottom {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */

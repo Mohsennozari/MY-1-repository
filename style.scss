@@ -685,30 +685,30 @@
       }
       ////////////////////////////////////////////////////////////////////////////////
       footer {
-          
+          display: flex;
           height: 507;
           background-color: #F8E1DB;
           color: #090501;
           padding: 2rem 1rem;
           border-top-left-radius: 150px;
           border-top-right-radius: 150px;
-          .containerf {
+          .Container-Footer {
               max-width: 100%;
               margin: 0 auto;
               min-height: 350px;
               
-              .footer-main {
+              .Container-Footer-Content{
                   display: flex;
+                  flex-wrap: wrap;
                   margin-bottom: 4rem;
-                  .Links{
+                  .Content-Link{
                     display: flex;
                    flex-wrap: wrap;
                    flex-direction: row;
                   }
-                  .footer-colum {
-                 
-                      flex-basis: content;
-                      flex-grow: 1;
+                  .Content {
+                 max-width: 700px;
+                      
                       justify-content: left;
                       text-align: justify;
                   }
@@ -724,6 +724,10 @@
                       margin-left: 20px;
                       margin-top: 50px;
                   }
+                  h3{
+                        margin-left: 20px;
+                        margin-top: 30px;
+                    }
                   .media {
                       margin-left: 20px;
                       margin-top: 15px;
@@ -774,13 +778,15 @@
             border-top-left-radius: 150px;
             border-top-right-radius: 150px;
     
-            .containerf {
+            .Container-Footer {
                 max-width: 100%;
                 margin: 0 auto;
                 min-height: 350px;
+                
     
-                .footer-main {
+                .Container-Footer-Content {
                     display: flex;
+                    flex-wrap: wrap;
                     overflow: hidden;
                     margin-bottom: 4rem;
                     ul{
@@ -795,7 +801,7 @@
                         overflow: hidden;
                     }
     
-                    .footer-colum {
+                    .Content{
     
                         flex-basis: content;
                         flex-grow: 1;
@@ -815,7 +821,11 @@
                     h1 {
                         font-size: 25px;
                         margin-left: 20px;
-                        margin-top: 50px;
+                        margin-top: 140px;
+                    }
+                    h3{
+                        margin-left: 20px;
+                        margin-top: 30px;
                     }
     
                     .media {
@@ -854,60 +864,11 @@
         }
     }
    }
-  //////////////////////////////////////////////////////////////////////////////
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
-  /// 
-  @media only screen and ( max-width: 1000px) {
-      .footer-main {
-          flex-direction: column;
-      }
-  }
-  
-  ///////////////////////////////////////////////////////////////
-  .footer-bottom {
-      text-align: center;
-      background-color: #F8E1DB;
-      padding-bottom: 50px;
-  }
-  
-  //   ///////////////////////////////////////////////////////////////
-  //   .gg {
-  //       margin-bottom: -1270px;
-  //       margin-left: -400px;
-  //   }
-  //   ///////////////////////////////////////////////////////////////
-  //   .jj {
-  //       margin-bottom: -800px;
-  //       margin-left: 1450px;
-  //       height: 800px;
-  //   }
-  //////////////////////////////////////////////////////////////
-  .explore {
-      align-items: center;
-      margin-bottom: 300px;
-      .imgexplore {
-          margin-left: 47%;
-      }
-      .pexplore {
-          align-items: center;
-          text-align: center;
-          margin-top: 30px;
-          justify-content: center;
-      }
-  }
-  
-  //////////////////////////////////////////////////////////////
-  .arrow {
+    .arrow {
       display: block;
       justify-content: center;
-      margin-left: 90%;
+     margin-left: 90%;
+     margin-right: 100px;
       background-color: rgb(255, 255, 255);
       width: 60px;
       height: 60px;
@@ -916,175 +877,21 @@
       margin-top: -70px;
   }
   
-  @media only screen and ( max-width: 1000px) {
+  @media only screen and ( max-width: 1600px) {
       .arrow {
-          margin-left: 48%;
+          margin-left: 44%;
+          margin-top: -70px;
       }
-  }
-  
-  //////////////////////////////////////////////////////////////////////////
-  ///
-  /// 
-  ///         responsive-box
-  /// 
-  /// 
-  /////////////////////////////////////
-  /// 
-  //   @media only screen and (min-width:1000px) {
-  //       .logo-meno {
-  //           display: none;
-  //       }
-  //   }
-  //   @media only screen and ( max-width: 1500px) {
-  //       .container nav ul li {
-  //           display: none;
-  //       }
-  //   }
-  //   @media only screen and ( max-width: 1000px) {
-  //       .container nav ul li {
-  //           display: none;
-  //       }
-  //       .container .btn {
-  //           display: none;
-  //       }
-  //       .container .btn2 {
-  //           display: none;
-  //       }
-  //   }
-  //   @media only screen and ( max-width: 1500px) {
-  //       .explore {
-  //           margin-bottom: 30px;
-  //       }
-  //   }
-  //   @media only screen and ( max-width: 1000px) {
-  //       .card-explore {
-  //           margin: 10px 10px;
-  //           padding: 0px 0px;
-  //           flex-direction: column;
-  //           width: 373px;
-  //           box-shadow: #646363;
-  //       }
-  //   }
-  //   @media only screen and ( max-width: 1000px) {
-  //       .footer-main {
-  //           flex-direction: column;
-  //       }
-  //       .gg {
-  //           display: none;
-  //       }
-  //   }
-  //   @media only screen and ( max-width: 1000px) {
-  //       .arrow {
-  //           margin-left: 48%;
-  //       }
-  //   }
-  ///////////////////////////////////////////////////////////////////////////////////////////////
-  /// 
-  /// Small parts
-  /// 
-  /// /////////////////////////////////////////////////////////////////////
-  //   .explore {
-  //       justify-content: center;
-  //       align-items: center;
-  //       margin-top: 100px;
-  //       margin-bottom: 250px;
-  //       .imgexplore {
-  //           margin-left: 48%;
-  //           justify-content: center;
-  //       }
-  //       .pexplore {
-  //           align-items: center;
-  //           text-align: center;
-  //           margin-top: 30px;
-  //           justify-content: center;
-  //       }
-  //   }
-  //   @media only screen and ( max-width: 1500px) {
-  //       .explore {
-  //           margin-bottom: 30px;
-  //       }
-  //   }
-  //   .coc {
-  //       color: #E76F51;
-  //       border-radius: 10px;
-  //       justify-content: center;
-  //       text-align: center;
-  //       background-color: #ffffff;
-  //       width: 145px;
-  //       height: 50px;
-  //       padding-top: 10px;
-  //       padding-bottom: 8px;
-  //       margin-left: -280px;
-  //       margin-top: -40px;
-  //   }
-  //   .look {
-  //       color: #E76F51;
-  //       border-radius: 13px;
-  //       justify-content: center;
-  //       text-align: center;
-  //       background-color: #ffffff;
-  //       width: 40px;
-  //       padding: 5px 5px 6px 5px;
-  //       margin-left: -110px;
-  //       margin-bottom: 300px;
-  //   }
-  //   .viwe {
-  //       align-items: center;
-  //       background: #f0a60800;
-  //       padding: 10px 30px;
-  //       margin: 0 auto;
-  //       border-radius: 40px;
-  //       margin: auto;
-  //       margin-top: 200px;
-  //       display: block;
-  //       margin-bottom: 250px;
-  //       color: #E76F51;
-  //       border: solid 2px #E76F51;
-  //   }
-  //   .footer-bottom {
-  //       text-align: center;
-  //       background-color: #F8E1DB;
-  //       padding-bottom: 50px;
-  //   }
-  //   ///////////////////////////////////////////////////////////////
-  //   .gg {
-  //       margin-bottom: -1270px;
-  //       margin-left: -400px;
-  //   }
-  //   ///////////////////////////////////////////////////////////////
-  //   .jj {
-  //       margin-bottom: -800px;
-  //       margin-left: 1450px;
-  //       height: 800px;
-  //   }
-  //   //////////////////////////////////////////////////////////////
-  //   .explore {
-  //       align-items: center;
-  //       margin-bottom: 300px;
-  //       .imgexplore {
-  //           margin-left: 47%;
-  //       }
-  //       .pexplore {
-  //           align-items: center;
-  //           text-align: center;
-  //           margin-top: 30px;
-  //           justify-content: center;
-  //       }
-  //   }
-  //   //////////////////////////////////////////////////////////////
-  //   .arrow {
-  //       display: block;
-  //       justify-content: center;
-  //       margin-left: 90%;
-  //       background-color: rgb(255, 255, 255);
-  //       width: 60px;
-  //       height: 60px;
-  //       border-radius: 14px;
-  //       padding: 15px;
-  //       margin-top: -70px;
-  //   }
-  //////////
-  /// //////////////////////////////////////////////////////////////////////////////////////////////////
-  /// 
-  ///   pag 1
-  ///
+    }
+      @media only screen and (max-width:500px) {
+      .arrow {
+          margin-left: 44%;
+          margin-top: -30px;
+      }
+    }
+    .footer-bottom{
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
