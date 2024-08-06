@@ -533,7 +533,7 @@ body {
 			margin-left: -110px;
 			margin-bottom: 300px;
 
-			&.look:hover {
+			&.heart:hover {
 				background-color: #ffd000;
 			}
 		}
@@ -936,6 +936,12 @@ body {
 	padding: 15px;
 	margin-top: -70px;
 }
+.Copy-Right {
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
 
 @media only screen and (max-width: 1600px) {
 	.arrow {
@@ -951,9 +957,3 @@ body {
 	}
 }
 
-.footer-bottom {
-	width: 100%;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-}
