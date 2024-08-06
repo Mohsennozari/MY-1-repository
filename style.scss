@@ -8,7 +8,7 @@ $font-text: Georgia,
 	Times,
 	serif;
 
-/////////////////////////////////////////////////////////////////
+
 %btn {
 	display: flex;
 	justify-content: center;
@@ -19,8 +19,7 @@ $font-text: Georgia,
 	border-radius: 10;
 }
 
-////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
+
 * {
 	margin: 0;
 	padding: 0;
@@ -92,24 +91,7 @@ body {
 			}
 		}
 
-		.logo-meno {
-			display: block;
-			justify-content: start;
-			margin-left: auto;
-			margin-right: 50px;
-			background-color: white;
-			width: 50px;
-			height: 50px;
-			border-radius: 20px;
-			padding: 10px;
-		}
-
-		@media only screen and (min-width:1000px) {
-			.logo-meno {
-				display: none;
-			}
-		}
-
+		
 		.Btn-Up {
 			display: block;
 			width: 130px;
@@ -218,11 +200,8 @@ body {
 		}
 
 		////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////
-		.drop img {
-			width: 30px;
-			margin: 20px;
-		}
+		
+		
 
 		.Sidbar {
 			position: fixed;
@@ -230,10 +209,8 @@ body {
 			flex-direction: column;
 			top: 0;
 			right: 0;
-			//   background-image: url(pexels-alexandrep-junior-7736101.jpg);
 			background-color: rgba($color: #19c2b4, $alpha: 0.30);
 			backdrop-filter: blur(40px);
-			//   border-top-left-radius: 50px;
 			z-index: 999;
 			height: 100vh;
 			width: 300px;
@@ -366,15 +343,6 @@ body {
 		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	}
 
-	//////////////////////////////////////////////////////
-	body {
-		background-image: url("background img/shape2.svg");
-		background-repeat: no-repeat;
-		background-position-y: 2500px;
-		background-position-x: -500px;
-	}
-
-	/////////////////////////////////////////////////////////////
 	.Card-Services {
 		width: 100%;
 		height: fit-content;
@@ -465,11 +433,7 @@ body {
 			}
 		}
 
-		@media only screen and (max-width: 1500px) {
-			.explore {
-				margin-bottom: 30px;
-			}
-		}
+		
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

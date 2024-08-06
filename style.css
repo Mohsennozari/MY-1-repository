@@ -65,22 +65,6 @@ body .Container-Heather nav ul li a {
   text-decoration: none;
   transition: 0.4s;
 }
-body .Container-Heather .logo-meno {
-  display: block;
-  justify-content: start;
-  margin-left: auto;
-  margin-right: 50px;
-  background-color: white;
-  width: 50px;
-  height: 50px;
-  border-radius: 20px;
-  padding: 10px;
-}
-@media only screen and (min-width: 1000px) {
-  body .Container-Heather .logo-meno {
-    display: none;
-  }
-}
 body .Container-Heather .Btn-Up {
   display: block;
   width: 130px;
@@ -178,10 +162,6 @@ body .Container-Heather .Content-Heather .Discover-Button.Discover-Button:hover 
   width: 250px;
   background-color: #00c291;
   text-shadow: 5px 5px 10px rgb(255, 255, 255);
-}
-body .Container-Heather .drop img {
-  width: 30px;
-  margin: 20px;
 }
 body .Container-Heather .Sidbar {
   position: fixed;
@@ -303,12 +283,6 @@ body * {
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-body body {
-  background-image: url("background img/shape2.svg");
-  background-repeat: no-repeat;
-  background-position-y: 2500px;
-  background-position-x: -500px;
-}
 body .Card-Services {
   width: 100%;
   height: -moz-fit-content;
@@ -389,11 +363,6 @@ body .Section-Destination-Activities .Destination-Activities .Description-Destin
   justify-content: center;
   margin-top: 30px;
   justify-content: center;
-}
-@media only screen and (max-width: 1500px) {
-  body .Section-Destination-Activities .explore {
-    margin-bottom: 30px;
-  }
 }
 body .Container-Destinations {
   display: flex;
