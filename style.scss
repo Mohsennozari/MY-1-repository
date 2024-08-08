@@ -503,6 +503,7 @@ body {
 		}
 
 		.under-photo {
+			position: absolute;
 			color: #E76F51;
 			border-radius: 10px;
 			justify-content: center;
@@ -523,6 +524,7 @@ body {
 		}
 
 		.heart {
+			position:absolute;
 			color: #E76F51;
 			border-radius: 13px;
 			justify-content: center;
@@ -530,15 +532,50 @@ body {
 			background-color: #ffffff;
 			width: 40px;
 			padding: 5px 5px 6px 5px;
-			margin-left: -110px;
-			margin-bottom: 300px;
-
+			margin-left: -125px;
+			margin-top: -170px;
+	
 			&.heart:hover {
 				background-color: #ffd000;
 			}
 		}
 
+		
 		//////////////////////////////////////////////////////////////////////////
+		@media only screen and (max-width:638px) {
+          .heart{
+			   position:absolute;
+			color: #E76F51;
+			border-radius: 13px;
+			justify-content: center;
+			text-align: center;
+			background-color: #ffffff;
+			width: 40px;
+			padding: 5px 5px 6px 5px;
+			margin-left: 100px;
+			margin-top: -410px
+		  }
+		  .under-photo {
+			position: absolute;
+			color: #E76F51;
+			border-radius: 10px;
+			justify-content: center;
+			text-align: center;
+			background-color: #ffffff;
+			width: 145px;
+			height: 50px;
+			padding-top: 10px;
+			padding-bottom: 8px;
+			margin-left: -70px;
+			margin-top: -290px;
+			transition: 0.6s;
+		  }
+
+	   }
+		
+		
+		
+		
 		@media only screen and (max-width: 1000px) {
 			.Card-Destination {
 				margin: 10px 10px;
@@ -546,14 +583,6 @@ body {
 				flex-direction: column;
 				width: 373px;
 				box-shadow: #646363;
-			}
-
-			.under-photo {
-				display: none;
-			}
-
-			.heart {
-				display: none;
 			}
 
 			.card-container {

@@ -424,6 +424,7 @@ body .Container-Destinations .Card-Destination.Card-Destination:hover {
   background-color: #E76F51;
 }
 body .Container-Destinations .under-photo {
+  position: absolute;
   color: #E76F51;
   border-radius: 10px;
   justify-content: center;
@@ -442,6 +443,7 @@ body .Container-Destinations .under-photo.coc:hover {
   color: #000000;
 }
 body .Container-Destinations .heart {
+  position: absolute;
   color: #E76F51;
   border-radius: 13px;
   justify-content: center;
@@ -449,11 +451,40 @@ body .Container-Destinations .heart {
   background-color: #ffffff;
   width: 40px;
   padding: 5px 5px 6px 5px;
-  margin-left: -110px;
-  margin-bottom: 300px;
+  margin-left: -125px;
+  margin-top: -170px;
 }
 body .Container-Destinations .heart.heart:hover {
   background-color: #ffd000;
+}
+@media only screen and (max-width: 638px) {
+  body .Container-Destinations .heart {
+    position: absolute;
+    color: #E76F51;
+    border-radius: 13px;
+    justify-content: center;
+    text-align: center;
+    background-color: #ffffff;
+    width: 40px;
+    padding: 5px 5px 6px 5px;
+    margin-left: 100px;
+    margin-top: -410px;
+  }
+  body .Container-Destinations .under-photo {
+    position: absolute;
+    color: #E76F51;
+    border-radius: 10px;
+    justify-content: center;
+    text-align: center;
+    background-color: #ffffff;
+    width: 145px;
+    height: 50px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    margin-left: -70px;
+    margin-top: -290px;
+    transition: 0.6s;
+  }
 }
 @media only screen and (max-width: 1000px) {
   body .Container-Destinations .Card-Destination {
@@ -462,12 +493,6 @@ body .Container-Destinations .heart.heart:hover {
     flex-direction: column;
     width: 373px;
     box-shadow: #646363;
-  }
-  body .Container-Destinations .under-photo {
-    display: none;
-  }
-  body .Container-Destinations .heart {
-    display: none;
   }
   body .Container-Destinations .card-container {
     margin: 0;
