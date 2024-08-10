@@ -1,1052 +1,1058 @@
 ////////////////////////////////////////////////////////////////
 // Define color variables for easy reuse throughout the stylesheet
-$button-color: #E76F51; // Color for buttons
-$bac-color: #FAF4F2; // Background color for the body
+$button-color: #e76f51; // Color for buttons
+$bac-color: #faf4f2; // Background color for the body
 $bac-button-color: #f0f0f0; // Background color for buttons
-$text-color-button: #8D8D8D; // Text color for buttons
-$font-text: Georgia, 'Times New Roman', Times, serif; // Font family for text
+$text-color-button: #8d8d8d; // Text color for buttons
+$font-text: Georgia, "Times New Roman", Times, serif; // Font family for text
 
 // Mixin for button styles
 %btn {
-	display: flex; // Use flexbox for layout
-	justify-content: center; // Center content horizontally
-	align-items: center; // Center content vertically
-	text-align: center; // Center text
-	margin: auto; // Center the button
-	padding: 0; // No padding
-	border-radius: 10; // Rounded corners
+  display: flex; // Use flexbox for layout
+  justify-content: center; // Center content horizontally
+  align-items: center; // Center content vertically
+  text-align: center; // Center text
+  margin: auto; // Center the button
+  padding: 0; // No padding
+  border-radius: 10; // Rounded corners
 }
 
 // Global styles for all elements
 * {
-	margin: 0; // Reset margin
-	padding: 0; // Reset padding
-	box-sizing: border-box; // Include padding and border in element's total width and height
+  margin: 0; // Reset margin
+  padding: 0; // Reset padding
+  box-sizing: border-box; // Include padding and border in element's total width and height
 }
 
 // Body styles
 body {
-	background-color: #FAF4F2; // Set background color
-	font-family: Georgia, 'Times New Roman', Times, serif; // Set font family
-
-	// Styles for the header container
-	.Container-Heather {
-		background-image: url(icon/header-bg.jpg); // Background image for the header
-		width: 100%; // Full width
-		min-height: 50vh; // Minimum height
-		background-size: cover; // Cover the entire area
-		background-position: center; // Center the background image
-		padding: 10px 8px; // Padding around the header
-		border-bottom-left-radius: 150px; // Rounded bottom left corner
-		border-bottom-right-radius: 150px; // Rounded bottom right corner
-
-		// Logo styles
-		.Logo-Website {
-			width: 60px; // Set logo width
-			cursor: pointer; // Change cursor to pointer on hover
-			margin: 60px; // Margin around the logo
-			margin-left: 30px; // Specific left margin
-			transition: 0.5s; // Smooth transition for hover effects
-		}
-
-		// Navigation styles
-		nav {
-			width: 100%; // Full width
-			display: flex; // Use flexbox for layout
-			align-items: center; // Center items vertically
-			justify-content: space-between; // Space items evenly
-
-			// Styles for the navigation menu
-			ul {
-				list-style: none; // Remove default list styles
-				width: 100%; // Full width
-				text-align: left; // Align text to the left
-
-				// Styles for list items in the navigation
-				li {
-					display: inline-block; // Display items inline
-					margin: 10px 20px; // Margin around items
-
-					// Styles for anchor tags on hover
-					a:hover {
-						transition-timing-function: ease; // Smooth transition
-						transition: 0.4s; // Duration of transition
-						display: flex; // Use flexbox for layout
-						text-align: center; // Center text
-						justify-content: center; // Center content
-						width: fit-content; // Fit to content width
-						height: fit-content; // Fit to content height
-						font-weight: 500; // Set font weight
-						background: $button-color; // Background color on hover
-						border: solid 1px rgb(255, 255, 255); // White border
-						color: #000000; // Text color
-						border-radius: 18px; // Rounded corners
-						padding-left: 15px; // Left padding
-						padding-right: 15px; // Right padding
-						padding: 10px; // General padding
-					}
-
-					// Styles for anchor tags
-					a {
-						color: #fff; // Text color
-						text-decoration: none; // Remove underline
-						transition: 0.4s; // Duration of transition
-					}
-				}
-			}
-		}
-
-		// Styles for the sign-up button
-		.Btn-Up {
-			display: block; // Block display
-			width: 130px; // Set width
-			background: none; // No background
-			border: none; // No border
-			color: white; // Text color
-			margin-right: 30px; // Right margin
-			transition: 0.4s; // Duration of transition
-
-			// Styles for the button on hover
-			&.Btn-Up:hover {
-				background-color: #00c291; // Background color on hover
-				border-radius: 30px; // Rounded corners
-				display: flex; // Use flexbox for layout
-				text-align: center; // Center text
-				justify-content: center; // Center content
-				width: 130px; // Set width
-				height: auto; // Automatic height
-				font-family: Georgia, 'Times New Roman', Times, serif; // Font family
-				font-weight: 500; // Font weight
-				padding: 12px; // Padding
-				color: #000000; // Text color
-				font-size: 20px; // Font size
-				border: solid 1px white; // White border
-				transform: none; // No transformation
-			}
-		}
-
-		// Styles for the sign-in button
-		.Btn-In {
-			display: block; // Block display
-			width: 130px; // Set width
-			height: 50px; // Set height
-			background: none; // No background
-			border: solid 1px white; // White border
-			border-radius: 30px; // Rounded corners
-			color: white; // Text color
-			margin-right: 130px; // Right margin
-			justify-content: center; // Center content
-			transition: 0.3s; // Duration of transition
-
-			// Styles for the button on hover
-			&.Btn-In:hover {
-				background-color: #0094b9; // Background color on hover
-				border-radius: 30px; // Rounded corners
-				display: flex; // Use flexbox for layout
-				text-align: center; // Center text
-				justify-content: center; // Center content
-				width: 130px; // Set width
-				height: auto; // Automatic height
-				font-family: Georgia, 'Times New Roman', Times, serif; // Font family
-				font-weight: 500; // Font weight
-				padding: 12px; // Padding
-				color: #000000; // Text color
-				font-size: 20px; // Font size
-				border: solid 1px white; // White border
-				transform: none; // No transformation
-			}
-		}
-
-		// Styles for the content header
-		.Content-Heather {
-			margin-top: 10%; // Top margin
-			color: #fff; // Text color
-			width: 100%; // Full width
-			align-items: center; // Center items
-
-			h1 {
-				font-style: inherit; // Inherit font style
-				align-items: center; // Center items
-				font-size: 70px; // Font size
-				text-align: center; // Center text
-				transition: 2s; // Duration of transition
-			}
-
-			.Description-Heather {
-				align-items: center; // Center items
-				text-align: center; // Center text
-				padding-top: 30px; // Top padding
-				border-style: 4px; // Border style
-				transition: 1s; // Duration of transition
-			}
-
-			.Discover-Button {
-				background: #E76F51; // Background color
-				margin-top: 30px; // Top margin
-				padding: 10px 40px; // Padding
-				border-radius: 40px; // Rounded corners
-				margin-bottom: 100px; // Bottom margin
-				display: block; // Block display
-				margin: 0 auto; // Center the button
-				margin-bottom: 250px; // Bottom margin
-				margin-top: 50px; // Top margin
-				color: #fff; // Text color
-				font-size: 18px; // Font size
-				font-family: 'Times New Roman', Times, serif; // Font family
-				width: 205px; // Set width
-				height: 55px; // Set height
-				border: none; // No border
-				transition: 0.4s; // Duration of transition
-
-				// Styles for the button on hover
-				&.Discover-Button:hover {
-					font-family: Georgia, 'Times New Roman', Times, serif; // Font family
-					border: solid 1px white; // White border
-					width: 250px; // Set width
-					background-color: #00c291; // Background color on hover
-					text-shadow: 5px 5px 10px rgb(255, 255, 255); // Text shadow
-				}
-			}
-		}
-
-		////////////////////////////////////////////////////////////////////////////////
-		
-		// Sidebar styles
-		.Sidbar {
-			position: fixed; // Fixed position
-			display: flex; // Use flexbox for layout
-			flex-direction: column; // Column layout
-			top: 0; // Align to top
-			right: 0; // Align to right
-			background-color: rgba($color: #19c2b4, $alpha: 0.30); // Background color with transparency
-			backdrop-filter: blur(40px); // Blur effect
-			z-index: 999; // High z-index to overlay other elements
-			height: 100vh; // Full height
-			width: 300px; // Set width
-			display: none; // Initially hidden
-
-			// Styles for the sidebar menu
-			ul {
-				list-style: none; // Remove default list styles
-				width: 100%; // Full width
-				margin-top: 100px; // Top margin
-				margin-bottom: 100px; // Bottom margin
-
-				// Styles for list items in the sidebar
-				li {
-					margin: 10px 20px; // Margin around items
-					display: flex; // Use flexbox for layout
-					align-items: center; // Center items vertically
-					justify-content: center; // Center items horizontally
-
-					// Styles for anchor tags in the sidebar
-					a {
-						background-color: #E76F51; // Background color
-						width: 300px; // Set width
-						padding: 15px 4px; // Padding
-						border-radius: 30px; // Rounded corners
-						color: #f0f0f0; // Text color
-						text-align: center; // Center text
-						text-decoration: none; // Remove underline
-						transition: 0.2s; // Duration of transition
-
-						// Styles for anchor tags on hover
-						&:hover {
-							background-color: #00c291; // Background color on hover
-							color: #000000; // Text color on hover
-						}
-					}
-				}
-			}
-		}
-
-		// Styles for the button to show the sidebar
-		.Show-Sidbar {
-			background-color: #f0f0f0; // Background color
-			border-radius: 5px; // Rounded corners
-			margin-right: 20px; // Right margin
-			width: 40px; // Set width
-			height: 40px; // Set height
-			transition: 0.2s; // Duration of transition
-
-			// Styles on hover
-			:hover {
-				background-color: #ffdd1f; // Background color on hover
-				border-radius: 5px; // Rounded corners
-			}
-		}
-
-		// Media query for larger screens
-		@media only screen and (min-width:1500px) {
-			.Show-Sidbar {
-				display: none; // Hide the sidebar button on larger screens
-			}
-		}
-
-		// Styles for the button to hide the sidebar
-		.Hide {
-			list-style: none; // Remove default list styles
-			background-color: rgba($color: #ffffff, $alpha: 0.50); // Background color with transparency
-			position: absolute; // Absolute positioning
-			top: 30px; // Top position
-			left: 30px; // Left position
-			width: 40px; // Set width
-			height: 40px; // Set height
-			border-radius: 5px; // Rounded corners
-		}
-
-		// Styles for the sidebar button container
-		.Box-Btn-Sidbar {
-			display: flex; // Use flexbox for layout
-			flex-direction: column; // Column layout
-			position: absolute; // Absolute positioning
-			top: 30px; // Top position
-			right: 30px; // Right position
-		}
-
-		// Styles for the sign-up button in the sidebar
-		.Btn-Up-sidebar {
-			width: 60px; // Set width
-			height: 30px; // Set height
-			background: #E76F51; // Background color
-			border: none; // No border
-			color: white; // Text color
-			border-radius: 10px; // Rounded corners
-			font-size: 15px; // Font size
-			padding: 4px; // Padding
-			margin-bottom: 5px; // Bottom margin
-		}
-
-		// Styles for the sign-in button in the sidebar
-		.Btn-In-sidebar {
-			display: flex; // Use flexbox for layout
-			width: 60px; // Set width
-			height: 30px; // Set height
-			background: #E76F51; // Background color
-			border: none; // No border
-			border-radius: 10px; // Rounded corners
-			padding: 2px; // Padding
-			color: white; // Text color
-			justify-content: center; // Center content
-			font-size: 15px; // Font size
-		}
-
-		/////////////////////////////////////////////////////////////////////////////////
-	}
-
-	// Media query for smaller screens
-	@media only screen and (max-width: 1500px) {
-		.Container-Heather nav ul li {
-			display: none; // Hide navigation items on smaller screens
-		}
-	}
-
-	// Media query for even smaller screens
-	@media only screen and (max-width: 1000px) {
-		.Container-Heather nav ul li {
-			display: none; // Hide navigation items on smaller screens
-		}
-
-		.Container-Heather .Btn-In {
-			display: none; // Hide sign-in button
-		}
-
-		.Container-Heather .Btn-Up {
-			display: none; // Hide sign-up button
-		}
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////
-	// Global styles for all elements
-	* {
-		margin: 0px; // Reset margin
-		padding: 0px; // Reset padding
-		box-sizing: border-box; // Include padding and border in element's total width and height
-	}
-
-	// Styles for the card services section
-	.Card-Services {
-		width: 100%; // Full width
-		height: fit-content; // Fit to content height
-		display: flex; // Use flexbox for layout
-		flex-wrap: wrap; // Allow wrapping of items
-		position: relative; // Relative positioning
-		top: -80px; // Adjust position
-		gap: 30px; // Gap between items
-		justify-self: center; // Center items
-		align-items: center; // Center items vertically
-		justify-content: center; // Center items horizontally
-
-		// Styles for individual service cards
-		.Service {
-			width: 360px; // Set width
-			height: 312px; // Set height
-			align-items: center; // Center items vertically
-			border-radius: 10px; // Rounded corners
-			background-color: #ffffff; // Background color
-			justify-self: center; // Center items
-			align-items: center; // Center items vertically
-			justify-content: center; // Center items horizontally
-			transition: 0.7s; // Duration of transition
-
-			// Styles for service card on hover
-			&.Service:hover {
-				border-radius: 50px; // Rounded corners on hover
-				box-shadow: 3px 3px 5px; // Shadow effect
-			}
-
-			// Styles for images in service cards
-			img {
-				width: 22%; // Set width
-				height: auto; // Automatic height
-				align-items: center; // Center items vertically
-				margin-top: 30px; // Top margin
-				justify-self: center; // Center items
-				margin-left: 130px; // Left margin
-				margin-bottom: 30px; // Bottom margin
-				margin-left: 40%; // Left margin
-			}
-
-			// Styles for the fourth service card
-			.Service-4 {
-				width: 20%; // Set width
-				height: auto; // Automatic height
-				align-items: center; // Center items vertically
-				margin-top: 30px; // Top margin
-				justify-self: center; // Center items
-				margin-left: 130px; // Left margin
-				margin-bottom: 30px; // Bottom margin
-				margin-left: 40%; // Left margin
-				padding: 10px; // Padding
-			}
-
-			// Styles for service titles
-			.Tittle-Servis {
-				text-align: center; // Center text
-			}
-
-			// Styles for service descriptions
-			.Service-Description {
-				text-align: center; // Center text
-				margin-bottom: 30px; // Bottom margin
-				padding: 10px; // Padding
-			}
-		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////
-	// Styles for the destination activities section
-	.Section-Destination-Activities {
-		width: 100%; // Full width
-		height: fit-content; // Fit to content height
-
-		.Destination-Activities {
-			justify-content: center; // Center items
-			align-items: center; // Center items vertically
-			margin-top: 100px; // Top margin
-			margin-bottom: 250px; // Bottom margin
-			text-align: center; // Center text
-
-			.Img-Destination-Activities {
-				justify-content: center; // Center items
-				align-items: center; // Center items vertically
-				text-align: center; // Center text
-			}
-
-			.Description-Destination-Activities {
-				align-items: center; // Center items
-				text-align: center; // Center text
-				justify-content: center; // Center items
-				margin-top: 30px; // Top margin
-				justify-content: center; // Center items
-			}
-		}
-	}
-
-	///////////////////////////////////////////////////////////////////////////////
-	// Styles for the destinations container
-	.Container-Destinations {
-		display: flex; // Use flexbox for layout
-		flex-wrap: wrap; // Allow wrapping of items
-		justify-content: center; // Center items
-		margin-top: 80px; // Top margin
-		margin-left: 100px; // Left margin
-		margin-right: 100px; // Right margin
-		align-items: center; // Center items vertically
-		margin-bottom: 40px; // Bottom margin
-
-		// Styles for individual destination cards
-		.Card-Destination {
-			min-width: 400px; // Minimum width
-			margin: 10px 10px; // Margin around items
-			margin-right: 10px; // Right margin
-			align-items: center; // Center items vertically
-			border-radius: 15px; // Rounded corners
-			background-color: #ffffff; // Background color
-			transition: 1s; // Duration of transition
-			box-shadow: #646363; // Shadow effect
-
-			// Styles for images in destination cards
-			img {
-				width: 70%; // Set width
-				height: auto; // Automatic height
-				border-radius: 15px; // Rounded corners
-				align-items: center; // Center items vertically
-				margin-top: 30px; // Top margin
-				justify-self: center; // Center items
-				margin-left: 70px; // Left margin
-				margin-bottom: 20px; // Bottom margin
-				margin-top: 40px; // Top margin
-			}
-
-			// Styles for destination titles
-			h4 {
-				text-align: center; // Center text
-				margin-top: 10px; // Top margin
-				margin-bottom: 10px; // Bottom margin
-			}
-
-			// Styles for destination descriptions
-			p {
-				max-width: 250px; // Maximum width
-				text-align: center; // Center text
-				margin-left: 75px; // Left margin
-			}
-
-			// Styles for buttons in destination cards
-			button {
-				background: #f0f0f0; // Background color
-				margin-top: 30px; // Top margin
-				padding: 10px 40px; // Padding
-				border-radius: 40px; // Rounded corners
-				margin-bottom: 100px; // Bottom margin
-				display: block; // Block display
-				margin: 0 auto; // Center the button
-				margin-bottom: 25px; // Bottom margin
-				margin-top: 20px; // Top margin
-				color: #8D8D8D; // Text color
-				border-style: none; // No border
-			}
-
-			// Styles for destination cards on hover
-			&.Card-Destination:hover {
-				border-radius: 50px; // Rounded corners on hover
-				box-shadow: 3px 3px 5px; // Shadow effect
-				background-color: #E76F51; // Background color on hover
-			}
-		}
-
-		// Styles for the under-photo text
-		.under-photo {
-			position: absolute; // Absolute positioning
-			color: #E76F51; // Text color
-			border-radius: 10px; // Rounded corners
-			justify-content: center; // Center items
-			text-align: center; // Center text
-			background-color: #ffffff; // Background color
-			width: 145px; // Set width
-			height: 50px; // Set height
-			padding-top: 10px; // Top padding
-			padding-bottom: 8px; // Bottom padding
-			margin-left: -280px; // Left margin
-			margin-top: -40px; // Top margin
-			transition: 0.6s; // Duration of transition
-
-			// Styles on hover
-			&.coc:hover {
-				background-color: #ffd000; // Background color on hover
-				color: #000000; // Text color on hover
-			}
-		}
-
-		// Styles for the heart icon
-		.heart {
-			position: absolute; // Absolute positioning
-			color: #E76F51; // Text color
-			border-radius: 13px; // Rounded corners
-			justify-content: center; // Center items
-			text-align: center; // Center text
-			background-color: #ffffff; // Background color
-			width: 40px; // Set width
-			padding: 5px 5px 6px 5px; // Padding
-			margin-left: -125px; // Left margin
-			margin-top: -170px; // Top margin
-
-			// Styles on hover
-			&.heart:hover {
-				background-color: #ffd000; // Background color on hover
-			}
-		}
-
-		//////////////////////////////////////////////////////////////////////////
-		// Media query for smaller screens
-		@media only screen and (max-width:638px) {
-			.heart {
-				position: absolute; // Absolute positioning
-				color: #E76F51; // Text color
-				border-radius: 13px; // Rounded corners
-				justify-content: center; // Center items
-				text-align: center; // Center text
-				background-color: #ffffff; // Background color
-				width: 40px; // Set width
-				padding: 5px 5px 6px 5px; // Padding
-				margin-left: 100px; // Left margin
-				margin-top: -410px; // Top margin
-			}
-
-			.under-photo {
-				position: absolute; // Absolute positioning
-				color: #E76F51; // Text color
-				border-radius: 10px; // Rounded corners
-				justify-content: center; // Center items
-				text-align: center; // Center text
-				background-color: #ffffff; // Background color
-				width: 145px; // Set width
-				height: 50px; // Set height
-				padding-top: 10px; // Top padding
-				padding-bottom: 8px; // Bottom padding
-				margin-left: -70px; // Left margin
-				margin-top: -290px; // Top margin
-				transition: 0.6s; // Duration of transition
-			}
-		}
-
-		// Media query for smaller screens
-		@media only screen and (max-width: 1000px) {
-			.Card-Destination {
-				margin: 10px 10px; // Margin around items
-				padding: 0px 0px; // Padding
-				flex-direction: column; // Column layout
-				width: 373px; // Set width
-				box-shadow: #646363; // Shadow effect
-			}
-
-			.card-container {
-				margin: 0; // Reset margin
-				padding: 0; // Reset padding
-			}
-		}
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////
-	// Styles for the view button section
-	.Viwe-Button {
-		width: 100%; // Full width
-		height: fit-content; // Fit to content height
-	}
-
-	// Styles for the view all button
-	.viwe {
-		align-items: center; // Center items
-		justify-content: center; // Center items
-		text-align: center; // Center text
-		background: #f0a60800; // Background color
-		padding: 10px 30px; // Padding
-		margin: 0 auto; // Center the button
-		border-radius: 40px; // Rounded corners
-		margin: auto; // Center the button
-		margin-top: 200px; // Top margin
-		display: block; // Block display
-		margin-bottom: 250px; // Bottom margin
-		color: #E76F51; // Text color
-		border: solid 2px #E76F51; // Border color
-		transition: 1s; // Duration of transition
-
-		// Styles for the button on hover
-		&.viwe:hover {
-			background-color: #E76F51; // Background color on hover
-			color: #090501; // Text color on hover
-		}
-	}
-
-	/////////////////////////////////////////////////////////////////////////
-	// Global styles for all elements
-	* {
-		margin: 0px; // Reset margin
-		padding: 0px; // Reset padding
-		box-sizing: border-box; // Include padding and border in element's total width and height
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; // Set font family
-	}
-
-	// Body styles
-	body {
-		background-color: #fff; // Set background color
-	}
-
-	// Styles for the form section
-	.All-Form {
-		width: 100%; // Full width
-		height: fit-content; // Fit to content height
-	}
-
-	// Media query for smaller screens
-	@media only screen and (max-width:500px) {
-		.All-Form {
-			max-width: 350px; // Maximum width
-		}
-	}
-
-	// Styles for the form container
-	.Container-Form {
-		background-color: #F8E1DB; // Background color
-		height: auto; // Automatic height
-
-		margin-left: 200px; // Left margin
-		margin-right: 200px; // Right margin
-		align-items: center; // Center items
-		margin-bottom: 180px; // Bottom margin
-		display: flex; // Use flexbox for layout
-		justify-content: center; // Center items
-		border-radius: 20px; // Rounded corners
-
-		// Styles for the image form
-		.Img-Form {
-			background: url("background img/shape3.svg"); // Background image
-			border-radius: 10px; // Rounded corners
-			background-color: #FFD2C6; // Background color
-			background-repeat: no-repeat; // No repeat
-			height: auto; // Automatic height
-			width: fit-content; // Fit to content width
-			background-size: cover; // Cover the entire area
-			transition: 1s; // Duration of transition
-
-			// Styles for the image form on hover
-			&.Img-Form:hover {
-				background-color: #E76F51; // Background color on hover
-				color: #090501; // Text color on hover
-				border-radius: 30px; // Rounded corners on hover
-			}
-		}
-
-		// Styles for the form card
-		.Card-Form {
-			align-items: center; // Center items vertically
-			border-radius: 10px; // Rounded corners
-		}
-
-		// Styles for the form card title
-		.Card-Form h1 {
-			margin-top: 50px; // Top margin
-			margin-left: 80px; // Left margin
-		}
-
-		// Styles for the form card paragraph
-		.Card-Form p {
-			text-align: left; // Left align text
-			justify-content: right; // Justify content to the right
-			justify-self: left; // Justify self to the left
-			margin-left: 80px; // Left margin
-			margin-right: 20px; // Right margin
-		}
-
-		// Styles for the form
-		.Card-Form form {
-			max-width: 500px; // Maximum width
-			min-width: 20px; // Minimum width
-			margin-top: 40px; // Top margin
-			margin-left: 80px; // Left margin
-			margin-right: 40px; // Right margin
-			margin-bottom: 30px; // Bottom margin
-			background: #fff; // Background color
-			display: flex; // Use flexbox for layout
-			align-items: center; // Center items vertically
-			border-radius: 20px; // Rounded corners
-			padding: 10px 20px; // Padding
-		}
-
-		// Styles for input fields in the form
-		.Card-Form input {
-			background: transparent; // Transparent background
-			flex: 1; // Flex-grow
-			border: 0; // No border
-			outline: none; // No outline
-			padding: 2px 2px; // Padding
-			font-size: 20px; // Font size
-			margin-bottom: 12px; // Bottom margin
-		}
-
-		// Styles for placeholder text
-		::placeholder {
-			color: #090501; // Placeholder text color
-		}
-
-		// Styles for images in the form card
-		.Card-Form img {
-			align-items: center; // Center items vertically
-			border: 2px; // Border
-			width: 400px; // Set width
-			float: right; // Float to the right
-			margin-right: 15px; // Right margin
-			margin-top: 00px; // Top margin
-			border-color: #fbf1f1; // Border color
-			margin-bottom: 28px; // Bottom margin
-		}
-
-		// Styles for button images in the form card
-		.Card-Form button img {
-			align-items: center; // Center items vertically
-			height: auto; // Automatic height
-			border: 2px; // Border
-			width: 34px; // Set width
-			border-color: #fbf1f1; // Border color
-			margin-right: 15px; // Right margin
-			margin-top: 8px; // Top margin
-			padding-right: 4px; // Right padding
-		}
-
-		// Styles for buttons in the form card
-		.Card-Form button {
-			border: 0; // No border
-			border-radius: 17px; // Rounded corners
-			width: 50px; // Set width
-			height: 50px; // Set height
-			background: #E76F51; // Background color
-			cursor: pointer; // Change cursor to pointer
-		}
-
-		// Styles for form images
-		.Card-Form form img {
-			width: 20px; // Set width
-			align-items: center; // Center items vertically
-			justify-content: center; // Center items
-			margin-bottom: 10px; // Bottom margin
-			margin-right: 10px; // Right margin
-		}
-	}
-
-	////////////////////////////////////////////////////////////////////////////////
-	// Footer styles
-	footer {
-		display: flex; // Use flexbox for layout
-		height: 507; // Set height
-		background-color: #F8E1DB; // Background color
-		color: #090501; // Text color
-		padding: 2rem 1rem; // Padding
-		border-top-left-radius: 150px; // Rounded top left corner
-		border-top-right-radius: 150px; // Rounded top right corner
-
-		.Container-Footer {
-			max-width: 100%; // Full width
-			margin: 0 auto; // Center the footer
-			min-height: 350px; // Minimum height
-
-			.Container-Footer-Content {
-				display: flex; // Use flexbox for layout
-				flex-wrap: wrap; // Allow wrapping of items
-				margin-bottom: 4rem; // Bottom margin
-
-				.Content-Link {
-					display: flex; // Use flexbox for layout
-					flex-wrap: wrap; // Allow wrapping of items
-					flex-direction: row; // Row layout
-				}
-
-				.Content {
-					max-width: 700px; // Maximum width
-					justify-content: left; // Justify content to the left
-					text-align: justify; // Justify text
-				}
-
-				// Styles for paragraphs in the footer
-				p {
-					max-width: 600px; // Maximum width
-					margin-left: 20px; // Left margin
-					text-align: left; // Left align text
-					min-width: 300px; // Minimum width
-					margin-left: 20px; // Left margin
-					margin-right: 150px; // Right margin
-				}
-
-				// Styles for footer headings
-				h1 {
-					margin-left: 20px; // Left margin
-					margin-top: 50px; // Top margin
-				}
-
-				h3 {
-					margin-left: 20px; // Left margin
-					margin-top: 30px; // Top margin
-				}
-
-				// Styles for media links in the footer
-				.media {
-					margin-left: 20px; // Left margin
-					margin-top: 15px; // Top margin
-					margin-bottom: 30px; // Bottom margin
-				}
-
-				// Styles for list items in the footer
-				li {
-					display: flex; // Use flexbox for layout
-					flex-direction: row; // Row layout
-					width: max-content; // Maximum width
-					padding: 5px 10px; // Padding
-					margin: 0 auto; // Center items
-					margin-left: 20px; // Left margin
-					margin-right: 30px; // Right margin
-
-					// Styles for anchor tags in the footer
-					a {
-						text-decoration: none; // Remove underline
-						color: #090501; // Text color
-					}
-				}
-
-				// Styles for footer section headings
-				h2 {
-					display: flex; // Use flexbox for layout
-					flex-direction: row; // Row layout
-					font-size: 26px; // Font size
-					margin-left: 31px; // Left margin
-					margin-right: 30px; // Right margin
-					margin-top: 50px; // Top margin
-				}
-			}
-		}
-	}
+  background-color: #faf4f2; // Set background color
+  font-family: Georgia, "Times New Roman", Times, serif; // Set font family
+
+  // Styles for the header container
+  .Container-Heather {
+    background-image: url(icon/header-bg.jpg); // Background image for the header
+    width: 100%; // Full width
+    min-height: 50vh; // Minimum height
+    background-size: cover; // Cover the entire area
+    background-position: center; // Center the background image
+    padding: 10px 8px; // Padding around the header
+    border-bottom-left-radius: 150px; // Rounded bottom left corner
+    border-bottom-right-radius: 150px; // Rounded bottom right corner
+
+    // Logo styles
+    .Logo-Website {
+      width: 60px; // Set logo width
+      cursor: pointer; // Change cursor to pointer on hover
+      margin: 60px; // Margin around the logo
+      margin-left: 30px; // Specific left margin
+      transition: 0.5s; // Smooth transition for hover effects
+    }
+
+    // Navigation styles
+    nav {
+      width: 100%; // Full width
+      display: flex; // Use flexbox for layout
+      align-items: center; // Center items vertically
+      justify-content: space-between; // Space items evenly
+
+      // Styles for the navigation menu
+      ul {
+        list-style: none; // Remove default list styles
+        width: 100%; // Full width
+        text-align: left; // Align text to the left
+
+        // Styles for list items in the navigation
+        li {
+          display: inline-block; // Display items inline
+          margin: 10px 20px; // Margin around items
+
+          // Styles for anchor tags on hover
+          a:hover {
+            transition-timing-function: ease; // Smooth transition
+            transition: 0.4s; // Duration of transition
+            display: flex; // Use flexbox for layout
+            text-align: center; // Center text
+            justify-content: center; // Center content
+            width: fit-content; // Fit to content width
+            height: fit-content; // Fit to content height
+            font-weight: 500; // Set font weight
+            background: $button-color; // Background color on hover
+            border: solid 1px rgb(255, 255, 255); // White border
+            color: #000000; // Text color
+            border-radius: 18px; // Rounded corners
+            padding-left: 15px; // Left padding
+            padding-right: 15px; // Right padding
+            padding: 10px; // General padding
+          }
+
+          // Styles for anchor tags
+          a {
+            color: #fff; // Text color
+            text-decoration: none; // Remove underline
+            transition: 0.4s; // Duration of transition
+          }
+        }
+      }
+    }
+
+    // Styles for the sign-up button
+    .Btn-Up {
+      display: block; // Block display
+      width: 130px; // Set width
+      background: none; // No background
+      border: none; // No border
+      color: white; // Text color
+      margin-right: 30px; // Right margin
+      transition: 0.4s; // Duration of transition
+
+      // Styles for the button on hover
+      &.Btn-Up:hover {
+        background-color: #00c291; // Background color on hover
+        border-radius: 30px; // Rounded corners
+        display: flex; // Use flexbox for layout
+        text-align: center; // Center text
+        justify-content: center; // Center content
+        width: 130px; // Set width
+        height: auto; // Automatic height
+        font-family: Georgia, "Times New Roman", Times, serif; // Font family
+        font-weight: 500; // Font weight
+        padding: 12px; // Padding
+        color: #000000; // Text color
+        font-size: 20px; // Font size
+        border: solid 1px white; // White border
+        transform: none; // No transformation
+      }
+    }
+
+    // Styles for the sign-in button
+    .Btn-In {
+      display: block; // Block display
+      width: 130px; // Set width
+      height: 50px; // Set height
+      background: none; // No background
+      border: solid 1px white; // White border
+      border-radius: 30px; // Rounded corners
+      color: white; // Text color
+      margin-right: 130px; // Right margin
+      justify-content: center; // Center content
+      transition: 0.3s; // Duration of transition
+
+      // Styles for the button on hover
+      &.Btn-In:hover {
+        background-color: #0094b9; // Background color on hover
+        border-radius: 30px; // Rounded corners
+        display: flex; // Use flexbox for layout
+        text-align: center; // Center text
+        justify-content: center; // Center content
+        width: 130px; // Set width
+        height: auto; // Automatic height
+        font-family: Georgia, "Times New Roman", Times, serif; // Font family
+        font-weight: 500; // Font weight
+        padding: 12px; // Padding
+        color: #000000; // Text color
+        font-size: 20px; // Font size
+        border: solid 1px white; // White border
+        transform: none; // No transformation
+      }
+    }
+
+    // Styles for the content header
+    .Content-Heather {
+      margin-top: 10%; // Top margin
+      color: #fff; // Text color
+      width: 100%; // Full width
+      align-items: center; // Center items
+
+      h1 {
+        font-style: inherit; // Inherit font style
+        align-items: center; // Center items
+        font-size: 70px; // Font size
+        text-align: center; // Center text
+        transition: 2s; // Duration of transition
+      }
+
+      .Description-Heather {
+        align-items: center; // Center items
+        text-align: center; // Center text
+        padding-top: 30px; // Top padding
+        border-style: 4px; // Border style
+        transition: 1s; // Duration of transition
+      }
+
+      .Discover-Button {
+        background: #e76f51; // Background color
+        margin-top: 30px; // Top margin
+        padding: 10px 40px; // Padding
+        border-radius: 40px; // Rounded corners
+        margin-bottom: 100px; // Bottom margin
+        display: block; // Block display
+        margin: 0 auto; // Center the button
+        margin-bottom: 250px; // Bottom margin
+        margin-top: 50px; // Top margin
+        color: #fff; // Text color
+        font-size: 18px; // Font size
+        font-family: "Times New Roman", Times, serif; // Font family
+        width: 205px; // Set width
+        height: 55px; // Set height
+        border: none; // No border
+        transition: 0.4s; // Duration of transition
+
+        // Styles for the button on hover
+        &.Discover-Button:hover {
+          font-family: Georgia, "Times New Roman", Times, serif; // Font family
+          border: solid 1px white; // White border
+          width: 250px; // Set width
+          background-color: #00c291; // Background color on hover
+          text-shadow: 5px 5px 10px rgb(255, 255, 255); // Text shadow
+        }
+      }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // Sidebar styles
+    .Sidbar {
+      position: fixed; // Fixed position
+      display: flex; // Use flexbox for layout
+      flex-direction: column; // Column layout
+      top: 0; // Align to top
+      right: 0; // Align to right
+      background-color: rgba(
+        $color: #19c2b4,
+        $alpha: 0.3
+      ); // Background color with transparency
+      backdrop-filter: blur(40px); // Blur effect
+      z-index: 999; // High z-index to overlay other elements
+      height: 100vh; // Full height
+      width: 300px; // Set width
+      display: none; // Initially hidden
+
+      // Styles for the sidebar menu
+      ul {
+        list-style: none; // Remove default list styles
+        width: 100%; // Full width
+        margin-top: 100px; // Top margin
+        margin-bottom: 100px; // Bottom margin
+
+        // Styles for list items in the sidebar
+        li {
+          margin: 10px 20px; // Margin around items
+          display: flex; // Use flexbox for layout
+          align-items: center; // Center items vertically
+          justify-content: center; // Center items horizontally
+
+          // Styles for anchor tags in the sidebar
+          a {
+            background-color: #e76f51; // Background color
+            width: 300px; // Set width
+            padding: 15px 4px; // Padding
+            border-radius: 30px; // Rounded corners
+            color: #f0f0f0; // Text color
+            text-align: center; // Center text
+            text-decoration: none; // Remove underline
+            transition: 0.2s; // Duration of transition
+
+            // Styles for anchor tags on hover
+            &:hover {
+              background-color: #00c291; // Background color on hover
+              color: #000000; // Text color on hover
+            }
+          }
+        }
+      }
+    }
+
+    // Styles for the button to show the sidebar
+    .Show-Sidbar {
+      background-color: #f0f0f0; // Background color
+      border-radius: 5px; // Rounded corners
+      margin-right: 20px; // Right margin
+      width: 40px; // Set width
+      height: 40px; // Set height
+      transition: 0.2s; // Duration of transition
+
+      // Styles on hover
+      :hover {
+        background-color: #ffdd1f; // Background color on hover
+        border-radius: 5px; // Rounded corners
+      }
+    }
+
+    // Media query for larger screens
+    @media only screen and (min-width: 1500px) {
+      .Show-Sidbar {
+        display: none; // Hide the sidebar button on larger screens
+      }
+    }
+
+    // Styles for the button to hide the sidebar
+    .Hide {
+      list-style: none; // Remove default list styles
+      background-color: rgba(
+        $color: #ffffff,
+        $alpha: 0.5
+      ); // Background color with transparency
+      position: absolute; // Absolute positioning
+      top: 30px; // Top position
+      left: 30px; // Left position
+      width: 40px; // Set width
+      height: 40px; // Set height
+      border-radius: 5px; // Rounded corners
+    }
+
+    // Styles for the sidebar button container
+    .Box-Btn-Sidbar {
+      display: flex; // Use flexbox for layout
+      flex-direction: column; // Column layout
+      position: absolute; // Absolute positioning
+      top: 30px; // Top position
+      right: 30px; // Right position
+    }
+
+    // Styles for the sign-up button in the sidebar
+    .Btn-Up-sidebar {
+      width: 60px; // Set width
+      height: 30px; // Set height
+      background: #e76f51; // Background color
+      border: none; // No border
+      color: white; // Text color
+      border-radius: 10px; // Rounded corners
+      font-size: 15px; // Font size
+      padding: 4px; // Padding
+      margin-bottom: 5px; // Bottom margin
+    }
+
+    // Styles for the sign-in button in the sidebar
+    .Btn-In-sidebar {
+      display: flex; // Use flexbox for layout
+      width: 60px; // Set width
+      height: 30px; // Set height
+      background: #e76f51; // Background color
+      border: none; // No border
+      border-radius: 10px; // Rounded corners
+      padding: 2px; // Padding
+      color: white; // Text color
+      justify-content: center; // Center content
+      font-size: 15px; // Font size
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+  }
+
+  // Media query for smaller screens
+  @media only screen and (max-width: 1500px) {
+    .Container-Heather nav ul li {
+      display: none; // Hide navigation items on smaller screens
+    }
+  }
+
+  // Media query for even smaller screens
+  @media only screen and (max-width: 1000px) {
+    .Container-Heather nav ul li {
+      display: none; // Hide navigation items on smaller screens
+    }
+
+    .Container-Heather .Btn-In {
+      display: none; // Hide sign-in button
+    }
+
+    .Container-Heather .Btn-Up {
+      display: none; // Hide sign-up button
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////
+  // Global styles for all elements
+  * {
+    margin: 0px; // Reset margin
+    padding: 0px; // Reset padding
+    box-sizing: border-box; // Include padding and border in element's total width and height
+  }
+
+  // Styles for the card services section
+  .Card-Services {
+    width: 100%; // Full width
+    height: fit-content; // Fit to content height
+    display: flex; // Use flexbox for layout
+    flex-wrap: wrap; // Allow wrapping of items
+    position: relative; // Relative positioning
+    top: -80px; // Adjust position
+    gap: 30px; // Gap between items
+    justify-self: center; // Center items
+    align-items: center; // Center items vertically
+    justify-content: center; // Center items horizontally
+
+    // Styles for individual service cards
+    .Service {
+      width: 360px; // Set width
+      height: 312px; // Set height
+      align-items: center; // Center items vertically
+      border-radius: 10px; // Rounded corners
+      background-color: #ffffff; // Background color
+      justify-self: center; // Center items
+      align-items: center; // Center items vertically
+      justify-content: center; // Center items horizontally
+      transition: 0.7s; // Duration of transition
+
+      // Styles for service card on hover
+      &.Service:hover {
+        border-radius: 50px; // Rounded corners on hover
+        box-shadow: 3px 3px 5px; // Shadow effect
+      }
+
+      // Styles for images in service cards
+      img {
+        width: 22%; // Set width
+        height: auto; // Automatic height
+        align-items: center; // Center items vertically
+        margin-top: 30px; // Top margin
+        justify-self: center; // Center items
+        margin-left: 130px; // Left margin
+        margin-bottom: 30px; // Bottom margin
+        margin-left: 40%; // Left margin
+      }
+
+      // Styles for the fourth service card
+      .Service-4 {
+        width: 20%; // Set width
+        height: auto; // Automatic height
+        align-items: center; // Center items vertically
+        margin-top: 30px; // Top margin
+        justify-self: center; // Center items
+        margin-left: 130px; // Left margin
+        margin-bottom: 30px; // Bottom margin
+        margin-left: 40%; // Left margin
+        padding: 10px; // Padding
+      }
+
+      // Styles for service titles
+      .Tittle-Servis {
+        text-align: center; // Center text
+      }
+
+      // Styles for service descriptions
+      .Service-Description {
+        text-align: center; // Center text
+        margin-bottom: 30px; // Bottom margin
+        padding: 10px; // Padding
+      }
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  // Styles for the destination activities section
+  .Section-Destination-Activities {
+    width: 100%; // Full width
+    height: fit-content; // Fit to content height
+
+    .Destination-Activities {
+      justify-content: center; // Center items
+      align-items: center; // Center items vertically
+      margin-top: 100px; // Top margin
+      margin-bottom: 250px; // Bottom margin
+      text-align: center; // Center text
+
+      .Img-Destination-Activities {
+        justify-content: center; // Center items
+        align-items: center; // Center items vertically
+        text-align: center; // Center text
+      }
+
+      .Description-Destination-Activities {
+        align-items: center; // Center items
+        text-align: center; // Center text
+        justify-content: center; // Center items
+        margin-top: 30px; // Top margin
+        justify-content: center; // Center items
+      }
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////
+  // Styles for the destinations container
+  .Container-Destinations {
+    display: flex; // Use flexbox for layout
+    flex-wrap: wrap; // Allow wrapping of items
+    justify-content: center; // Center items
+    margin-top: 80px; // Top margin
+    margin-left: 100px; // Left margin
+    margin-right: 100px; // Right margin
+    align-items: center; // Center items vertically
+    margin-bottom: 40px; // Bottom margin
+
+    // Styles for individual destination cards
+    .Card-Destination {
+      min-width: 400px; // Minimum width
+      margin: 10px 10px; // Margin around items
+      margin-right: 10px; // Right margin
+      align-items: center; // Center items vertically
+      border-radius: 15px; // Rounded corners
+      background-color: #ffffff; // Background color
+      transition: 1s; // Duration of transition
+      box-shadow: #646363; // Shadow effect
+
+      // Styles for images in destination cards
+      img {
+        width: 70%; // Set width
+        height: auto; // Automatic height
+        border-radius: 15px; // Rounded corners
+        align-items: center; // Center items vertically
+        margin-top: 30px; // Top margin
+        justify-self: center; // Center items
+        margin-left: 70px; // Left margin
+        margin-bottom: 20px; // Bottom margin
+        margin-top: 40px; // Top margin
+      }
+
+      // Styles for destination titles
+      h4 {
+        text-align: center; // Center text
+        margin-top: 10px; // Top margin
+        margin-bottom: 10px; // Bottom margin
+      }
+
+      // Styles for destination descriptions
+      p {
+        max-width: 250px; // Maximum width
+        text-align: center; // Center text
+        margin-left: 75px; // Left margin
+      }
+
+      // Styles for buttons in destination cards
+      button {
+        background: #f0f0f0; // Background color
+        margin-top: 30px; // Top margin
+        padding: 10px 40px; // Padding
+        border-radius: 40px; // Rounded corners
+        margin-bottom: 100px; // Bottom margin
+        display: block; // Block display
+        margin: 0 auto; // Center the button
+        margin-bottom: 25px; // Bottom margin
+        margin-top: 20px; // Top margin
+        color: #8d8d8d; // Text color
+        border-style: none; // No border
+      }
+
+      // Styles for destination cards on hover
+      &.Card-Destination:hover {
+        border-radius: 50px; // Rounded corners on hover
+        box-shadow: 3px 3px 5px; // Shadow effect
+        background-color: #e76f51; // Background color on hover
+      }
+    }
+
+    // Styles for the under-photo text
+    .under-photo {
+      position: absolute; // Absolute positioning
+      color: #e76f51; // Text color
+      border-radius: 10px; // Rounded corners
+      justify-content: center; // Center items
+      text-align: center; // Center text
+      background-color: #ffffff; // Background color
+      width: 145px; // Set width
+      height: 50px; // Set height
+      padding-top: 10px; // Top padding
+      padding-bottom: 8px; // Bottom padding
+      margin-left: -280px; // Left margin
+      margin-top: -40px; // Top margin
+      transition: 0.6s; // Duration of transition
+
+      // Styles on hover
+      &.coc:hover {
+        background-color: #ffd000; // Background color on hover
+        color: #000000; // Text color on hover
+      }
+    }
+
+    // Styles for the heart icon
+    .heart {
+      position: absolute; // Absolute positioning
+      color: #e76f51; // Text color
+      border-radius: 13px; // Rounded corners
+      justify-content: center; // Center items
+      text-align: center; // Center text
+      background-color: #ffffff; // Background color
+      width: 40px; // Set width
+      padding: 5px 5px 6px 5px; // Padding
+      margin-left: -125px; // Left margin
+      margin-top: -170px; // Top margin
+
+      // Styles on hover
+      &.heart:hover {
+        background-color: #ffd000; // Background color on hover
+      }
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Media query for smaller screens
+    @media only screen and (max-width: 638px) {
+      .heart {
+        position: absolute; // Absolute positioning
+        color: #e76f51; // Text color
+        border-radius: 13px; // Rounded corners
+        justify-content: center; // Center items
+        text-align: center; // Center text
+        background-color: #ffffff; // Background color
+        width: 40px; // Set width
+        padding: 5px 5px 6px 5px; // Padding
+        margin-left: 100px; // Left margin
+        margin-top: -410px; // Top margin
+      }
+
+      .under-photo {
+        position: absolute; // Absolute positioning
+        color: #e76f51; // Text color
+        border-radius: 10px; // Rounded corners
+        justify-content: center; // Center items
+        text-align: center; // Center text
+        background-color: #ffffff; // Background color
+        width: 145px; // Set width
+        height: 50px; // Set height
+        padding-top: 10px; // Top padding
+        padding-bottom: 8px; // Bottom padding
+        margin-left: -70px; // Left margin
+        margin-top: -290px; // Top margin
+        transition: 0.6s; // Duration of transition
+      }
+    }
+
+    // Media query for smaller screens
+    @media only screen and (max-width: 1000px) {
+      .Card-Destination {
+        margin: 10px 10px; // Margin around items
+        padding: 0px 0px; // Padding
+        flex-direction: column; // Column layout
+        width: 373px; // Set width
+        box-shadow: #646363; // Shadow effect
+      }
+
+      .card-container {
+        margin: 0; // Reset margin
+        padding: 0; // Reset padding
+      }
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////
+  // Styles for the view button section
+  .Viwe-Button {
+    width: 100%; // Full width
+    height: fit-content; // Fit to content height
+  }
+
+  // Styles for the view all button
+  .viwe {
+    align-items: center; // Center items
+    justify-content: center; // Center items
+    text-align: center; // Center text
+    background: #f0a60800; // Background color
+    padding: 10px 30px; // Padding
+    margin: 0 auto; // Center the button
+    border-radius: 40px; // Rounded corners
+    margin: auto; // Center the button
+    margin-top: 200px; // Top margin
+    display: block; // Block display
+    margin-bottom: 250px; // Bottom margin
+    color: #e76f51; // Text color
+    border: solid 2px #e76f51; // Border color
+    transition: 1s; // Duration of transition
+
+    // Styles for the button on hover
+    &.viwe:hover {
+      background-color: #e76f51; // Background color on hover
+      color: #090501; // Text color on hover
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////
+  // Global styles for all elements
+  * {
+    margin: 0px; // Reset margin
+    padding: 0px; // Reset padding
+    box-sizing: border-box; // Include padding and border in element's total width and height
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; // Set font family
+  }
+
+  // Body styles
+  body {
+    background-color: #fff; // Set background color
+  }
+
+  // Styles for the form section
+  .All-Form {
+    width: 100%; // Full width
+    height: fit-content; // Fit to content height
+  }
+
+  // Media query for smaller screens
+  @media only screen and (max-width: 500px) {
+    .All-Form {
+      max-width: 350px; // Maximum width
+    }
+  }
+
+  // Styles for the form container
+  .Container-Form {
+    background-color: #f8e1db; // Background color
+    height: auto; // Automatic height
+
+    margin-left: 200px; // Left margin
+    margin-right: 200px; // Right margin
+    align-items: center; // Center items
+    margin-bottom: 180px; // Bottom margin
+    display: flex; // Use flexbox for layout
+    justify-content: center; // Center items
+    border-radius: 20px; // Rounded corners
+
+    // Styles for the image form
+    .Img-Form {
+      background: url("background img/shape3.svg"); // Background image
+      border-radius: 10px; // Rounded corners
+      background-color: #ffd2c6; // Background color
+      background-repeat: no-repeat; // No repeat
+      height: auto; // Automatic height
+      width: fit-content; // Fit to content width
+      background-size: cover; // Cover the entire area
+      transition: 1s; // Duration of transition
+
+      // Styles for the image form on hover
+      &.Img-Form:hover {
+        background-color: #e76f51; // Background color on hover
+        color: #090501; // Text color on hover
+        border-radius: 30px; // Rounded corners on hover
+      }
+    }
+
+    // Styles for the form card
+    .Card-Form {
+      align-items: center; // Center items vertically
+      border-radius: 10px; // Rounded corners
+    }
+
+    // Styles for the form card title
+    .Card-Form h1 {
+      margin-top: 50px; // Top margin
+      margin-left: 80px; // Left margin
+    }
+
+    // Styles for the form card paragraph
+    .Card-Form p {
+      text-align: left; // Left align text
+      justify-content: right; // Justify content to the right
+      justify-self: left; // Justify self to the left
+      margin-left: 80px; // Left margin
+      margin-right: 20px; // Right margin
+    }
+
+    // Styles for the form
+    .Card-Form form {
+      max-width: 500px; // Maximum width
+      min-width: 20px; // Minimum width
+      margin-top: 40px; // Top margin
+      margin-left: 80px; // Left margin
+      margin-right: 40px; // Right margin
+      margin-bottom: 30px; // Bottom margin
+      background: #fff; // Background color
+      display: flex; // Use flexbox for layout
+      align-items: center; // Center items vertically
+      border-radius: 20px; // Rounded corners
+      padding: 10px 20px; // Padding
+    }
+
+    // Styles for input fields in the form
+    .Card-Form input {
+      background: transparent; // Transparent background
+      flex: 1; // Flex-grow
+      border: 0; // No border
+      outline: none; // No outline
+      padding: 2px 2px; // Padding
+      font-size: 20px; // Font size
+      margin-bottom: 12px; // Bottom margin
+    }
+
+    // Styles for placeholder text
+    ::placeholder {
+      color: #090501; // Placeholder text color
+    }
+
+    // Styles for images in the form card
+    .Card-Form img {
+      align-items: center; // Center items vertically
+      border: 2px; // Border
+      width: 400px; // Set width
+      float: right; // Float to the right
+      margin-right: 15px; // Right margin
+      margin-top: 00px; // Top margin
+      border-color: #fbf1f1; // Border color
+      margin-bottom: 28px; // Bottom margin
+    }
+
+    // Styles for button images in the form card
+    .Card-Form button img {
+      align-items: center; // Center items vertically
+      height: auto; // Automatic height
+      border: 2px; // Border
+      width: 34px; // Set width
+      border-color: #fbf1f1; // Border color
+      margin-right: 15px; // Right margin
+      margin-top: 8px; // Top margin
+      padding-right: 4px; // Right padding
+    }
+
+    // Styles for buttons in the form card
+    .Card-Form button {
+      border: 0; // No border
+      border-radius: 17px; // Rounded corners
+      width: 50px; // Set width
+      height: 50px; // Set height
+      background: #e76f51; // Background color
+      cursor: pointer; // Change cursor to pointer
+    }
+
+    // Styles for form images
+    .Card-Form form img {
+      width: 20px; // Set width
+      align-items: center; // Center items vertically
+      justify-content: center; // Center items
+      margin-bottom: 10px; // Bottom margin
+      margin-right: 10px; // Right margin
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Footer styles
+  footer {
+    display: flex; // Use flexbox for layout
+    height: 507; // Set height
+    background-color: #f8e1db; // Background color
+    color: #090501; // Text color
+    padding: 2rem 1rem; // Padding
+    border-top-left-radius: 150px; // Rounded top left corner
+    border-top-right-radius: 150px; // Rounded top right corner
+
+    .Container-Footer {
+      max-width: 100%; // Full width
+      margin: 0 auto; // Center the footer
+      min-height: 350px; // Minimum height
+
+      .Container-Footer-Content {
+        display: flex; // Use flexbox for layout
+        flex-wrap: wrap; // Allow wrapping of items
+        margin-bottom: 4rem; // Bottom margin
+
+        .Content-Link {
+          display: flex; // Use flexbox for layout
+          flex-wrap: wrap; // Allow wrapping of items
+          flex-direction: row; // Row layout
+        }
+
+        .Content {
+          max-width: 700px; // Maximum width
+          justify-content: left; // Justify content to the left
+          text-align: justify; // Justify text
+        }
+
+        // Styles for paragraphs in the footer
+        p {
+          max-width: 600px; // Maximum width
+          margin-left: 20px; // Left margin
+          text-align: left; // Left align text
+          min-width: 300px; // Minimum width
+          margin-left: 20px; // Left margin
+          margin-right: 150px; // Right margin
+        }
+
+        // Styles for footer headings
+        h1 {
+          margin-left: 20px; // Left margin
+          margin-top: 50px; // Top margin
+        }
+
+        h3 {
+          margin-left: 20px; // Left margin
+          margin-top: 30px; // Top margin
+        }
+
+        // Styles for media links in the footer
+        .media {
+          margin-left: 20px; // Left margin
+          margin-top: 15px; // Top margin
+          margin-bottom: 30px; // Bottom margin
+        }
+
+        // Styles for list items in the footer
+        li {
+          display: flex; // Use flexbox for layout
+          flex-direction: row; // Row layout
+          width: max-content; // Maximum width
+          padding: 5px 10px; // Padding
+          margin: 0 auto; // Center items
+          margin-left: 20px; // Left margin
+          margin-right: 30px; // Right margin
+
+          // Styles for anchor tags in the footer
+          a {
+            text-decoration: none; // Remove underline
+            color: #090501; // Text color
+          }
+        }
+
+        // Styles for footer section headings
+        h2 {
+          display: flex; // Use flexbox for layout
+          flex-direction: row; // Row layout
+          font-size: 26px; // Font size
+          margin-left: 31px; // Left margin
+          margin-right: 30px; // Right margin
+          margin-top: 50px; // Top margin
+        }
+      }
+    }
+  }
 }
 
 // Media query for smaller screens
-@media only screen and (max-width:500px) {
-	body {
-		margin: 0; // Reset margin
-		padding: 0; // Reset padding
+@media only screen and (max-width: 500px) {
+  body {
+    margin: 0; // Reset margin
+    padding: 0; // Reset padding
 
-		footer {
-			height: auto; // Automatic height
-			margin: 0; // Reset margin
-			background-color: #F8E1DB; // Background color
-			color: #090501; // Text color
-			padding: 0; // Reset padding
-			border-top-left-radius: 150px; // Rounded top left corner
-			border-top-right-radius: 150px; // Rounded top right corner
+    footer {
+      height: auto; // Automatic height
+      margin: 0; // Reset margin
+      background-color: #f8e1db; // Background color
+      color: #090501; // Text color
+      padding: 0; // Reset padding
+      border-top-left-radius: 150px; // Rounded top left corner
+      border-top-right-radius: 150px; // Rounded top right corner
 
-			.Container-Footer {
-				max-width: 100%; // Full width
-				margin: 0 auto; // Center the footer
-				min-height: 350px; // Minimum height
+      .Container-Footer {
+        max-width: 100%; // Full width
+        margin: 0 auto; // Center the footer
+        min-height: 350px; // Minimum height
 
-				.Container-Footer-Content {
-					display: flex; // Use flexbox for layout
-					flex-wrap: wrap; // Allow wrapping of items
-					overflow: hidden; // Hide overflow
-					margin-bottom: 4rem; // Bottom margin
+        .Container-Footer-Content {
+          display: flex; // Use flexbox for layout
+          flex-wrap: wrap; // Allow wrapping of items
+          overflow: hidden; // Hide overflow
+          margin-bottom: 4rem; // Bottom margin
 
-					ul {
-						margin: 0; // Reset margin
-						padding: 0; // Reset padding
-					}
+          ul {
+            margin: 0; // Reset margin
+            padding: 0; // Reset padding
+          }
 
-					.Links {
-						display: flex; // Use flexbox for layout
-						flex-wrap: wrap; // Allow wrapping of items
-						flex-direction: row; // Row layout
-						overflow: hidden; // Hide overflow
-					}
+          .Links {
+            display: flex; // Use flexbox for layout
+            flex-wrap: wrap; // Allow wrapping of items
+            flex-direction: row; // Row layout
+            overflow: hidden; // Hide overflow
+          }
 
-					.Content {
-						flex-basis: content; // Flex basis
-						flex-grow: 1; // Flex grow
-						justify-content: left; // Justify content to the left
-						text-align: justify; // Justify text
-					}
+          .Content {
+            flex-basis: content; // Flex basis
+            flex-grow: 1; // Flex grow
+            justify-content: left; // Justify content to the left
+            text-align: justify; // Justify text
+          }
 
-					// Styles for paragraphs in the footer
-					p {
-						max-width: 600px; // Maximum width
-						margin-left: 20px; // Left margin
-						text-align: left; // Left align text
-						min-width: 300px; // Minimum width
-						margin-left: 20px; // Left margin
-						margin-right: 50px; // Right margin
-					}
+          // Styles for paragraphs in the footer
+          p {
+            max-width: 600px; // Maximum width
+            margin-left: 20px; // Left margin
+            text-align: left; // Left align text
+            min-width: 300px; // Minimum width
+            margin-left: 20px; // Left margin
+            margin-right: 50px; // Right margin
+          }
 
-					// Styles for footer headings
-					h1 {
-						font-size: 25px; // Font size
-						margin-left: 20px; // Left margin
-						margin-top: 140px; // Top margin
-					}
+          // Styles for footer headings
+          h1 {
+            font-size: 25px; // Font size
+            margin-left: 20px; // Left margin
+            margin-top: 140px; // Top margin
+          }
 
-					h3 {
-						margin-left: 20px; // Left margin
-						margin-top: 30px; // Top margin
-					}
+          h3 {
+            margin-left: 20px; // Left margin
+            margin-top: 30px; // Top margin
+          }
 
-					// Styles for media links in the footer
-					.media {
-						margin-left: 20px; // Left margin
-						margin-top: 15px; // Top margin
-						margin-bottom: 30px; // Bottom margin
-					}
+          // Styles for media links in the footer
+          .media {
+            margin-left: 20px; // Left margin
+            margin-top: 15px; // Top margin
+            margin-bottom: 30px; // Bottom margin
+          }
 
-					// Styles for list items in the footer
-					li {
-						display: flex; // Use flexbox for layout
-						flex-direction: row; // Row layout
-						width: max-content; // Maximum width
-						padding: 5px 10px; // Padding
-						margin: 0 auto; // Center items
-						margin-left: 10px; // Left margin
-						margin-right: 30px; // Right margin
-						font-size: 17px; // Font size
+          // Styles for list items in the footer
+          li {
+            display: flex; // Use flexbox for layout
+            flex-direction: row; // Row layout
+            width: max-content; // Maximum width
+            padding: 5px 10px; // Padding
+            margin: 0 auto; // Center items
+            margin-left: 10px; // Left margin
+            margin-right: 30px; // Right margin
+            font-size: 17px; // Font size
 
-						// Styles for anchor tags in the footer
-						a {
-							text-decoration: none; // Remove underline
-							color: #090501; // Text color
-						}
-					}
+            // Styles for anchor tags in the footer
+            a {
+              text-decoration: none; // Remove underline
+              color: #090501; // Text color
+            }
+          }
 
-					// Styles for footer section headings
-					h2 {
-						display: flex; // Use flexbox for layout
-						flex-direction: row; // Row layout
-						font-size: 20px; // Font size
-						margin-left: 20px; // Left margin
-						margin-right: 30px; // Right margin
-						margin-top: 50px; // Top margin
-					}
-				}
-			}
-		}
-	}
+          // Styles for footer section headings
+          h2 {
+            display: flex; // Use flexbox for layout
+            flex-direction: row; // Row layout
+            font-size: 20px; // Font size
+            margin-left: 20px; // Left margin
+            margin-right: 30px; // Right margin
+            margin-top: 50px; // Top margin
+          }
+        }
+      }
+    }
+  }
 }
 
 // Styles for the arrow button
 .arrow {
-	display: block; // Block display
-	justify-content: center; // Center items
-	margin-left: 90%; // Left margin
-	margin-right: 100px; // Right margin
-	background-color: rgb(255, 255, 255); // Background color
-	width: 60px; // Set width
-	height: 60px; // Set height
-	border-radius: 14px; // Rounded corners
-	padding: 15px; // Padding
-	margin-top: -70px; // Top margin
+  display: block; // Block display
+  justify-content: center; // Center items
+  margin-left: 90%; // Left margin
+  margin-right: 100px; // Right margin
+  background-color: rgb(255, 255, 255); // Background color
+  width: 60px; // Set width
+  height: 60px; // Set height
+  border-radius: 14px; // Rounded corners
+  padding: 15px; // Padding
+  margin-top: -70px; // Top margin
 }
 
 // Styles for the copyright section
 .Copy-Right {
-	width: 100%; // Full width
-	justify-content: center; // Center items
-	align-items: center; // Center items vertically
-	text-align: center; // Center text
+  width: 100%; // Full width
+  justify-content: center; // Center items
+  align-items: center; // Center items vertically
+  text-align: center; // Center text
 }
 
 // Media query for larger screens
 @media only screen and (max-width: 1600px) {
-	.arrow {
-		margin-left: 44%; // Adjust left margin
-		margin-top: -70px; // Adjust top margin
-	}
+  .arrow {
+    margin-left: 44%; // Adjust left margin
+    margin-top: -70px; // Adjust top margin
+  }
 }
 
 // Media query for smaller screens
-@media only screen and (max-width:500px) {
-	.arrow {
-		margin-left: 44%; // Adjust left margin
-		margin-top: -30px; // Adjust top margin
-	}
+@media only screen and (max-width: 500px) {
+  .arrow {
+    margin-left: 44%; // Adjust left margin
+    margin-top: -30px; // Adjust top margin
+  }
 }

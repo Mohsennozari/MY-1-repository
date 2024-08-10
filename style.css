@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #FAF4F2;
+  background-color: #faf4f2;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 body .Container-Heather {
@@ -30,7 +30,6 @@ body .Container-Heather nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
 }
 body .Container-Heather nav ul {
   list-style: none;
@@ -52,7 +51,7 @@ body .Container-Heather nav ul li a:hover {
   height: -moz-fit-content;
   height: fit-content;
   font-weight: 500;
-  background: #E76F51;
+  background: #e76f51;
   border: solid 1px rgb(255, 255, 255);
   color: #000000;
   border-radius: 18px;
@@ -139,7 +138,7 @@ body .Container-Heather .Content-Heather .Description-Heather {
   transition: 1s;
 }
 body .Container-Heather .Content-Heather .Discover-Button {
-  background: #E76F51;
+  background: #e76f51;
   margin-top: 30px;
   padding: 10px 40px;
   border-radius: 40px;
@@ -188,10 +187,9 @@ body .Container-Heather .Sidbar ul li {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
 }
 body .Container-Heather .Sidbar ul li a {
-  background-color: #E76F51;
+  background-color: #e76f51;
   width: 300px;
   padding: 15px 4px;
   border-radius: 30px;
@@ -241,7 +239,7 @@ body .Container-Heather .Box-Btn-Sidbar {
 body .Container-Heather .Btn-Up-sidebar {
   width: 60px;
   height: 30px;
-  background: #E76F51;
+  background: #e76f51;
   border: none;
   color: white;
   border-radius: 10px;
@@ -253,7 +251,7 @@ body .Container-Heather .Btn-In-sidebar {
   display: flex;
   width: 60px;
   height: 30px;
-  background: #E76F51;
+  background: #e76f51;
   border: none;
   border-radius: 10px;
   padding: 2px;
@@ -281,7 +279,6 @@ body * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 body .Card-Services {
   width: 100%;
@@ -415,17 +412,17 @@ body .Container-Destinations .Card-Destination button {
   margin: 0 auto;
   margin-bottom: 25px;
   margin-top: 20px;
-  color: #8D8D8D;
+  color: #8d8d8d;
   border-style: none;
 }
 body .Container-Destinations .Card-Destination.Card-Destination:hover {
   border-radius: 50px;
   box-shadow: 3px 3px 5px;
-  background-color: #E76F51;
+  background-color: #e76f51;
 }
 body .Container-Destinations .under-photo {
   position: absolute;
-  color: #E76F51;
+  color: #e76f51;
   border-radius: 10px;
   justify-content: center;
   text-align: center;
@@ -444,7 +441,7 @@ body .Container-Destinations .under-photo.coc:hover {
 }
 body .Container-Destinations .heart {
   position: absolute;
-  color: #E76F51;
+  color: #e76f51;
   border-radius: 13px;
   justify-content: center;
   text-align: center;
@@ -460,7 +457,7 @@ body .Container-Destinations .heart.heart:hover {
 @media only screen and (max-width: 638px) {
   body .Container-Destinations .heart {
     position: absolute;
-    color: #E76F51;
+    color: #e76f51;
     border-radius: 13px;
     justify-content: center;
     text-align: center;
@@ -472,7 +469,7 @@ body .Container-Destinations .heart.heart:hover {
   }
   body .Container-Destinations .under-photo {
     position: absolute;
-    color: #E76F51;
+    color: #e76f51;
     border-radius: 10px;
     justify-content: center;
     text-align: center;
@@ -516,17 +513,17 @@ body .viwe {
   margin-top: 200px;
   display: block;
   margin-bottom: 250px;
-  color: #E76F51;
-  border: solid 2px #E76F51;
+  color: #e76f51;
+  border: solid 2px #e76f51;
   transition: 1s;
 }
 body .viwe.viwe:hover {
-  background-color: #E76F51;
+  background-color: #e76f51;
   color: #090501;
 }
 body * {
   margin: 0px;
-  padding: opx;
+  padding: 0px;
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -544,7 +541,7 @@ body .All-Form {
   }
 }
 body .Container-Form {
-  background-color: #F8E1DB;
+  background-color: #f8e1db;
   height: auto;
   margin-left: 200px;
   margin-right: 200px;
@@ -555,9 +552,9 @@ body .Container-Form {
   border-radius: 20px;
 }
 body .Container-Form .Img-Form {
-  background: url(" background img/shape3.svg");
+  background: url("background img/shape3.svg");
   border-radius: 10px;
-  background-color: #FFD2C6;
+  background-color: #ffd2c6;
   background-repeat: no-repeat;
   height: auto;
   width: -moz-fit-content;
@@ -566,7 +563,7 @@ body .Container-Form .Img-Form {
   transition: 1s;
 }
 body .Container-Form .Img-Form.Img-Form:hover {
-  background-color: #E76F51;
+  background-color: #e76f51;
   color: #090501;
   border-radius: 30px;
 }
@@ -638,7 +635,7 @@ body .Container-Form .Card-Form button {
   border-radius: 17px;
   width: 50px;
   height: 50px;
-  background: #E76F51;
+  background: #e76f51;
   cursor: pointer;
 }
 body .Container-Form .Card-Form form img {
@@ -651,7 +648,7 @@ body .Container-Form .Card-Form form img {
 body footer {
   display: flex;
   height: 507;
-  background-color: #F8E1DB;
+  background-color: #f8e1db;
   color: #090501;
   padding: 2rem 1rem;
   border-top-left-radius: 150px;
@@ -729,7 +726,7 @@ body footer .Container-Footer .Container-Footer-Content h2 {
   body footer {
     height: auto;
     margin: 0;
-    background-color: #F8E1DB;
+    background-color: #f8e1db;
     color: #090501;
     padding: 0;
     border-top-left-radius: 150px;
