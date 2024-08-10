@@ -37,58 +37,67 @@ body {
     overflow: hidden; /* Hide overflow */
     border-bottom-left-radius: 150px; /* Rounded bottom left corner */
     border-bottom-right-radius: 150px; /* Rounded bottom right corner */
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url(pexels-dreamypixel-547119.jpg); /* Gradient overlay with background image */
-    background-size: 125%; /* Set background size to 125% */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url(pexels-dreamypixel-547119.jpg); /* Gradient overlay with background image */
+    background-size: cover; /* Set background size to cover */
     background-position: center; /* Center the background image */
     padding: 10px 8px; /* Padding around the header */
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Shadow for depth */
-    animation: moveBackground 10s ease-in-out infinite; /* Smooth motion with ease-in-out timing */
+    animation: moveBackground 15s ease-in-out infinite; /* Smooth motion with ease-in-out timing */
+    background-repeat: no-repeat; /* Prevent background repeat */
 
 
 @keyframes moveBackground {
     0% {
         transform: translate(0, 0); /* Start position */
-        background-position: 0% 0%; /* Start position */
+        background-position: center; /* Start position */
     }
     10% {
         transform: translate(0, -5px); /* Move up */
-        background-position: 0% 2%; /* Slight upward movement */
+        background-position: center; /* Keep centered */
     }
     20% {
         transform: translate(5px, -3px); /* Move up and right */
-        background-position: 2% 1%; /* Gentle wave effect */
+        background-position: center; /* Keep centered */
     }
     30% {
         transform: translate(0, 0); /* Return to center */
-        background-position: 0% 0%; /* Return to center */
+        background-position: center; /* Keep centered */
     }
     40% {
         transform: translate(-5px, 3px); /* Move down and left */
-        background-position: -2% 1%; /* Slight downward movement */
+        background-position: center; /* Keep centered */
     }
     50% {
         transform: translate(0, 5px); /* Move down */
-        background-position: 0% 2%; /* Slight downward movement */
+        background-position: center; /* Keep centered */
     }
     60% {
         transform: translate(-5px, 3px); /* Move down and left */
-        background-position: -2% 1%; /* Wave effect */
+        background-position: center; /* Keep centered */
     }
     70% {
         transform: translate(0, 0); /* Return to center */
-        background-position: 0% 0%; /* Return to center */
+        background-position: center; /* Keep centered */
     }
     80% {
         transform: translate(5px, -3px); /* Move up and right */
-        background-position: 2% 1%; /* Wave effect */
+        background-position: center; /* Keep centered */
     }
     90% {
         transform: translate(0, -5px); /* Move up */
-        background-position: 0% 2%; /* Wave effect */
+        background-position: center; /* Keep centered */
     }
     100% {
         transform: translate(0, 0); /* Complete loop */
-        background-position: 0% 0%; /* Complete loop */
+        background-position: center; /* Keep centered */
+    }
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .Container-Heather {
+        padding: 5px 4px; /* Reduce padding for mobile */
+        min-height: 40vh; /* Adjust minimum height for mobile */
     }
 }
 
