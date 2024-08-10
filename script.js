@@ -1,10 +1,16 @@
+// Function to show the sidebar
 function ShowSidbar() {
-    const Sidbar = document.querySelector('.Sidbar')
-    Sidbar.style.display = 'flex'
+    // Select the sidebar element using the class name 'Sidbar'
+    const Sidbar = document.querySelector('.Sidbar');
+    // Change the display style of the sidebar to 'flex' to make it visible
+    Sidbar.style.display = 'flex';
 }
 
+// Function to hide the sidebar
 function HideSidbar() {
-
-    const Sidbar = document.querySelector('.Sidbar')
-    Sidbar.style.display = 'none'
+    // Select the sidebar element using the class name 'Sidbar'
+    const Sidbar = document.querySelector('.Sidbar');
+    // Change the display style of the sidebar to 'none' to hide it
+    Sidbar.style.display = 'none';
 }
+  

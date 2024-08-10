@@ -1,47 +1,59 @@
 <!DOCTYPE html>
-
+<html lang="en"> <!-- Specify the language of the document -->
 <head>
+    <!-- Link to the external CSS stylesheet for custom styles -->
     <link rel="stylesheet" href="style1.css">
+    <!-- Link to the Animate.css library for animation effects -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Link to Font Awesome for icon fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Link to Google Fonts for the Montserrat font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <!-- Title of the webpage -->
     <title>js App</title>
+    <!-- Preconnect to Google Fonts for performance optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Link to Google Fonts for the Poppins font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
+    <!-- Main container for the weather application -->
     <div class="container">
+        <!-- Card to display weather information -->
         <div class="weather-card">
+            <!-- Title of the weather card -->
             <h1 class="tittle" style="color: rgb(255, 255, 255);">
-                weather
+                Weather
             </h1>
             <h3>
-
+                <!-- Placeholder for additional information (if needed) -->
             </h3>
+            <!-- Input field for the user to enter the city name -->
             <input type="text" id="city-input" placeholder="Enter city name">
+            <!-- Button to fetch weather data for the entered city -->
             <button id="city-input-btn" onclick="weatherFn($('#city-input').val())">
-					Get Weather
-			</button>
+                Get Weather
+            </button>
+            <!-- Div to display weather information -->
             <div id="weather-info" class="animate__animated animate__fadeIn">
-                <h3 id="city-name"></h3>
-                <p id="date"></p>
-                <img src="icon/cloud.png" alt="">
-                <p id="temperature"></p>
-                <p id="description"></p>
-                <p id="wind-speed"></p>
+                <h3 id="city-name"></h3> <!-- Display the name of the city -->
+                <p id="date"></p> <!-- Display the current date -->
+                <img src="icon/cloud.png" alt=""> <!-- Weather icon -->
+                <p id="temperature"></p> <!-- Display the temperature -->
+                <p id="description"></p> <!-- Display weather description -->
+                <p id="wind-speed"></p> <!-- Display wind speed -->
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js">
-    </script>
-    <script src="https://momentjs.com/downloads/moment.min.js">
-    </script>
+    <!-- Link to jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Link to Moment.js library for date formatting -->
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <!-- Link to the external JavaScript file containing the weather functionality -->
     <script src="script1.js"></script>
 
-
 </body>
-
 </html>
