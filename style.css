@@ -5,18 +5,68 @@
 }
 
 body {
-  background-color: #faf4f2;
+  background-color: #FAF4F2;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 body .Container-Heather {
-  background-image: url(icon/header-bg.jpg);
-  width: 100%;
-  min-height: 50vh;
-  background-size: cover;
-  background-position: center;
-  padding: 10px 8px;
-  border-bottom-left-radius: 150px;
-  border-bottom-right-radius: 150px;
+  position: relative; /* Position relative for child elements */
+  width: 100%; /* Full width */
+  min-height: 50vh; /* Minimum height */
+  overflow: hidden; /* Hide overflow */
+  border-bottom-left-radius: 150px; /* Rounded bottom left corner */
+  border-bottom-right-radius: 150px; /* Rounded bottom right corner */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url(pexels-dreamypixel-547119.jpg); /* Gradient overlay with background image */
+  background-size: 125%; /* Set background size to 125% */
+  background-position: center; /* Center the background image */
+  padding: 10px 8px; /* Padding around the header */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  animation: moveBackground 10s ease-in-out infinite; /* Smooth motion with ease-in-out timing */
+}
+@keyframes moveBackground {
+  0% {
+    transform: translate(0, 0); /* Start position */
+    background-position: 0% 0%; /* Start position */
+  }
+  10% {
+    transform: translate(0, -5px); /* Move up */
+    background-position: 0% 2%; /* Slight upward movement */
+  }
+  20% {
+    transform: translate(5px, -3px); /* Move up and right */
+    background-position: 2% 1%; /* Gentle wave effect */
+  }
+  30% {
+    transform: translate(0, 0); /* Return to center */
+    background-position: 0% 0%; /* Return to center */
+  }
+  40% {
+    transform: translate(-5px, 3px); /* Move down and left */
+    background-position: -2% 1%; /* Slight downward movement */
+  }
+  50% {
+    transform: translate(0, 5px); /* Move down */
+    background-position: 0% 2%; /* Slight downward movement */
+  }
+  60% {
+    transform: translate(-5px, 3px); /* Move down and left */
+    background-position: -2% 1%; /* Wave effect */
+  }
+  70% {
+    transform: translate(0, 0); /* Return to center */
+    background-position: 0% 0%; /* Return to center */
+  }
+  80% {
+    transform: translate(5px, -3px); /* Move up and right */
+    background-position: 2% 1%; /* Wave effect */
+  }
+  90% {
+    transform: translate(0, -5px); /* Move up */
+    background-position: 0% 2%; /* Wave effect */
+  }
+  100% {
+    transform: translate(0, 0); /* Complete loop */
+    background-position: 0% 0%; /* Complete loop */
+  }
 }
 body .Container-Heather .Logo-Website {
   width: 60px;
@@ -51,7 +101,7 @@ body .Container-Heather nav ul li a:hover {
   height: -moz-fit-content;
   height: fit-content;
   font-weight: 500;
-  background: #e76f51;
+  background: #E76F51;
   border: solid 1px rgb(255, 255, 255);
   color: #000000;
   border-radius: 18px;
@@ -138,7 +188,7 @@ body .Container-Heather .Content-Heather .Description-Heather {
   transition: 1s;
 }
 body .Container-Heather .Content-Heather .Discover-Button {
-  background: #e76f51;
+  background: #E76F51;
   margin-top: 30px;
   padding: 10px 40px;
   border-radius: 40px;
@@ -189,7 +239,7 @@ body .Container-Heather .Sidbar ul li {
   justify-content: center;
 }
 body .Container-Heather .Sidbar ul li a {
-  background-color: #e76f51;
+  background-color: #E76F51;
   width: 300px;
   padding: 15px 4px;
   border-radius: 30px;
@@ -239,7 +289,7 @@ body .Container-Heather .Box-Btn-Sidbar {
 body .Container-Heather .Btn-Up-sidebar {
   width: 60px;
   height: 30px;
-  background: #e76f51;
+  background: #E76F51;
   border: none;
   color: white;
   border-radius: 10px;
@@ -251,7 +301,7 @@ body .Container-Heather .Btn-In-sidebar {
   display: flex;
   width: 60px;
   height: 30px;
-  background: #e76f51;
+  background: #E76F51;
   border: none;
   border-radius: 10px;
   padding: 2px;
@@ -412,17 +462,17 @@ body .Container-Destinations .Card-Destination button {
   margin: 0 auto;
   margin-bottom: 25px;
   margin-top: 20px;
-  color: #8d8d8d;
+  color: #8D8D8D;
   border-style: none;
 }
 body .Container-Destinations .Card-Destination.Card-Destination:hover {
   border-radius: 50px;
   box-shadow: 3px 3px 5px;
-  background-color: #e76f51;
+  background-color: #E76F51;
 }
 body .Container-Destinations .under-photo {
   position: absolute;
-  color: #e76f51;
+  color: #E76F51;
   border-radius: 10px;
   justify-content: center;
   text-align: center;
@@ -441,7 +491,7 @@ body .Container-Destinations .under-photo.coc:hover {
 }
 body .Container-Destinations .heart {
   position: absolute;
-  color: #e76f51;
+  color: #E76F51;
   border-radius: 13px;
   justify-content: center;
   text-align: center;
@@ -457,7 +507,7 @@ body .Container-Destinations .heart.heart:hover {
 @media only screen and (max-width: 638px) {
   body .Container-Destinations .heart {
     position: absolute;
-    color: #e76f51;
+    color: #E76F51;
     border-radius: 13px;
     justify-content: center;
     text-align: center;
@@ -469,7 +519,7 @@ body .Container-Destinations .heart.heart:hover {
   }
   body .Container-Destinations .under-photo {
     position: absolute;
-    color: #e76f51;
+    color: #E76F51;
     border-radius: 10px;
     justify-content: center;
     text-align: center;
@@ -513,12 +563,12 @@ body .viwe {
   margin-top: 200px;
   display: block;
   margin-bottom: 250px;
-  color: #e76f51;
-  border: solid 2px #e76f51;
+  color: #E76F51;
+  border: solid 2px #E76F51;
   transition: 1s;
 }
 body .viwe.viwe:hover {
-  background-color: #e76f51;
+  background-color: #E76F51;
   color: #090501;
 }
 body * {
@@ -541,7 +591,7 @@ body .All-Form {
   }
 }
 body .Container-Form {
-  background-color: #f8e1db;
+  background-color: #F8E1DB;
   height: auto;
   margin-left: 200px;
   margin-right: 200px;
@@ -554,7 +604,7 @@ body .Container-Form {
 body .Container-Form .Img-Form {
   background: url("background img/shape3.svg");
   border-radius: 10px;
-  background-color: #ffd2c6;
+  background-color: #FFD2C6;
   background-repeat: no-repeat;
   height: auto;
   width: -moz-fit-content;
@@ -563,7 +613,7 @@ body .Container-Form .Img-Form {
   transition: 1s;
 }
 body .Container-Form .Img-Form.Img-Form:hover {
-  background-color: #e76f51;
+  background-color: #E76F51;
   color: #090501;
   border-radius: 30px;
 }
@@ -635,7 +685,7 @@ body .Container-Form .Card-Form button {
   border-radius: 17px;
   width: 50px;
   height: 50px;
-  background: #e76f51;
+  background: #E76F51;
   cursor: pointer;
 }
 body .Container-Form .Card-Form form img {
@@ -648,7 +698,7 @@ body .Container-Form .Card-Form form img {
 body footer {
   display: flex;
   height: 507;
-  background-color: #f8e1db;
+  background-color: #F8E1DB;
   color: #090501;
   padding: 2rem 1rem;
   border-top-left-radius: 150px;
@@ -726,7 +776,7 @@ body footer .Container-Footer .Container-Footer-Content h2 {
   body footer {
     height: auto;
     margin: 0;
-    background-color: #f8e1db;
+    background-color: #F8E1DB;
     color: #090501;
     padding: 0;
     border-top-left-radius: 150px;
