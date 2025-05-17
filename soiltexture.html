@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>محاسبه بافت خاک (روش هیدرومتر)</title>
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      padding: 20px;
+      direction: rtl;
+      background: #f9f9f9;
+    }
+    label, input {
+      display: block;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e6ffe6;
+      border: 1px solid #ccc;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>محاسبه بافت خاک (روش هیدرومتر)</h2>
+
+  <label title="وزن خشک خاک به گرم وارد شود">وزن خشک خاک (گرم):</label>
+  <input type="number" id="soilWeight" placeholder="مثلاً 40" required min="0">
+
+  <label title="عدد هیدرومتر در 40 ثانیه">عدد هیدرومتر در ۴۰ ثانیه:</label>
+  <input type="number" id="reading40s" placeholder="مثلاً 22" required min="0">
+
+  <label title="عدد هیدرومتر در 2 ساعت">عدد هیدرومتر در ۲ ساعت:</label>
+  <input type="number" id="reading2h" placeholder="مثلاً 8" required min="0">
+
+  <button onclick="calculate()">محاسبه</button>
+
+  <div id="result"></div>
+
+  <script>
+    function determineTexture(sand, silt, clay) {
+      if (clay >= 40) return "رس";
+      if (clay >= 27 && silt >= 28 && silt < 40) return "رس لومی";
+      if (clay >= 20 && silt >= 40) return "رس سیلتی لومی";
+      if (sand >= 70 && clay < 15) return "رس ماسه‌ای لومی";
+      if (sand >= 85) return "ماسه";
+      if (clay >= 27 && sand >= 20 && sand < 45) return "رس ماسه‌ای";
+      if (clay < 20 && silt >= 40) return "سیلت لومی";
+      return "لومی";
+    }
+
+    function calculate() {
+      const W = parseFloat(document.getElementById("soilWeight").value);
+      const R1 = parseFloat(document.getElementById("reading40s").value);
+      const R2 = parseFloat(document.getElementById("reading2h").value);
+      const resultDiv = document.getElementById("result");
+
+      // Clear previous result
+      resultDiv.innerHTML = "";
+
+      if (isNaN(W) || isNaN(R1) || isNaN(R2) || W <= 0 || R1 <= R2) {
+        resultDiv.innerHTML = "<strong class='error'>لطفاً ورودی‌ها را به‌درستی وارد کنید.</strong>";
+        return;
+      }
+
+      const clay = (R2 / W) * 100;
+      const silt = ((R1 - R2) / W) * 100;
+      const sand = 100 - (clay + silt);
+
+      const texture = determineTexture(sand, silt, clay);
+
+      resultDiv.innerHTML =
+        `<strong>نتایج:</strong><br>
+        درصد ماسه: ${sand.toFixed(2)}%<br>
+        درصد سیلت: ${silt.toFixed(2)}%<br>
+        درصد رس: ${clay.toFixed(2)}%<br>
+        <strong>نوع بافت خاک: ${texture}</strong>`;
+    }
+  </script>
+
+</body>
+</html>

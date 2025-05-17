@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>محاسبه چگالی خاک و پارافین (روش کلوخه‌ای)</title>
+  <style>
+    body { font-family: Tahoma; padding: 20px; background: #f0f0f0; direction: rtl; }
+    label, input { display: block; margin: 10px 0; }
+    button { padding: 10px 20px; background-color: #2196F3; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #1976D2; }
+    #result { margin-top: 20px; background: #e0f7fa; padding: 15px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+  <h2>محاسبه چگالی ظاهری و حقیقی خاک و پارافین (روش کلوخه‌ای)</h2>
+
+  <label for="dryWeight">وزن خشک کلوخه (گرم):</label>
+  <input type="number" id="dryWeight" placeholder="مثلاً 120">
+
+  <label for="bulkVolume">حجم کل کلوخه (cm³):</label>
+  <input type="number" id="bulkVolume" placeholder="مثلاً 90">
+
+  <label for="solidVolume">حجم واقعی جامد خاک (cm³):</label>
+  <input type="number" id="solidVolume" placeholder="مثلاً 60">
+
+  <label for="paraffinWeight">وزن پارافین (گرم):</label>
+  <input type="number" id="paraffinWeight" placeholder="مثلاً 50">
+
+  <label for="paraffinVolume">حجم پارافین (cm³):</label>
+  <input type="number" id="paraffinVolume" placeholder="مثلاً 30">
+
+  <button onclick="calculateDensity()">محاسبه</button>
+  <button onclick="resetFields()">تنظیم مجدد</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateDensity() {
+      const W = parseFloat(document.getElementById("dryWeight").value);
+      const V_bulk = parseFloat(document.getElementById("bulkVolume").value);
+      const V_solid = parseFloat(document.getElementById("solidVolume").value);
+      const W_paraffin = parseFloat(document.getElementById("paraffinWeight").value);
+      const V_paraffin = parseFloat(document.getElementById("paraffinVolume").value);
+
+      // بررسی ورودی‌ها
+      if (isNaN(W) || isNaN(V_bulk) || isNaN(V_solid) || isNaN(W_paraffin) || isNaN(V_paraffin) ||
+          W <= 0 || V_bulk <= 0 || V_solid <= 0 || W_paraffin <= 0 || V_paraffin <= 0) {
+        alert("لطفاً تمام ورودی‌ها را به‌درستی وارد کنید.");
+        return;
+      }
+
+      // محاسبه چگالی خاک
+      const bulkDensity = W / V_bulk;
+      const particleDensity = W / V_solid;
+      const porosity = (1 - (bulkDensity / particleDensity)) * 100;
+
+      // محاسبه چگالی پارافین
+      const paraffinDensity = W_paraffin / V_paraffin;
+
+      // نمایش نتایج
+      document.getElementById("result").innerHTML =
+        `<strong>نتایج:</strong><br>
+        چگالی ظاهری خاک: ${bulkDensity.toFixed(2)} گرم/سانتی‌متر³<br>
+        چگالی حقیقی خاک: ${particleDensity.toFixed(2)} گرم/سانتی‌متر³<br>
+        درصد تخلخل تقریبی: ${porosity.toFixed(1)}%<br>
+        چگالی پارافین: ${paraffinDensity.toFixed(2)} گرم/سانتی‌متر³`;
+    }
+
+    function resetFields() {
+      document.getElementById("dryWeight").value = '';
+      document.getElementById("bulkVolume").value = '';
+      document.getElementById("solidVolume").value = '';
+      document.getElementById("paraffinWeight").value = '';
+      document.getElementById("paraffinVolume").value = '';
+      document.getElementById("result").innerHTML = '';
+    }
+  </script>
+
+</body>
+</html>
