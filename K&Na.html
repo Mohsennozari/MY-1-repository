@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاسبه غلظت سدیم و پتاسیم</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background: #f0f4f8;
+            padding: 20px;
+            direction: rtl;
+            margin: 0;
+        }
+
+        h2, h3 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden; /* برای گرد کردن گوشه‌های جدول */
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 15px; /* فضای داخلی سلول‌ها */
+            text-align: center;
+            font-size: 16px; /* اندازه فونت داخل جدول */
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            max-width: 150px;
+            height: 45px; /* افزایش ارتفاع ورودی */
+            padding: 10px; /* فضای داخلی ورودی */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s, box-shadow 0.3s; /* اضافه کردن سایه */
+            font-size: 16px; /* اندازه فونت ورودی */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* اضافه کردن سایه */
+        }
+
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* سایه در حالت فوکوس */
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            max-width: 200px;
+            height: 50px; /* افزایش ارتفاع دکمه */
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s; /* اضافه کردن انیمیشن */
+            font-size: 18px; /* اندازه فونت */
+            margin: 20px auto;
+            display: block;
+        }
+
+        button:hover {
+            background-color: #388E3C;
+            transform: translateY(-2px); /* انیمیشن جابجایی */
+        }
+
+        #result {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* اضافه کردن سایه */
+        }
+
+        canvas {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 16px; /* افزایش اندازه فونت برچسب */
+            color: #555; /* رنگ ملایم‌تر */
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>محاسبه غلظت واقعی سدیم و پتاسیم</h2>
+    <h3>جدول استاندارد سدیم</h3>
+    <table id="sodiumTable">
+        <thead>
+            <tr>
+                <th>غلظت استاندارد (ppm)</th>
+                <th>عدد دستگاه</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+        </tbody>
+    </table>
+
+    <h3>جدول استاندارد پتاسیم</h3>
+    <table id="potassiumTable">
+        <thead>
+            <tr>
+                <th>غلظت استاندارد (ppm)</th>
+                <th>عدد دستگاه</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+            <tr><td><input type="number"></td><td><input type="number"></td></tr>
+        </tbody>
+    </table>
+
+    <h3>ورودی داده‌های نمونه خاک</h3>
+    <label>عدد دستگاه برای سدیم:</label>
+    <input type="number" id="naUnknown">
+    <label>ضریب رقت سدیم:</label>
+    <input type="number" id="naDilution">
+    <label>عدد دستگاه برای پتاسیم:</label>
+    <input type="number" id="kUnknown">
+    <label>ضریب رقت پتاسیم:</label>
+    <input type="number" id="kDilution">
+    
+    <button onclick="calculateConcentrations()">محاسبه</button>
+
+    <div id="result"></div>
+    <canvas id="chartNa" width="400" height="200"></canvas>
+    <canvas id="chartK" width="400" height="200"></canvas>
+
+    <script>
+        function getTableData(tableId) {
+            const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+            const standards = [];
+            const readings = [];
+
+            rows.forEach(row => {
+                const std = parseFloat(row.cells[0].querySelector('input').value);
+                const read = parseFloat(row.cells[1].querySelector('input').value);
+                if (!isNaN(std) && !isNaN(read)) {
+                    standards.push(std);
+                    readings.push(read);
+                }
+            });
+            return { standards, readings };
+        }
+
+        function linearRegression(x, y) {
+            const n = x.length;
+            const sumX = x.reduce((a, b) => a + b, 0);
+            const sumY = y.reduce((a, b) => a + b, 0);
+            const sumXY = x.reduce((acc, xi, i) => acc + xi * y[i], 0);
+            const sumXX = x.reduce((acc, xi) => acc + xi * xi, 0);
+
+            const a = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+            const b = (sumY - a * sumX) / n;
+
+            return { a, b };
+        }
+
+        function calculateConcentrations() {
+            const { standards: naStds, readings: naReads } = getTableData('sodiumTable');
+            const { standards: kStds, readings: kReads } = getTableData('potassiumTable');
+
+            const naUnknown = parseFloat(document.getElementById('naUnknown').value);
+            const naDilution = parseFloat(document.getElementById('naDilution').value);
+            const kUnknown = parseFloat(document.getElementById('kUnknown').value);
+            const kDilution = parseFloat(document.getElementById('kDilution').value);
+
+            const { a: aNa, b: bNa } = linearRegression(naReads, naStds);
+            const { a: aK, b: bK } = linearRegression(kReads, kStds);
+
+            const naConc = (aNa * naUnknown + bNa) * naDilution;
+            const kConc = (aK * kUnknown + bK) * kDilution;
+
+            document.getElementById("result").innerHTML = `
+                <strong>غلظت نهایی سدیم:</strong> ${naConc.toFixed(2)} ppm<br>
+                <strong>غلظت نهایی پتاسیم:</strong> ${kConc.toFixed(2)} ppm
+            `;
+
+            drawChart('chartNa', naReads, naStds, aNa, bNa, 'سدیم');
+            drawChart('chartK', kReads, kStds, aK, bK, 'پتاسیم');
+        }
+
+        function drawChart(canvasId, x, y, a, b, label) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const regressionLine = x.map(val => a * val + b);
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: `${label} - نقاط استاندارد`,
+                            data: x.map((xi, i) => ({ x: xi, y: y[i] })),
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                        },
+                        {
+                            label: `${label} - منحنی رگرسیون`,
+                            data: x.map((xi, i) => ({ x: xi, y: regressionLine[i] })),
+                            type: 'line',
+                            borderColor: 'red',
+                            fill: false,
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: true, text: `منحنی کالیبراسیون ${label}` }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'عدد دستگاه' } },
+                        y: { title: { display: true, text: 'غلظت (ppm)' } }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
