@@ -1,0 +1,110 @@
+444
+
+
+
+<!DOCTYPE html><html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>محاسبه ماده آلی خاک - روش احتراق تر</title>
+  <style>
+    body {
+      font-family: "Vazir", sans-serif;
+      background: #f2f2f2;
+      padding: 2rem;
+      direction: rtl;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #e0ffe0;
+      border-radius: 8px;
+      border: 1px solid #b2ffb2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>محاسبه ماده آلی خاک (روش والکی و بلک)</h2><label for="weight">وزن خاک (گرم)</label>
+<input type="number" id="weight" placeholder="مثلاً 1">
+
+<label for="nFe">نرمالیته فروس (N)</label>
+<input type="number" step="0.01" id="nFe" placeholder="مثلاً 0.5">
+
+<label for="vBlank">حجم فروس بلانک (میلی‌لیتر)</label>
+<input type="number" id="vBlank" placeholder="مثلاً 10">
+
+<label for="vSample">حجم فروس نمونه (میلی‌لیتر)</label>
+<input type="number" id="vSample" placeholder="مثلاً 4.8">
+
+<label for="unit">واحد نمایش نتیجه</label>
+<select id="unit">
+  <option value="percent">درصد (%)</option>
+  <option value="mg">میلی‌گرم در گرم (mg/g)</option>
+</select>
+
+<button onclick="calculateOrganicMatter()">محاسبه</button>
+
+<div id="result" class="results" style="display:none;"></div>
+
+  </div>  <script>
+    function calculateOrganicMatter() {
+      const weight = parseFloat(document.getElementById('weight').value);
+      const nFe = parseFloat(document.getElementById('nFe').value);
+      const vBlank = parseFloat(document.getElementById('vBlank').value);
+      const vSample = parseFloat(document.getElementById('vSample').value);
+      const unit = document.getElementById('unit').value;
+
+      if (isNaN(weight) || isNaN(nFe) || isNaN(vBlank) || isNaN(vSample)) {
+        alert("لطفاً تمام فیلدهای ضروری را به‌درستی پر کنید.");
+        return;
+      }
+
+      // محاسبه درصد کربن آلی
+      const carbonPercent = ((vBlank - vSample) * nFe * 0.003 * 100) / weight;
+      // محاسبه ماده آلی خاک
+      const organicMatterPercent = carbonPercent * 1.724;
+
+      let output;
+      if (unit === "percent") {
+        output = `درصد کربن آلی: ${carbonPercent.toFixed(2)}% <br>
+                  درصد ماده آلی: ${organicMatterPercent.toFixed(2)}%`;
+      } else {
+        output = `مقدار کربن آلی: ${(carbonPercent * 10).toFixed(2)} mg/g <br>
+                  مقدار ماده آلی: ${(organicMatterPercent * 10).toFixed(2)} mg/g`;
+      }
+
+      document.getElementById('result').innerHTML = output;
+      document.getElementById('result').style.display = 'block';
+    }
+  </script></body>
+</html>

@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <title>تفسیر pH و EC خاک</title>
+  <style>
+    body {
+      font-family: 'Vazirmatn',Tahoma, sans-serif;
+      background-color: #f0f8ff;
+      padding: 30px;
+      direction: rtl;
+      color: #333;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin: 20px auto;
+      max-width: 300px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 25px;
+      border: 1px solid #2980b9;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-family: 'Vazirmatn',Tahoma, sans-serif;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;  
+    }
+
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 10px 30px;
+      background-color: #2980b9;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: 'Vazirmatn',Tahoma, sans-serif;
+    }
+
+    button:hover {
+      background-color: #1f5f8b;
+      transform: scale(1.05);
+    }
+
+    #result {
+      margin-top: 30px;
+      background-color: #ecf0f1;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-family: 'Vazirmatn',Tahoma, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>تفسیر pH و EC خاک</h2>
+
+  <label>
+    مقدار pH اندازه‌گیری‌شده:
+    <input type="number" id="ph" step="0.01" placeholder="مثلاً 7.2">
+  </label>
+
+  <label>
+    مقدار EC اندازه‌گیری‌شده (dS/m):
+    <input type="number" id="ec" step="0.01" placeholder="مثلاً 2.5">
+  </label>
+
+  <button onclick="interpret()">تفسیر نتایج</button>
+
+  <div id="result"></div>
+
+  <script>
+    function interpret() {
+      const ph = parseFloat(document.getElementById("ph").value);
+      const ec = parseFloat(document.getElementById("ec").value);
+
+      if (isNaN(ph) || isNaN(ec)) {
+        alert("لطفاً هر دو مقدار pH و EC را وارد کنید.");
+        return;
+      }
+
+      // تفسیر pH
+      let phInterpretation = "";
+      if (ph < 5.5) phInterpretation = "خیلی اسیدی";
+      else if (ph >= 5.5 && ph < 6.5) phInterpretation = "اسیدی";
+      else if (ph >= 6.5 && ph <= 7.5) phInterpretation = "خنثی";
+      else if (ph > 7.5 && ph <= 8.5) phInterpretation = "قلیایی";
+      else phInterpretation = "خیلی قلیایی";
+
+      // تفسیر EC
+      let ecInterpretation = "";
+      if (ec < 1) ecInterpretation = "خاک غیر شور";
+      else if (ec >= 1 && ec < 2) ecInterpretation = "شور کم";
+      else if (ec >= 2 && ec < 4) ecInterpretation = "شوری متوسط";
+      else if (ec >= 4 && ec < 8) ecInterpretation = "شور زیاد";
+      else ecInterpretation = "شوری بسیار زیاد";
+
+      document.getElementById("result").innerHTML = `
+        <strong>نتایج:</strong><br>
+         مقدار pH: <strong>${ph}</strong> → <strong>${phInterpretation}</strong><br>
+         مقدار EC: <strong>${ec} dS/m</strong> → <strong>${ecInterpretation}</strong>
+      `;
+    }
+  </script>
+
+</body>
+</html>

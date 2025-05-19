@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="fa">
+<head>
+  <meta charset="UTF-8">
+   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <title>اندازه‌گیری آنیون‌ها در عصاره خاک</title>
+  <style>
+    body {
+     font-family: 'Vazirmatn',Tahoma, sans-serif;
+      background: linear-gradient(145deg, #ffffff, #ffffff);
+      margin: 10px;
+      padding: 20px;
+      direction: rtl;
+      color: #2c3e50;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;
+    }h2 {
+  text-align: center;
+  color: #1a1a1a;
+  font-family: 'Vazirmatn',Tahoma, sans-serif;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: #ffbe6a;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  font-weight: bold;
+  flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.05);
+  font-size: 14px;
+  flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;
+      font-family: 'Vazirmatn',Tahoma, sans-serif;
+}
+
+button {
+  margin-top: 30px;
+  width: 93%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #055f6b;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;
+      font-family: 'Vazirmatn',Tahoma, sans-serif;
+}
+
+button:hover {
+  background-color: #cc0000;
+}
+
+#result {
+  margin-top: 10px;
+  background: #626363;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  line-height: 2;
+  flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;
+      font-family: 'Vazirmatn',Tahoma, sans-serif;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>اندازه‌گیری غلظت آنیون‌های CO₃, HCO₃ ,Cl</h2><label>نرمالیته اسید (H₂SO₄):
+  <input type="number" id="acidNormality" placeholder="مثلاً 0.02" step="0.001">
+</label>
+<label>حجم نمونه برای CO₃²⁻ و HCO₃⁻ (میلی‌لیتر):
+  <input type="number" id="volumeSample1" placeholder="مثلاً 5">
+</label>
+<label>حجم مصرف‌شده تا بی‌رنگ شدن فنل‌فتالئین (V₁):
+  <input type="number" id="volumePhenol" placeholder="مثلاً 1.2">
+</label>
+<label>حجم مصرف‌شده تا نارنجی شدن متیل اورنج (V₂):
+  <input type="number" id="volumeMethyl" placeholder="مثلاً 3.5">
+</label>
+
+<label>نرمالیته نیترات نقره (AgNO₃):
+  <input type="number" id="silverNormality" placeholder="مثلاً 0.02" step="0.001">
+</label>
+<label>حجم نمونه برای Cl⁻ (میلی‌لیتر):
+  <input type="number" id="volumeSample2" placeholder="مثلاً 10">
+</label>
+<label>حجم مصرف‌شده AgNO₃ تا رنگ قرمز آجری:
+  <input type="number" id="volumeAgNO3" placeholder="مثلاً 2.8">
+</label>
+
+<button onclick="calculateAnions()">محاسبه مقادیر آنیون‌ها</button>
+
+<div id="result"></div>
+
+  </div>  <script>
+    function calculateAnions() {
+      const acidN = parseFloat(document.getElementById('acidNormality').value);
+      const V1 = parseFloat(document.getElementById('volumePhenol').value);
+      const V2 = parseFloat(document.getElementById('volumeMethyl').value);
+      const sample1 = parseFloat(document.getElementById('volumeSample1').value);
+
+      const silverN = parseFloat(document.getElementById('silverNormality').value);
+      const Vag = parseFloat(document.getElementById('volumeAgNO3').value);
+      const sample2 = parseFloat(document.getElementById('volumeSample2').value);
+
+      if ([acidN, V1, V2, sample1, silverN, Vag, sample2].some(isNaN)) {
+        alert("لطفاً تمام مقادیر را به درستی وارد کنید.");
+        return;
+      }
+
+      const carbonate = (V1 * acidN * 1000) / sample1;
+      const bicarbonate = ((V2 - V1) * acidN * 1000) / sample1;
+      const chloride = (Vag * silverN * 1000) / sample2;
+
+      document.getElementById('result').innerHTML = `
+        <strong>نتایج:</strong><br>
+        غلظت کربنات (CO₃²⁻): <strong>${carbonate.toFixed(2)}</strong> meq/L<br>
+        غلظت بی‌کربنات (HCO₃⁻): <strong>${bicarbonate.toFixed(2)}</strong> meq/L<br>
+        غلظت کلر (Cl⁻): <strong>${chloride.toFixed(2)}</strong> meq/L
+      `;
+    }
+  </script></body>
+</html>

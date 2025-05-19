@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محاسبه غلظت کاتیون‌ها در محلول خاک</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Vazir', sans-serif;
+      background: #f4f7f8;
+      padding: 30px;
+      direction: rtl;
+      color: #333;
+     
+    }
+    h2 {
+      color: #2980b9;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+       display: flex;
+      align-items: center;
+      justify-content: center;
+    flex-direction: column;
+    }
+    label {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      padding: 12px;
+      width: 100%;
+      max-width: 300px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+    input:focus, select:focus {
+      border-color: #2980b9;
+      outline: none;
+    }
+    button {
+      margin: 20px;
+      padding: 12px 20px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #1c5980;
+    }
+    #result {
+      margin-top: 30px;
+      background: #ecf0f1;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>برنامه محاسبه غلظت کلسیم، منیزیم و SAR</h2>
+    <p>لطفاً مقادیر زیر را وارد کنید تا غلظت کلسیم، منیزیم و نرخ جذب سدیم (SAR) محاسبه شود.</p>
+    
+    <label>واحد نمایش نتایج:</label><br>
+    <select id="unitSelect">
+      <option value="meq">میلی اکی والان بر لیتر (meq/L)</option>
+      <option value="ppm">قسمت در میلیون (ppm)</option>
+    </select>
+    
+    <h3>ورودی‌های تیتراسیون:</h3>
+    
+    <label>حجم مصرفی EDTA برای کلسیم (ml):</label>
+    <input type="number" id="caVolume" step="0.01" min="0" placeholder="مثال: 5.00">
+    
+    <label>حجم مصرفی EDTA برای مجموع Ca + Mg (ml):</label>
+    <input type="number" id="caMgVolume" step="0.01" min="0" placeholder="مثال: 10.00">
+    
+    <label>نرمالیته EDTA:</label>
+    <input type="number" id="edtaNormality" step="0.01" value="0.01" min="0" placeholder="مثال: 0.01">
+    
+    <label>حجم نمونه خاک (ml):</label>
+    <input type="number" id="sampleVolume" step="0.1" value="5" min="0" placeholder="مثال: 5.0">
+    
+    <label>غلظت سدیم (ppm):</label>
+    <input type="number" id="naPpm" step="0.1" min="0" placeholder="مثال: 150.0">
+    
+    <div style="display: flex; justify-content: space-between;">
+      <button onclick="calculate()" style="flex: 1; margin-right: 10px;">محاسبه</button>
+      <button onclick="resetForm()" style="flex: 1;">ریست</button>
+    </div>
+
+    <div id="result"></div>
+  </div>
+</body>
+  
+  <script>
+    function calculate() {
+      const caVol = parseFloat(document.getElementById("caVolume").value);
+      const caMgVol = parseFloat(document.getElementById("caMgVolume").value);
+      const norm = parseFloat(document.getElementById("edtaNormality").value);
+      const sampleVol = parseFloat(document.getElementById("sampleVolume").value);
+      const naPpm = parseFloat(document.getElementById("naPpm").value);
+      const unit = document.getElementById("unitSelect").value;
+
+      if (isNaN(caVol) || isNaN(caMgVol) || isNaN(norm) || isNaN(sampleVol) ) {
+        alert("لطفاً تمام مقادیر ضروری را وارد کنید.");
+        return;
+      }
+
+      // محاسبه برحسب meq/L
+      const caMeq = (caVol * norm * 1000) / sampleVol;
+      const caMgMeq = (caMgVol * norm * 1000) / sampleVol;
+      const mgMeq = caMgMeq - caMeq;
+      const naMeq = naPpm / 23;
+
+      // محاسبه SAR
+      const sar = naMeq / Math.sqrt((caMeq + mgMeq) / 2);
+
+      let caFinal, mgFinal, naFinal, unitLabel;
+      if (unit === "ppm") {
+        caFinal = caMeq * 20;
+        mgFinal = mgMeq * 12.15;
+        naFinal = naPpm;
+        unitLabel = "ppm";
+      } else {
+        caFinal = caMeq;
+        mgFinal = mgMeq;
+        naFinal = naMeq;
+        unitLabel = "meq/L";
+      }
+
+      const resultHTML = `
+        <strong>نتایج نهایی:</strong><br>
+        کلسیم: ${caFinal.toFixed(2)} ${unitLabel}<br>
+        منیزیم: ${mgFinal.toFixed(2)} ${unitLabel}<br>
+        سدیم: ${naFinal.toFixed(2)} ${unitLabel}<br>
+        <br><strong>نرخ جذب سدیم (SAR):</strong> ${sar.toFixed(2)}
+      `;
+
+      document.getElementById("result").innerHTML = resultHTML;
+    }
+
+    function resetForm() {
+      document.getElementById("caVolume").value = '';
+      document.getElementById("caMgVolume").value = '';
+      document.getElementById("edtaNormality").value = '0.01';
+      document.getElementById("sampleVolume").value = '5';
+      document.getElementById("naPpm").value = '';
+      document.getElementById("result").innerHTML = '';
+      document.getElementById("unitSelect").selectedIndex = 0;
+    }
+  </script>
+</body>
+</html>

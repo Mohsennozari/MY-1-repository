@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <title>تعیین درصد اشباع و استخراج عصاره خاک</title>
+  <style>
+    body {
+      font-family: 'Vazirmatn',sans-serif;
+      background: #f0f4f8;
+      padding: 30px;
+      direction: rtl;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center;
+
+    }
+    div{
+        background-color: #ff9900;
+        border-radius: 20px;
+        margin: 10px;
+        padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    input, select {
+      padding: 10px;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      border: 1px solid #3498db;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 5px;
+    }
+
+    button {
+      padding: 12px 24px;
+      margin-top: 25px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #2c80b4;
+      transform: scale(1.05);
+    }
+
+    #result {
+      margin-top: 30px;
+      background: #eaf2f8;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .unit-label {
+      font-size: 0.9em;
+      color: #555;
+      display: inline-block;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <h2>تعیین درصد اشباع و تهیه عصاره خاک</h2>
+
+  <label>
+    وزن خالی بوته چینی (W₀):
+    <input type="number" id="emptyCrucible" step="0.01" placeholder="مثلاً 40">
+    <span class="unit-label"></span>
+  </label>
+
+  <label>
+    وزن بوته + خاک اشباع‌شده (W₁):
+    <input type="number" id="saturatedSoil" step="0.01" placeholder="مثلاً 90">
+    <span class="unit-label"></span>
+  </label>
+
+  <label>
+    وزن بوته + خاک خشک‌شده درآون (W₂):
+    <input type="number" id="driedSoil" step="0.01" placeholder="مثلاً 70">
+    <span class="unit-label"></span>
+  </label>
+
+  <label>
+    نسبت خاک به آب برای عصاره‌گیری:
+    <select id="ratio">
+      <option value="1">۱:۱</option>
+      <option value="2">۱:۲</option>
+      <option value="0.5">۲:۱</option>
+    </select>
+  </label>
+
+  <label>
+    مقدار خاک خشک برای تهیه عصاره:
+    <input type="number" id="extractSoil" step="0.1" placeholder="مثلاً 20">
+    <span class="unit-label"></span>
+  </label>
+
+  <button onclick="calculate()">محاسبه نتایج</button></div>
+
+  <div id="result"></div>
+
+  <script>
+    function calculate() {
+      const W0 = parseFloat(document.getElementById('emptyCrucible').value);
+      const W1 = parseFloat(document.getElementById('saturatedSoil').value);
+      const W2 = parseFloat(document.getElementById('driedSoil').value);
+      const ratio = parseFloat(document.getElementById('ratio').value);
+      const extractSoil = parseFloat(document.getElementById('extractSoil').value);
+
+      if (isNaN(W0) || isNaN(W1) || isNaN(W2) || W1 <= W0 || W2 <= W0 || W1 <= W2) {
+        alert("لطفاً مقادیر وزن‌ها را به‌درستی وارد کنید.");
+        return;
+      }
+
+      const W_dry = W2 - W0;
+      const W_water = W1 - W2;
+      const saturationPercent = (W_water / W_dry) * 100;
+      const extractWaterVolume = extractSoil * ratio;
+
+      const result = `
+        <strong>نتایج محاسبه:</strong><br>
+        وزن خاک خشک (W<sub>d</sub>): <strong>${W_dry.toFixed(2)} گرم</strong><br>
+        وزن آب اشباع (W<sub>water</sub>): <strong>${W_water.toFixed(2)} گرم</strong><br>
+        درصد اشباع خاک: <strong>${saturationPercent.toFixed(2)}%</strong><br>
+        مقدار آب مورد نیاز برای تهیه عصاره (بر اساس نسبت انتخابی): 
+        <strong>${extractWaterVolume.toFixed(2)} میلی‌لیتر</strong>
+      `;
+
+      document.getElementById('result').innerHTML = result;
+    }
+  </script>
+</body>
+</html>
