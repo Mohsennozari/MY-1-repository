@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <title>اندازه‌گیری آهک خاک به روش کلسیمتری</title>
+  <style>
+    body {
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      background: linear-gradient(145deg, #e8f0f7, #ffffff);
+      margin: 0;
+      padding: 40px;
+      direction: rtl;
+      color: #2c3e50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    h2 {
+      color: #ffc402;
+      font-size: 30px;
+      
+    }
+    .container {
+      max-width: 600px;
+      background: #02a799;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 8px 8px 20px #d1d9e6, -8px -8px 20px #ffffff;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #000000;
+    }
+    input {
+      width: 90%;
+      padding: 12px;
+      border-radius: 25px;
+      border: 1px solid #ffffff;
+      margin-top: 8px;
+      text-align: center;
+    }
+    button {
+        font-family: 'Vazirmatn', Tahoma, sans-serif;
+      margin-top: 30px;
+      width: 95%;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      background-color: #4c4e4e;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #2c80b4;
+      transform: scale(1.02);
+    }
+    .result {
+        font-family: 'Vazirmatn', Tahoma, sans-serif;
+      margin-top: 25px;
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>اندازه‌گیری مقدار آهک در خاک</h2>
+    <label>وزن خاک خشک (گرم): <input type="number" id="drySoil" step="0.01"></label>
+    <label>جرم آهک خالص مصرفی (گرم): <input type="number" id="pureLime" step="0.01"></label>
+    <label>حجم گاز CO₂ تولید شده از خاک (ml): <input type="number" id="soilCO2" step="0.01"></label>
+    <label>حجم گاز CO₂ تولید شده از آهک (ml): <input type="number" id="limeCO2" step="0.01"></label>
+
+    <button onclick="calculateCaCO3()">محاسبه مقدار CaCO₃</button>
+    <button onclick="resetFields()">تنظیم مجدد</button>
+    <div class="result" id="result"></div>
+  </div>
+  
+  <script>
+    function calculateCaCO3() {
+      const drySoil = parseFloat(document.getElementById('drySoil').value);
+      const pureLime = parseFloat(document.getElementById('pureLime').value);
+      const soilCO2 = parseFloat(document.getElementById('soilCO2').value);
+      const limeCO2 = parseFloat(document.getElementById('limeCO2').value);
+
+      if ([drySoil, pureLime, soilCO2, limeCO2].some(isNaN)) {
+        alert('لطفاً تمام مقادیر مورد نیاز را وارد کنید.');
+        return;
+      }
+
+      if (limeCO2 === 0) {
+        alert('حجم گاز CO₂ تولید شده از آهک نمی‌تواند صفر باشد.');
+        return;
+      }
+
+      const caCO3Grams = (soilCO2 / limeCO2) * pureLime;
+      const caCO3Percent = (caCO3Grams / drySoil) * 100;
+
+      let interpretation = '';
+      if (caCO3Percent < 2) interpretation = 'آهک کم';
+      else if (caCO3Percent < 8) interpretation = 'آهک متوسط';
+      else if (caCO3Percent < 15) interpretation = 'آهک زیاد';
+      else interpretation = 'آهک بسیار زیاد';
+
+      document.getElementById('result').innerHTML = `
+        <strong>نتایج:</strong><br>
+        جرم CaCO₃ در نمونه: <strong>${caCO3Grams.toFixed(3)} گرم</strong><br>
+        درصد CaCO₃: <strong>${caCO3Percent.toFixed(2)}%</strong><br>
+        <em>تفسیر: ${interpretation}</em>
+      `;
+    }
+
+    function resetFields() {
+      document.getElementById('drySoil').value = '';
+      document.getElementById('pureLime').value = '';
+      document.getElementById('soilCO2').value = '';
+      document.getElementById('limeCO2').value = '';
+      document.getElementById('result').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
