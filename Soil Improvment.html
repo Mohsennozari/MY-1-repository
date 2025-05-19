@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اصلاح وضعیت خاک</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: #eef2f7;
+      color: #333;
+      direction: rtl;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+    }
+    legend {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-top: 0.8rem;
+      font-weight: 500;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      align-items: end;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.8rem 1.2rem;
+      background: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1f2a38;
+    }
+    .button-group {
+      display: flex;
+      gap: 1rem;
+    }
+    .result {
+      margin-top: 2rem;
+      background: #f5faff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #cce0ff;
+    }
+    .section-title {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      color: #2c3e50;
+      border-bottom: 2px solid #2c3e50;
+      padding-bottom: 0.3rem;
+    }
+    #error {
+      color: red;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+    small {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    ul {
+      margin-top: 0.5rem;
+      padding-right: 1.5rem;
+    }
+    li {
+      margin-bottom: 0.5rem;
+    }
+    .priority-urgent { color: red; font-weight: bold; }
+    .priority-recommended { color: orange; }
+    .priority-optional { color: green; }
+  </style>
+</head>
+<body>
+  <header>برنامه اصلاح وضعیت خاک</header>
+  <div class="container">
+    <div id="error"></div>
+    <form id="evaluationForm">
+      <fieldset>
+        <legend>1. بافت خاک (%)</legend>
+        <div class="grid">
+          <div>
+            <label for="sand">درصد شن</label>
+            <input type="number" id="sand" step="0.1" required aria-label="درصد شن" aria-describedby="sandHelp">
+            <small id="sandHelp">بین 0 تا 100</small>
+          </div>
+          <div>
+            <label for="silt">درصد سیلت</label>
+            <input type="number" id="silt" step="0.1" required aria-label="درصد سیلت" aria-describedby="siltHelp">
+            <small id="siltHelp">بین 0 تا 100</small>
+          </div>
+          <div>
+            <label for="clay">درصد رس</label>
+            <input type="number" id="clay" step="0.1" required aria-label="درصد رس" aria-describedby="clayHelp">
+            <small id="clayHelp">بین 0 تا 100</small>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>2. جرم مخصوص ظاهری (g/cm³)</legend>
+        <input type="number" id="bulkDensity" step="0.01" required aria-label="جرم مخصوص ظاهری" aria-describedby="bulkHelp">
+        <small id="bulkHelp">معمولاً بین 0.5 تا 2.5</small>
+      </fieldset>
+      <fieldset>
+        <legend>3. درصد اشباع خاک (%)</legend>
+        <input type="number" id="saturation" step="0.1" required aria-label="درصد اشباع" aria-describedby="satHelp">
+        <small id="satHelp">بین 0 تا 100</small>
+      </fieldset>
+      <fieldset>
+        <legend>4. EC عصاره (dS/m)</legend>
+        <input type="number" id="ecValue" step="0.01" required aria-label="EC عصاره" aria-describedby="ecHelp">
+        <small id="ecHelp">معمولاً بین 0 تا 16</small>
+      </fieldset>
+      <fieldset>
+        <legend>5. pH عصاره</legend>
+        <input type="number" id="phValue" step="0.01" required aria-label="pH عصاره" aria-describedby="phHelp">
+        <small id="phHelp">بین 0 تا 14</small>
+      </fieldset>
+      <fieldset>
+        <legend>6. Na⁺</legend>
+        <div class="grid">
+          <div>
+            <label for="naValue">مقدار Na⁺</label>
+            <input type="number" id="naValue" step="0.01" required aria-label="مقدار سدیم">
+          </div>
+          <div>
+            <label for="naUnit">واحد</label>
+            <select id="naUnit" aria-label="واحد سدیم">
+              <option value="meq/L">meq/L</option>
+              <option value="ppm">ppm</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>7. Ca²⁺ و Mg²⁺</legend>
+        <div class="grid">
+          <div>
+            <label for="caValue">Ca²⁺</label>
+            <input type="number" id="caValue" step="0.01" required aria-label="مقدار کلسیم">
+            <select id="caUnit" aria-label="واحد کلسیم">
+              <option value="meq/L">meq/L</option>
+              <option value="ppm">ppm</option>
+            </select>
+          </div>
+          <div>
+            <label for="mgValue">Mg²⁺</label>
+            <input type="number" id="mgValue" step="0.01" required aria-label="مقدار منیزیم">
+            <select id="mgUnit" aria-label="واحد منیزیم">
+              <option value="meq/L">meq/L</option>
+              <option value="ppm">ppm</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>8. CO₃²⁻, HCO₃⁻, Cl⁻</legend>
+        <div class="grid">
+          <div>
+            <label for="co3Value">CO₃²⁻</label>
+            <input type="number" id="co3Value" step="0.01" required aria-label="مقدار کربنات">
+            <select id="co3Unit" aria-label="واحد کربنات">
+              <option value="meq/L">meq/L</option>
+              <option value="ppm">ppm</option>
+            </select>
+          </div>
+          <div>
+            <label for="hco3Value">HCO₃⁻</label>
+            <input type="number" id="hco3Value" step="0.01" required aria-label="مقدار بی‌کربنات">
+            <select id="hco3Unit" aria-label="واحد بی‌کربنات">
+              <option value="meq/L">meq/L</option>
+              <option value="ppm">ppm</option>
+            </select>
+          </div>
+          <div>
+            <label for="clValue">Cl⁻</label>
+            <input type="number" id="clValue" step="0.01" required aria-label="مقدار کلرید">
+            <select id="clUnit" aria-label="واحد کلرید">
+              <option value="meq/L">meq/L</option>
+              <option value="ppm">ppm</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>9. درصد CaCO₃ (روش کلسیمتری)</legend>
+        <input type="number" id="limePercent" step="0.01" required aria-label="درصد آهک" aria-describedby="limeHelp">
+        <small id="limeHelp">بین 0 تا 100</small>
+      </fieldset>
+      <fieldset>
+        <legend>10. ماده آلی (%)</legend>
+        <input type="number" id="organicMatter" step="0.01" required aria-label="ماده آلی" aria-describedby="omHelp">
+        <small id="omHelp">معمولاً بین 0 تا 20</small>
+      </fieldset>
+      <div class="button-group">
+        <button type="submit">ارزیابی و اصلاح خاک</button>
+        <button type="button" onclick="resetForm()">پاک کردن</button>
+        <button type="button" onclick="saveResults()">ذخیره نتایج</button>
+      </div>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById('evaluationForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      evaluateAndAmendSoil();
+    });
+
+    function evaluateAndAmendSoil() {
+      document.getElementById('error').textContent = '';
+
+      // دریافت ورودی‌ها
+      const sand = parseFloat(document.getElementById('sand').value);
+      const silt = parseFloat(document.getElementById('silt').value);
+      const clay = parseFloat(document.getElementById('clay').value);
+      const bulk = parseFloat(document.getElementById('bulkDensity').value);
+      const sat = parseFloat(document.getElementById('saturation').value);
+      const ec = parseFloat(document.getElementById('ecValue').value);
+      const ph = parseFloat(document.getElementById('phValue').value);
+      const naValue = parseFloat(document.getElementById('naValue').value);
+      const naUnit = document.getElementById('naUnit').value;
+      const caValue = parseFloat(document.getElementById('caValue').value);
+      const caUnit = document.getElementById('caUnit').value;
+      const mgValue = parseFloat(document.getElementById('mgValue').value);
+      const mgUnit = document.getElementById('mgUnit').value;
+      const co3Value = parseFloat(document.getElementById('co3Value').value);
+      const co3Unit = document.getElementById('co3Unit').value;
+      const hco3Value = parseFloat(document.getElementById('hco3Value').value);
+      const hco3Unit = document.getElementById('hco3Unit').value;
+      const clValue = parseFloat(document.getElementById('clValue').value);
+      const clUnit = document.getElementById('clUnit').value;
+      const lime = parseFloat(document.getElementById('limePercent').value);
+      const om = parseFloat(document.getElementById('organicMatter').value);
+
+      // اعتبارسنجی
+      const inputs = { sand, silt, clay, bulk, sat, ec, ph, naValue, caValue, mgValue, co3Value, hco3Value, clValue, lime, om };
+      if (Object.values(inputs).some(isNaN)) {
+        document.getElementById('error').textContent = 'لطفاً تمام فیلدها را با مقادیر معتبر پر کنید.';
+        return;
+      }
+      if (Math.abs(sand + silt + clay - 100) > 0.1) {
+        document.getElementById('error').textContent = 'درصد شن، سیلت و رس باید مجموعاً 100% باشد.';
+        return;
+      }
+      if (sand < 0 || sand > 100 || silt < 0 || silt > 100 || clay < 0 || clay > 100) {
+        document.getElementById('error').textContent = 'درصدها باید بین 0 و 100 باشند.';
+        return;
+      }
+      if (bulk < 0.5 || bulk > 2.5) {
+        document.getElementById('error').textContent = 'جرم مخصوص ظاهری باید بین 0.5 و 2.5 باشد.';
+        return;
+      }
+      if (sat < 0 || sat > 100) {
+        document.getElementById('error').textContent = 'درصد اشباع باید بین 0 و 100 باشد.';
+        return;
+      }
+      if (ec < 0 || ec > 50) {
+        document.getElementById('error').textContent = 'EC باید بین 0 و 50 باشد.';
+        return;
+      }
+      if (ph < 0 || ph > 14) {
+        document.getElementById('error').textContent = 'pH باید بین 0 و 14 باشد.';
+        return;
+      }
+      if (naValue < 0 || caValue < 0 || mgValue < 0 || co3Value < 0 || hco3Value < 0 || clValue < 0) {
+        document.getElementById('error').textContent = 'مقادیر یون‌ها نمی‌توانند منفی باشند.';
+        return;
+      }
+      if (lime < 0 || lime > 100) {
+        document.getElementById('error').textContent = 'درصد آهک باید بین 0 و 100 باشد.';
+        return;
+      }
+      if (om < 0 || om > 20) {
+        document.getElementById('error').textContent = 'ماده آلی باید بین 0 و 20 باشد.';
+        return;
+      }
+
+      // تبدیل واحدها به meq/L
+      const equivalentWeights = {
+        na: 23,
+        ca: 20,
+        mg: 12.15,
+        co3: 30,
+        hco3: 61,
+        cl: 35.45
+      };
+      const na = naUnit === 'ppm' ? naValue / equivalentWeights.na : naValue;
+      const ca = caUnit === 'ppm' ? caValue / equivalentWeights.ca : caValue;
+      const mg = mgUnit === 'ppm' ? mgValue / equivalentWeights.mg : mgValue;
+      const co3 = co3Unit === 'ppm' ? co3Value / equivalentWeights.co3 : co3Value;
+      const hco3 = hco3Unit === 'ppm' ? hco3Value / equivalentWeights.hco3 : hco3Value;
+      const cl = clUnit === 'ppm' ? clValue / equivalentWeights.cl : clValue;
+
+      // تحلیل بافت خاک (~100 دسته)
+      function getSoilTexture(sand, silt, clay) {
+        if (Math.abs(sand + silt + clay - 100) > 0.1) return 'نامعتبر';
+        let baseTexture = '';
+        let modifier = '';
+
+        // کلاس‌های اصلی USDA
+        if (clay >= 40 && silt <= 40) baseTexture = 'رس';
+        else if (sand >= 70 && clay <= 15) {
+          if (sand >= 90) baseTexture = 'شن';
+          else if (sand >= 80) baseTexture = 'شن لومی';
+          else baseTexture = 'شنی';
+        } else if (silt >= 80 && clay <= 12) baseTexture = 'سیلت';
+        else if (sand >= 52 && clay >= 7 && clay <= 27 && silt < 50) baseTexture = 'لوم شنی';
+        else if (silt >= 50 && clay <= 20 && sand < 50) baseTexture = 'لوم سیلتی';
+        else if (clay >= 27 && clay <= 40 && sand <= 45 && silt <= 50) baseTexture = 'لوم رسی';
+        else if (sand >= 45 && clay >= 20 && clay <= 35 && silt < 28) baseTexture = 'لوم شنی رسی';
+        else if (silt >= 28 && silt <= 50 && clay >= 20 && clay <= 35) baseTexture = 'لوم سیلتی رسی';
+        else if (sand >= 20 && sand <= 45 && clay >= 40 && silt < 28) baseTexture = 'رس شنی';
+        else if (silt >= 28 && silt <= 40 && clay >= 40) baseTexture = 'رس سیلتی';
+        else if (sand >= 43 && sand <= 52 && clay < 20 && silt < 50) baseTexture = 'لوم شنی ریز';
+        else baseTexture = 'لوم';
+
+        // افزودن جزئیات برای ~100 دسته
+        if (sand > 75 && baseTexture.includes('شنی')) modifier = sand > 85 ? 'بسیار شنی' : 'تمایل به شن';
+        else if (silt > 60 && baseTexture.includes('سیلتی')) modifier = silt > 75 ? 'بسیار سیلتی' : 'تمایل به سیلت';
+        else if (clay > 50 && baseTexture.includes('رس')) modifier = clay > 60 ? 'بسیار رسی' : 'تمایل به رس';
+        else if (baseTexture === 'لوم') {
+          if (sand > silt && sand > clay) modifier = 'تمایل به شن';
+          else if (silt > sand && silt > clay) modifier = 'تمایل به سیلت';
+          else if (clay > sand && clay > silt) modifier = 'تمایل به رس';
+        }
+
+        return modifier ? `${baseTexture} (${modifier})` : baseTexture;
+      }
+      const texture = getSoilTexture(sand, silt, clay);
+
+      // تحلیل و پیشنهادات اصلاح برای هر پارامتر
+      const parameterAnalyses = [];
+      const allAmendments = [];
+
+      // بافت خاک
+      let textureStatus = texture.includes('لوم') ? 'مناسب' : texture.includes('شنی') ? 'نیاز به بهبود ظرفیت نگهداری آب' : 'نیاز به بهبود زهکشی';
+      const textureAmendments = [];
+      if (texture.includes('رس')) textureAmendments.push({ text: 'افزودن 10-20 تن/هکتار ماده آلی یا شن برای بهبود زهکشی', priority: 'recommended' });
+      if (texture.includes('شن') && !texture.includes('لوم')) textureAmendments.push({ text: 'افزودن 15-25 تن/هکتار کمپوست یا ورمی‌کولیت برای افزایش ظرفیت نگهداری آب', priority: 'recommended' });
+      if (texture.includes('لوم')) textureAmendments.push({ text: 'بافت خاک مناسب است، نیازی به اصلاح خاص نیست.', priority: 'optional' });
+      parameterAnalyses.push(`بافت خاک: <strong>${texture}</strong> - ${textureStatus}<ul>${textureAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...textureAmendments);
+
+      // جرم مخصوص ظاهری
+      let bulkStatus = bulk >= 1.3 && bulk <= 1.6 ? 'مناسب' : bulk < 1.3 ? 'بسیار سبک' : 'فشرده';
+      const bulkAmendments = [];
+      if (bulk < 1) bulkAmendments.push({ text: 'افزودن 10-20 تن/هکتار ماده آلی برای کاهش فشردگی خاک', priority: 'urgent' });
+      else if (bulk > 1.6) bulkAmendments.push({ text: 'شخم‌زنی عمیق و افزودن 5-10 تن/هکتار ماده آلی برای کاهش فشردگی', priority: 'recommended' });
+      else bulkAmendments.push({ text: 'جرم مخصوص مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`جرم مخصوص ظاهری: <strong>${bulk.toFixed(2)} g/cm³</strong> - ${bulkStatus}<ul>${bulkAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...bulkAmendments);
+
+      // درصد اشباع
+      let satStatus = sat >= 40 && sat <= 60 ? 'مناسب' : sat < 40 ? 'خشک' : 'غرقابی';
+      const satAmendments = [];
+      if (sat < 20) satAmendments.push({ text: 'افزایش آبیاری برای رساندن درصد اشباع به 40-60% (50-100 لیتر/مترمربع)', priority: 'urgent' });
+      else if (sat < 40) satAmendments.push({ text: 'افزایش آبیاری ملایم (20-50 لیتر/مترمربع)', priority: 'recommended' });
+      else if (sat > 80) satAmendments.push({ text: 'بهبود زهکشی با ایجاد کانال یا افزودن شن (10 تن/هکتار)', priority: 'urgent' });
+      else if (sat > 60) satAmendments.push({ text: 'بهبود زهکشی با افزودن 5 تن/هکتار شن', priority: 'recommended' });
+      else satAmendments.push({ text: 'درصد اشباع مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`درصد اشباع: <strong>${sat.toFixed(1)}%</strong> - ${satStatus}<ul>${satAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...satAmendments);
+
+      // EC
+      let ecStatus = ec < 1 ? 'بسیار کم' : ec < 2 ? 'کم' : ec < 4 ? 'متوسط' : ec < 8 ? 'بالا' : 'بسیار بالا';
+      const ecAmendments = [];
+      if (ec > 4) {
+        const waterNeeded = ec * 10 * (texture.includes('رس') ? 1.5 : texture.includes('شنی') ? 0.5 : 1); // لیتر/مترمربع
+        ecAmendments.push({ text: `شستشوی خاک با ${waterNeeded.toFixed(1)} لیتر آب/مترمربع برای کاهش شوری`, priority: 'urgent' });
+      } else if (ec > 2) ecAmendments.push({ text: 'شستشوی خاک با 50 لیتر آب/مترمربع برای کاهش شوری متوسط', priority: 'recommended' });
+      else ecAmendments.push({ text: 'شوری خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`EC: <strong>${ec.toFixed(2)} dS/m</strong> - ${ecStatus}<ul>${ecAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...ecAmendments);
+
+      // pH
+      let phStatus = ph < 5.5 ? 'بسیار اسیدی' : ph < 6.5 ? 'اسیدی' : ph <= 7.5 ? 'خنثی' : ph < 8.5 ? 'قلیایی' : 'بسیار قلیایی';
+      const phAmendments = [];
+      if (ph < 6.5) {
+        const limeNeeded = (6.5 - ph) * 1.5 * bulk * 0.3; // تن/هکتار برای عمق 30 سانتی‌متر
+        phAmendments.push({ text: `افزودن ${limeNeeded.toFixed(1)} تن آهک در هکتار برای اصلاح pH`, priority: ph < 5.5 ? 'urgent' : 'recommended' });
+      } else if (ph > 7.5) {
+        const sulfurNeeded = (ph - 7.5) * 0.5 * bulk * 0.3; // تن/هکتار
+        phAmendments.push({ text: `افزودن ${sulfurNeeded.toFixed(1)} تن گوگرد در هکتار برای کاهش pH`, priority: ph > 8.5 ? 'urgent' : 'recommended' });
+      } else phAmendments.push({ text: 'pH خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`pH: <strong>${ph.toFixed(2)}</strong> - ${phStatus}<ul>${phAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...phAmendments);
+
+      // Na⁺ و SAR
+      const sar = na / Math.sqrt((ca + mg) / 2);
+      let sarStatus = sar < 5 ? 'بسیار کم' : sar < 13 ? 'کم' : sar < 26 ? 'متوسط' : sar < 40 ? 'بالا' : 'بسیار بالا';
+      const sarAmendments = [];
+      if (sar > 13) {
+        const gypsumNeeded = na * 0.234 * 0.3; // تن/هکتار گچ
+        sarAmendments.push({ text: `افزودن ${gypsumNeeded.toFixed(1)} تن گچ در هکتار برای کاهش سدیم`, priority: sar > 26 ? 'urgent' : 'recommended' });
+      } else sarAmendments.push({ text: 'سدیم خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`Na⁺: <strong>${na.toFixed(2)} meq/L (${(na * equivalentWeights.na).toFixed(2)} ppm)</strong> - ${na < 3 ? 'کم' : na < 10 ? 'متوسط' : 'بالا'}<ul><li>SAR: <strong>${sar.toFixed(2)}</strong> - ${sarStatus}</li>${sarAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...sarAmendments);
+
+      // Ca²⁺
+      let caStatus = ca < 2 ? 'بسیار کم' : ca < 5 ? 'کم' : ca < 15 ? 'مناسب' : 'بالا';
+      const caAmendments = [];
+      if (ca < 2) caAmendments.push({ text: 'افزودن 2-5 تن/هکتار گچ یا آهک برای افزایش کلسیم', priority: 'recommended' });
+      else caAmendments.push({ text: 'کلسیم خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`Ca²⁺: <strong>${ca.toFixed(2)} meq/L (${(ca * equivalentWeights.ca).toFixed(2)} ppm)</strong> - ${caStatus}<ul>${caAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...caAmendments);
+
+      // Mg²⁺
+      let mgStatus = mg < 1 ? 'بسیار کم' : mg < 3 ? 'کم' : mg < 10 ? 'مناسب' : 'بالا';
+      const mgAmendments = [];
+      if (mg < 1) mgAmendments.push({ text: 'افزودن 1-3 تن/هکتار سولفات منیزیم برای افزایش منیزیم', priority: 'recommended' });
+      else mgAmendments.push({ text: 'منیزیم خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`Mg²⁺: <strong>${mg.toFixed(2)} meq/L (${(mg * equivalentWeights.mg).toFixed(2)} ppm)</strong> - ${mgStatus}<ul>${mgAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...mgAmendments);
+
+      // CO₃²⁻
+      let co3Status = co3 < 0.5 ? 'کم' : co3 < 2 ? 'متوسط' : 'بالا';
+      const co3Amendments = [];
+      if (co3 > 2) co3Amendments.push({ text: 'افزودن 0.5-1 تن/هکتار گوگرد برای کاهش قلیائیت کربنات', priority: 'recommended' });
+      else co3Amendments.push({ text: 'کربنات خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`CO₃²⁻: <strong>${co3.toFixed(2)} meq/L (${(co3 * equivalentWeights.co3).toFixed(2)} ppm)</strong> - ${co3Status}<ul>${co3Amendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...co3Amendments);
+
+      // HCO₃⁻
+      let hco3Status = hco3 < 3 ? 'کم' : hco3 < 8 ? 'متوسط' : 'بالا';
+      const hco3Amendments = [];
+      if (hco3 > 8) hco3Amendments.push({ text: 'افزودن 0.5-1 تن/هکتار گوگرد برای کاهش قلیائیت بی‌کربنات', priority: 'recommended' });
+      else hco3Amendments.push({ text: 'بی‌کربنات خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`HCO₃⁻: <strong>${hco3.toFixed(2)} meq/L (${(hco3 * equivalentWeights.hco3).toFixed(2)} ppm)</strong> - ${hco3Status}<ul>${hco3Amendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...hco3Amendments);
+
+      // Cl⁻
+      let clStatus = cl < 5 ? 'کم' : cl < 10 ? 'متوسط' : 'بالا';
+      const clAmendments = [];
+      if (cl > 10) clAmendments.push({ text: 'شستشوی خاک با 50-100 لیتر آب/مترمربع برای کاهش کلرید', priority: cl > 20 ? 'urgent' : 'recommended' });
+      else clAmendments.push({ text: 'کلرید خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`Cl⁻: <strong>${cl.toFixed(2)} meq/L (${(cl * equivalentWeights.cl).toFixed(2)} ppm)</strong> - ${clStatus}<ul>${clAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...clAmendments);
+
+      // آهک
+      let limeStatus = lime < 2 ? 'کم' : lime < 8 ? 'مناسب' : 'بالا';
+      const limeAmendments = [];
+      if (lime > 20) limeAmendments.push({ text: 'افزودن 0.5-1 تن/هکتار گوگرد برای کاهش قلیائیت ناشی از آهک', priority: 'recommended' });
+      else limeAmendments.push({ text: 'آهک خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`درصد آهک: <strong>${lime.toFixed(2)}%</strong> - ${limeStatus}<ul>${limeAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...limeAmendments);
+
+      // ماده آلی
+      let omStatus = om < 1 ? 'بسیار کم' : om < 3 ? 'کم' : om < 5 ? 'مناسب' : 'بالا';
+      const omAmendments = [];
+      if (om < 3) omAmendments.push({ text: 'افزودن 10-20 تن/هکتار کمپوست یا کود دامی برای افزایش ماده آلی', priority: om < 1 ? 'urgent' : 'recommended' });
+      else omAmendments.push({ text: 'ماده آلی خاک مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`ماده آلی: <strong>${om.toFixed(2)}%</strong> - ${omStatus}<ul>${omAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...omAmendments);
+
+      // CEC
+      const cec = (clay * 0.5) + (om * 5);
+      let cecStatus = cec < 5 ? 'بسیار کم' : cec < 10 ? 'کم' : cec < 25 ? 'مناسب' : 'بالا';
+      const cecAmendments = [];
+      if (cec < 10) cecAmendments.push({ text: 'افزودن 10-15 تن/هکتار ماده آلی برای افزایش ظرفیت تبادل کاتیونی', priority: cec < 5 ? 'urgent' : 'recommended' });
+      else cecAmendments.push({ text: 'ظرفیت تبادل کاتیونی مناسب است، نیازی به اصلاح نیست.', priority: 'optional' });
+      parameterAnalyses.push(`CEC: <strong>${cec.toFixed(2)} meq/100g</strong> - ${cecStatus}<ul>${cecAmendments.map(a => `<li class="priority-${a.priority}">${a.text}</li>`).join('')}</ul>`);
+      allAmendments.push(...cecAmendments);
+
+      // تحلیل جامع
+      let overallScore = 0;
+      const weights = {
+        texture: texture.includes('لوم') ? 2 : texture.includes('شنی') || texture.includes('سیلتی') ? 1 : 0,
+        bulk: bulk >= 1.3 && bulk <= 1.6 ? 2 : bulk >= 1 && bulk <= 2 ? 1 : 0,
+        sat: sat >= 40 && sat <= 60 ? 2 : sat >= 20 && sat <= 80 ? 1 : 0,
+        ec: ec < 2 ? 2 : ec < 4 ? 1 : 0,
+        ph: ph >= 6.5 && ph <= 7.5 ? 2 : ph >= 5.5 && ph <= 8.5 ? 1 : 0,
+        na: na < 3 ? 2 : na < 10 ? 1 : 0,
+        ca: ca >= 5 && ca <= 15 ? 2 : ca >= 2 && ca <= 25 ? 1 : 0,
+        mg: mg >= 3 && mg <= 10 ? 2 : mg >= 1 && mg <= 20 ? 1 : 0,
+        co3: co3 < 0.5 ? 2 : co3 < 2 ? 1 : 0,
+        hco3: hco3 < 3 ? 2 : hco3 < 8 ? 1 : 0,
+        cl: cl < 5 ? 2 : cl < 10 ? 1 : 0,
+        lime: lime >= 2 && lime <= 8 ? 2 : lime >= 1 && lime <= 20 ? 1 : 0,
+        om: om >= 3 && om <= 5 ? 2 : om >= 1 && om <= 7 ? 1 : 0,
+        sar: sar < 13 ? 2 : sar < 26 ? 1 : 0,
+        cec: cec >= 10 && cec <= 25 ? 2 : cec >= 5 && cec <= 40 ? 1 : 0
+      };
+      overallScore = Object.values(weights).reduce((sum, score) => sum + score, 0);
+      const maxScore = Object.keys(weights).length * 2;
+      const overallInt = overallScore >= maxScore * 0.9 ? 'عالی' :
+                        overallScore >= maxScore * 0.7 ? 'خوب' :
+                        overallScore >= maxScore * 0.5 ? 'متوسط' :
+                        overallScore >= maxScore * 0.3 ? 'نیاز به اصلاح' : 'نامناسب';
+      let overallAnalysis = '';
+      switch (overallInt) {
+        case 'عالی': overallAnalysis = 'خاک در شرایط بسیار خوبی است و نیاز به اصلاح خاصی ندارد.'; break;
+        case 'خوب': overallAnalysis = 'خاک در شرایط مناسبی است، اما اصلاحات جزئی توصیه می‌شود.'; break;
+        case 'متوسط': overallAnalysis = 'خاک برای برخی محصولات مناسب است، اما اصلاحات توصیه می‌شود.'; break;
+        case 'نیاز به اصلاح': overallAnalysis = 'خاک دارای مشکلات متعددی است و نیاز به اصلاحات جدی دارد.'; break;
+        case 'نامناسب': overallAnalysis = 'خاک برای کشاورزی نامناسب است و نیاز به اصلاحات اساسی دارد.'; break;
+      }
+
+      // اولویت‌بندی پیشنهادات
+      const urgentAmendments = allAmendments.filter(a => a.priority === 'urgent');
+      const recommendedAmendments = allAmendments.filter(a => a.priority === 'recommended');
+      const optionalAmendments = allAmendments.filter(a => a.priority === 'optional');
+
+      // نمایش نتایج
+      const resultHTML = `
+        <div class="section-title">تحلیل و اصلاح هر پارامتر</div>
+        <ul>
+          ${parameterAnalyses.map(a => `<li>${a}</li>`).join('')}
+        </ul>
+        <div class="section-title">تحلیل جامع خاک</div>
+        <ul>
+          <li>وضعیت کلی: <strong>${overallInt}</strong> - ${overallAnalysis}</li>
+        </ul>
+        <div class="section-title">پیشنهادات اصلاحی اولویت‌بندی‌شده</div>
+        <h3>فوری:</h3>
+        <ul>${urgentAmendments.length ? urgentAmendments.map(a => `<li class="priority-urgent">${a.text}</li>`).join('') : '<li>هیچ پیشنهاد فوری وجود ندارد.</li>'}</ul>
+        <h3>توصیه‌شده:</h3>
+        <ul>${recommendedAmendments.length ? recommendedAmendments.map(a => `<li class="priority-recommended">${a.text}</li>`).join('') : '<li>هیچ پیشنهاد توصیه‌شده وجود ندارد.</li>'}</ul>
+        <h3>اختیاری:</h3>
+        <ul>${optionalAmendments.length ? optionalAmendments.map(a => `<li class="priority-optional">${a.text}</li>`).join('') : '<li>هیچ پیشنهاد اختیاری وجود ندارد.</li>'}</ul>
+      `;
+      document.getElementById('result').innerHTML = resultHTML;
+    }
+
+    function resetForm() {
+      document.getElementById('evaluationForm').reset();
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('error').textContent = '';
+    }
+
+    function saveResults() {
+      const result = document.getElementById('result').innerHTML;
+      localStorage.setItem('soilAmendment', result);
+      alert('نتایج ذخیره شد.');
+    }
+  </script>
+</body>
+</html>
