@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت مالی هوشمند کشاورزی</title>
+    <style>
+        /* CSS برای طراحی مدرن و کاربرپسند */
+        body {
+            font-family: 'IRANSans', Arial, sans-serif;
+            background: linear-gradient(to bottom, #dcedc8, #ffffff);
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+            font-size: 30px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+
+        select, input[type="text"], input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #f9f9f9;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        select:focus, input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            outline: none;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: none;
+            z-index: 10;
+        }
+
+        .form-group:hover .tooltip {
+            display: block;
+        }
+
+        button {
+            background: linear-gradient(to right, #4CAF50, #66BB6A);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            background: linear-gradient(to right, #45a049, #5cb85c);
+        }
+
+        #result, #history {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .history-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            transition: background 0.2s;
+        }
+
+        .history-item:hover {
+            background: #e8f5e9;
+        }
+
+        #chart-container {
+            margin-top: 30px;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .tab button {
+            background: #f9f9f9;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-size: 16px;
+            border-radius: 8px 8px 0 0;
+            transition: background 0.3s;
+        }
+
+        .tab button:hover {
+            background: #e0e0e0;
+        }
+
+        .tab button.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            button {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>مدیریت مالی هوشمند کشاورزی</h1>
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'income')">درآمد</button>
+            <button class="tablinks" onclick="openTab(event, 'expense')">هزینه</button>
+            <button class="tablinks" onclick="openTab(event, 'inventory')">موجودی</button>
+            <button class="tablinks" onclick="openTab(event, 'reports')">گزارش‌ها</button>
+        </div>
+
+        <!-- فرم درآمد -->
+        <div id="income" class="tabcontent">
+            <div class="form-group">
+                <label for="income-source">منبع درآمد (اجباری):</label>
+                <span class="tooltip">منبع درآمد مثل فروش محصول یا یارانه را انتخاب کنید</span>
+                <select id="income-source" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="فروش گندم">فروش گندم</option>
+                    <option value="فروش گوجه‌فرنگی">فروش گوجه‌فرنگی</option>
+                    <option value="فروش زعفران">فروش زعفران</option>
+                    <option value="فروش خیار">فروش خیار</option>
+                    <option value="فروش پسته">فروش پسته</option>
+                    <option value="فروش برنج">فروش برنج</option>
+                    <option value="یارانه دولتی">یارانه دولتی</option>
+                    <option value="سایر">سایر</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="income-amount">مبلغ (ریال، اجباری):</label>
+                <span class="tooltip">مبلغ درآمد را وارد کنید</span>
+                <input type="number" id="income-amount" min="0" placeholder="مثال: 5000000" required>
+            </div>
+            <div class="form-group">
+                <label for="income-date">تاریخ (اختیاری):</label>
+                <span class="tooltip">تاریخ دریافت درآمد را وارد کنید</span>
+                <input type="date" id="income-date">
+            </div>
+            <div class="form-group">
+                <label for="income-notes">یادداشت (اختیاری):</label>
+                <span class="tooltip">توضیحات اضافی مثل خریدار یا جزئیات</span>
+                <input type="text" id="income-notes" placeholder="مثال: فروش به تعاونی">
+            </div>
+            <button onclick="submitIncome()">ثبت درآمد</button>
+        </div>
+
+        <!-- فرم هزینه -->
+        <div id="expense" class="tabcontent" style="display: none;">
+            <div class="form-group">
+                <label for="expense-type">نوع هزینه (اجباری):</label>
+                <span class="tooltip">نوع هزینه مثل کود یا نیروی کار را انتخاب کنید</span>
+                <select id="expense-type" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="کود">کود</option>
+                    <option value="سم">سم</option>
+                    <option value="نیروی کار">نیروی کار</option>
+                    <option value="ماشین‌آلات">ماشین‌آلات</option>
+                    <option value="آبیاری">آبیاری</option>
+                    <option value="سایر">سایر</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="expense-amount">مبلغ (ریال، اجباری):</label>
+                <span class="tooltip">مبلغ هزینه را وارد کنید</span>
+                <input type="number" id="expense-amount" min="0" placeholder="مثال: 2000000" required>
+            </div>
+            <div class="form-group">
+                <label for="expense-date">تاریخ (اختیاری):</label>
+                <span class="tooltip">تاریخ پرداخت هزینه را وارد کنید</span>
+                <input type="date" id="expense-date">
+            </div>
+            <div class="form-group">
+                <label for="expense-notes">یادداشت (اختیاری):</label>
+                <span class="tooltip">توضیحات اضافی مثل فروشنده یا جزئیات</span>
+                <input type="text" id="expense-notes" placeholder="مثال: خرید کود از شرکت X">
+            </div>
+            <button onclick="submitExpense()">ثبت هزینه</button>
+        </div>
+
+        <!-- فرم موجودی -->
+        <div id="inventory" class="tabcontent" style="display: none;">
+            <div class="form-group">
+                <label for="inventory-type">نوع موجودی (اجباری):</label>
+                <span class="tooltip">نوع موجودی مثل محصول یا تجهیزات را انتخاب کنید</span>
+                <select id="inventory-type" required>
+                    <option value="">انتخاب کنید</option>
+                    <option value="گندم">گندم</option>
+                    <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+                    <option value="زعفران">زعفران</option>
+                    <option value="کود">کود</option>
+                    <option value="ماشین‌آلات">ماشین‌آلات</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inventory-quantity">مقدار (اجباری):</label>
+                <span class="tooltip">مقدار موجودی (مثل کیلوگرم یا تعداد) را وارد کنید</span>
+                <input type="number" id="inventory-quantity" min="0" placeholder="مثال: 1000" required>
+            </div>
+            <div class="form-group">
+                <label for="inventory-unit">واحد (اختیاری):</label>
+                <span class="tooltip">واحد موجودی مثل کیلوگرم یا عدد</span>
+                <input type="text" id="inventory-unit" placeholder="مثال: کیلوگرم">
+            </div>
+            <div class="form-group">
+                <label for="inventory-notes">یادداشت (اختیاری):</label>
+                <span class="tooltip">توضیحات اضافی مثل محل ذخیره</span>
+                <input type="text" id="inventory-notes" placeholder="مثال: انبار شماره 1">
+            </div>
+            <button onclick="submitInventory()">ثبت موجودی</button>
+        </div>
+
+        <!-- گزارش‌ها -->
+        <div id="reports" class="tabcontent" style="display: none;">
+            <h2>گزارش‌های مالی</h2>
+            <button onclick="generateBalanceSheet()">ترازنامه</button>
+            <button onclick="generateIncomeStatement()">صورت سود و زیان</button>
+            <button onclick="generateCashFlow()">صورت جریان نقدی</button>
+            <div id="result"></div>
+            <div id="chart-container"></div>
+        </div>
+
+        <div class="loader" id="loader">در حال پردازش...</div>
+        <div id="history">
+            <h2>تاریخچه تراکنش‌ها</h2>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // مدیریت تب‌ها
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // داده‌های نمونه برای تحلیل
+        const financialData = {
+            income: [],
+            expense: [],
+            inventory: [],
+            balanceSheet: { assets: 0, liabilities: 0, equity: 0 }
+        };
+
+        // ثبت درآمد
+        function submitIncome() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                processIncome();
+            }, 1000);
+        }
+
+        function processIncome() {
+            const source = document.getElementById('income-source').value;
+            const amount = document.getElementById('income-amount').value;
+            const date = document.getElementById('income-date').value || new Date().toLocaleDateString('fa-IR');
+            const notes = document.getElementById('income-notes').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!source || !amount) {
+                resultDiv.innerHTML = '<p style="color: red;">لطفاً منبع و مبلغ درآمد را وارد کنید.</p>';
+                return;
+            }
+
+            const income = { source, amount: parseFloat(amount), date, notes };
+            financialData.income.push(income);
+            financialData.balanceSheet.assets += parseFloat(amount);
+            financialData.balanceSheet.equity += parseFloat(amount);
+            saveData();
+            resultDiv.innerHTML = `<p style="color: green;">درآمد ${source} با مبلغ ${amount} ریال ثبت شد.</p>`;
+            displayHistory();
+        }
+
+        // ثبت هزینه
+        function submitExpense() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                processExpense();
+            }, 1000);
+        }
+
+        function processExpense() {
+            const type = document.getElementById('expense-type').value;
+            const amount = document.getElementById('expense-amount').value;
+            const date = document.getElementById('expense-date').value || new Date().toLocaleDateString('fa-IR');
+            const notes = document.getElementById('expense-notes').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!type || !amount) {
+                resultDiv.innerHTML = '<p style="color: red;">لطفاً نوع و مبلغ هزینه را وارد کنید.</p>';
+                return;
+            }
+
+            const expense = { type, amount: parseFloat(amount), date, notes };
+            financialData.expense.push(expense);
+            financialData.balanceSheet.assets -= parseFloat(amount);
+            financialData.balanceSheet.equity -= parseFloat(amount);
+            saveData();
+            resultDiv.innerHTML = `<p style="color: green;">هزینه ${type} با مبلغ ${amount} ریال ثبت شد.</p>`;
+            displayHistory();
+        }
+
+        // ثبت موجودی
+        function submitInventory() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                processInventory();
+            }, 1000);
+        }
+
+        function processInventory() {
+            const type = document.getElementById('inventory-type').value;
+            const quantity = document.getElementById('inventory-quantity').value;
+            const unit = document.getElementById('inventory-unit').value || 'نامشخص';
+            const notes = document.getElementById('inventory-notes').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!type || !quantity) {
+                resultDiv.innerHTML = '<p style="color: red;">لطفاً نوع و مقدار موجودی را وارد کنید.</p>';
+                return;
+            }
+
+            const inventory = { type, quantity: parseFloat(quantity), unit, notes, date: new Date().toLocaleDateString('fa-IR') };
+            financialData.inventory.push(inventory);
+            saveData();
+            resultDiv.innerHTML = `<p style="color: green;">موجودی ${type} با مقدار ${quantity} ${unit} ثبت شد.</p>`;
+            displayHistory();
+        }
+
+        // ذخیره داده‌ها در LocalStorage
+        function saveData() {
+            localStorage.setItem('financialData', JSON.stringify(financialData));
+        }
+
+        // نمایش تاریخچه تراکنش‌ها
+        function displayHistory() {
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = '';
+            financialData.income.forEach(item => {
+                historyList.innerHTML += `
+                    <div class="history-item">
+                        <p><strong>نوع:</strong> درآمد - ${item.source}</p>
+                        <p><strong>مبلغ:</strong> ${item.amount} ریال</p>
+                        <p><strong>تاریخ:</strong> ${item.date}</p>
+                        <p><strong>یادداشت:</strong> ${item.notes || 'نامشخص'}</p>
+                    </div>
+                `;
+            });
+            financialData.expense.forEach(item => {
+                historyList.innerHTML += `
+                    <div class="history-item">
+                        <p><strong>نوع:</strong> هزینه - ${item.type}</p>
+                        <p><strong>مبلغ:</strong> ${item.amount} ریال</p>
+                        <p><strong>تاریخ:</strong> ${item.date}</p>
+                        <p><strong>یادداشت:</strong> ${item.notes || 'نامشخص'}</p>
+                    </div>
+                `;
+            });
+            financialData.inventory.forEach(item => {
+                historyList.innerHTML += `
+                    <div class="history-item">
+                        <p><strong>نوع:</strong> موجودی - ${item.type}</p>
+                        <p><strong>مقدار:</strong> ${item.quantity} ${item.unit}</p>
+                        <p><strong>تاریخ:</strong> ${item.date}</p>
+                        <p><strong>یادداشت:</strong> ${item.notes || 'نامشخص'}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // تولید ترازنامه
+        function generateBalanceSheet() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3>ترازنامه</h3>
+                <p><strong>دارایی‌ها:</strong> ${financialData.balanceSheet.assets} ریال</p>
+                <p><strong>بدهی‌ها:</strong> ${financialData.balanceSheet.liabilities} ریال</p>
+                <p><strong>حقوق صاحبان سهام:</strong> ${financialData.balanceSheet.equity} ریال</p>
+            `;
+            drawBalanceChart();
+        }
+
+        // تولید صورت سود و زیان
+        function generateIncomeStatement() {
+            const totalIncome = financialData.income.reduce((sum, item) => sum + item.amount, 0);
+            const totalExpense = financialData.expense.reduce((sum, item) => sum + item.amount, 0);
+            const profit = totalIncome - totalExpense;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3>صورت سود و زیان</h3>
+                <p><strong>کل درآمدها:</strong> ${totalIncome} ریال</p>
+                <p><strong>کل هزینه‌ها:</strong> ${totalExpense} ریال</p>
+                <p><strong>سود/زیان:</strong> ${profit} ریال</p>
+            `;
+            drawProfitChart(totalIncome, totalExpense, profit);
+        }
+
+        // تولید صورت جریان نقدی
+        function generateCashFlow() {
+            const totalIncome = financialData.income.reduce((sum, item) => sum + item.amount, 0);
+            const totalExpense = financialData.expense.reduce((sum, item) => sum + item.amount, 0);
+            const cashFlow = totalIncome - totalExpense;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <h3>صورت جریان نقدی</h3>
+                <p><strong>جریان نقدی ورودی:</strong> ${totalIncome} ریال</p>
+                <p><strong>جریان نقدی خروجی:</strong> ${totalExpense} ریال</p>
+                <p><strong>جریان نقدی خالص:</strong> ${cashFlow} ریال</p>
+            `;
+            drawCashFlowChart(totalIncome, totalExpense, cashFlow);
+        }
+
+        // نمودار ترازنامه
+        function drawBalanceChart() {
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.innerHTML = '<canvas id="balanceChart"></canvas>';
+            const ctx = document.getElementById('balanceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['دارایی‌ها', 'بدهی‌ها', 'حقوق صاحبان سهام'],
+                    datasets: [{
+                        label: 'ترازنامه',
+                        data: [
+                            financialData.balanceSheet.assets,
+                            financialData.balanceSheet.liabilities,
+                            financialData.balanceSheet.equity
+                        ],
+                        backgroundColor: ['#4CAF50', '#FF5722', '#2196F3'],
+                        borderColor: ['#388E3C', '#D32F2F', '#1976D2'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'مبلغ (ریال)' } } },
+                    plugins: { title: { display: true, text: 'ترازنامه مالی' } }
+                }
+            });
+        }
+
+        // نمودار سود و زیان
+        function drawProfitChart(totalIncome, totalExpense, profit) {
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.innerHTML = '<canvas id="profitChart"></canvas>';
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['درآمدها', 'هزینه‌ها', 'سود/زیان'],
+                    datasets: [{
+                        label: 'صورت سود و زیان',
+                        data: [totalIncome, totalExpense, profit],
+                        backgroundColor: ['#4CAF50', '#FF5722', profit >= 0 ? '#2196F3' : '#F44336'],
+                        borderColor: ['#388E3C', '#D32F2F', profit >= 0 ? '#1976D2' : '#D32F2F'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'مبلغ (ریال)' } } },
+                    plugins: { title: { display: true, text: 'صورت سود و زیان' } }
+                }
+            });
+        }
+
+        // نمودار جریان نقدی
+        function drawCashFlowChart(totalIncome, totalExpense, cashFlow) {
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.innerHTML = '<canvas id="cashFlowChart"></canvas>';
+            const ctx = document.getElementById('cashFlowChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ورودی نقدی', 'خروجی نقدی', 'جریان نقدی خالص'],
+                    datasets: [{
+                        label: 'صورت جریان نقدی',
+                        data: [totalIncome, totalExpense, cashFlow],
+                        backgroundColor: ['#4CAF50', '#FF5722', cashFlow >= 0 ? '#2196F3' : '#F44336'],
+                        borderColor: ['#388E3C', '#D32F2F', cashFlow >= 0 ? '#1976D2' : '#D32F2F'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'مبلغ (ریال)' } } },
+                    plugins: { title: { display: true, text: 'صورت جریان نقدی' } }
+                }
+            });
+        }
+
+        // بارگذاری داده‌ها در شروع
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedData = JSON.parse(localStorage.getItem('financialData'));
+            if (savedData) {
+                financialData.income = savedData.income || [];
+                financialData.expense = savedData.expense || [];
+                financialData.inventory = savedData.inventory || [];
+                financialData.balanceSheet = savedData.balanceSheet || { assets: 0, liabilities: 0, equity: 0 };
+            }
+            displayHistory();
+            document.getElementsByClassName('tabcontent')[0].style.display = 'block';
+        });
+    </script>
+</body>
+</html>

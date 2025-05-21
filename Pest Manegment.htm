@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <title>مدیریت هوشمند آفات کشاورزی</title>
+    <style>
+        /* CSS برای طراحی مدرن و کاربرپسند */
+        *{
+             font-family: 'Vazirmatn',sans-serif;
+        }
+        body {
+            font-family: 'Vazirmatn',sans-serif;
+            background: linear-gradient(to bottom, #c8e6c9, #ffffff);
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+
+        select, input[type="text"], input[type="number"], input[type="file"] {
+            width: 90%;
+            padding: 10px;
+            margin: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #f9f9f9;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: none;
+        }
+
+        .form-group:hover .tooltip {
+            display: block;
+        }
+
+        button {
+            background: linear-gradient(to right, #085f0b, #66BB6A);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            background: linear-gradient(to right, #45a049, #5cb85c);
+        }
+
+        #result, #history {
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #a4a4a4;
+        }
+
+        #preview {
+            max-width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            display: none;
+        }
+
+        .history-item {
+            border-bottom: 1px solid #ffb300;
+            padding: 15px 0;
+            transition: background 0.2s;
+        }
+
+        .history-item:hover {
+            background: #ffb300;
+            border-radius: 20px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #chart-container {
+            margin-top: 25px;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            button {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>مدیریت هوشمند آفات کشاورزی</h1>
+        <div class="form-group">
+            <label for="crop">محصول (اجباری):</label>
+            <span class="tooltip">محصول کشت‌شده را انتخاب کنید</span>
+            <select id="crop" required>
+                <option value="">انتخاب کنید</option>
+                <option value="گندم">گندم</option>
+                <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+                <option value="زعفران">زعفران</option>
+                <option value="خیار">خیار</option>
+                <option value="پسته">پسته</option>
+                <option value="برنج">برنج</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="symptoms">علائم آفت (اختیاری):</label>
+            <span class="tooltip">علائم مشاهده‌شده را انتخاب یا توضیح دهید</span>
+            <select id="symptoms">
+                <option value="">انتخاب کنید یا توضیح دهید</option>
+                <option value="زرد شدن برگ‌ها">زرد شدن برگ‌ها</option>
+                <option value="سوراخ روی برگ">سوراخ روی برگ</option>
+                <option value="حشرات روی گیاه">حشرات روی گیاه</option>
+                <option value="رشد ضعیف گیاه">رشد ضعیف گیاه</option>
+                <option value="لکه‌های قارچی">لکه‌های قارچی</option>
+            </select>
+            <input type="text" id="custom-symptoms" placeholder="یا توضیحات خود را وارد کنید">
+        </div>
+        <div class="form-group">
+            <label for="severity">شدت آفت (درصد گیاهان آلوده، اختیاری):</label>
+            <span class="tooltip">درصد تقریبی گیاهان آلوده را وارد کنید</span>
+            <input type="number" id="severity" min="0" max="100" placeholder="مثال: 20">
+        </div>
+        <div class="form-group">
+            <label for="location">منطقه (اختیاری):</label>
+            <span class="tooltip">نام شهر یا منطقه را وارد کنید</span>
+            <input type="text" id="location" placeholder="مثال: یزد، مازندران" list="locations">
+            <datalist id="locations">
+                <option value="یزد">
+                <option value="مازندران">
+                <option value="فارس">
+                <option value="خراسان رضوی">
+            </datalist>
+        </div>
+        <div class="form-group">
+            <label>داده‌های محیطی (اختیاری):</label>
+            <span class="tooltip">اطلاعات محیطی را برای تحلیل دقیق‌تر وارد کنید</span>
+            <input type="number" id="temperature" placeholder="دما (درجه سانتی‌گراد، مثال: 25)" min="-10" max="50">
+            <input type="number" id="humidity" placeholder="رطوبت (درصد، مثال: 60)" min="0" max="100">
+            <input type="number" id="soilPH" placeholder="pH خاک (مثال: 6.5)" min="0" max="14" step="0.1">
+        </div>
+        <div class="form-group">
+            <label for="image">آپلود تصویر گیاه (اختیاری):</label>
+            <span class="tooltip">تصویر گیاه آلوده را آپلود کنید</span>
+            <input type="file" id="image" accept="image/*">
+            <img id="preview" alt="پیش‌نمایش تصویر">
+        </div>
+        <button onclick="submitReport()">ثبت گزارش</button>
+        <div class="loader" id="loader">در حال تحلیل...</div>
+        <div id="result"></div>
+        <div id="chart-container"></div>
+        <div id="history">
+            <h2>تاریخچه گزارش‌ها</h2>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // بانک اطلاعات آفات (10 آفت نمونه)
+        const pestDatabase = [
+            {
+                crop: "گندم",
+                symptom: "زرد شدن برگ‌ها",
+                pest: "شته",
+                description: "شته‌ها حشرات کوچکی هستند که از شیره گیاه تغذیه می‌کنند و باعث زردی و ضعف گیاه می‌شوند.",
+                control: [
+                    "شیمیایی: سم مالاتیون (1 لیتر/هکتار، زمان‌بندی: صبح زود).",
+                    "بیولوژیک: استفاده از کفشدوزک یا زنبور پارازیتوئید.",
+                    "فرهنگی: تناوب زراعی و حذف علف‌های هرز."
+                ],
+                severityImpact: "بالا: بیش از 20% آلودگی نیاز به اقدام فوری دارد.",
+                envImpact: {
+                    temperature: "دمای بالای 25 درجه گسترش شته را افزایش می‌دهد.",
+                    humidity: "رطوبت بالای 70% احتمال شیوع را بیشتر می‌کند.",
+                    soilPH: "pH خاک بین 6-7 مناسب برای شته است."
+                }
+            },
+            {
+                crop: "گوجه‌فرنگی",
+                symptom: "سوراخ روی برگ",
+                pest: "سوسک کلرادو",
+                description: "سوسک کلرادو با جویدن برگ‌ها باعث سوراخ‌های مشخص می‌شود.",
+                control: [
+                    "شیمیایی: سم ایمیداکلوپرید (0.5 لیتر/هکتار).",
+                    "مکانیکی: جمع‌آوری دستی سوسک‌ها در صبح.",
+                    "فرهنگی: کاشت گیاهان تله مانند بادمجان."
+                ],
+                severityImpact: "متوسط: 10-30% آلودگی قابل کنترل است.",
+                envImpact: {
+                    temperature: "دمای 20-30 درجه برای فعالیت سوسک ایده‌آل است.",
+                    humidity: "رطوبت متوسط (40-60%) مناسب است.",
+                    soilPH: "pH خاک تأثیری ندارد."
+                }
+            },
+            {
+                crop: "زعفران",
+                symptom: "حشرات روی گیاه",
+                pest: "کنه قرمز",
+                description: "کنه‌های قرمز باعث کاهش رشد و کیفیت محصول زعفران می‌شوند.",
+                control: [
+                    "شیمیایی: سم آبامکتین (0.3 لیتر/هکتار).",
+                    "بیولوژیک: استفاده از کنه‌های شکارگر.",
+                    "فرهنگی: افزایش رطوبت مزرعه با آبیاری منظم."
+                ],
+                severityImpact: "بالا: بیش از 15% آلودگی خطرناک است.",
+                envImpact: {
+                    temperature: "دمای بالای 30 درجه گسترش کنه را تسریع می‌کند.",
+                    humidity: "رطوبت پایین (زیر 50%) خطر را افزایش می‌دهد.",
+                    soilPH: "pH خاک 6.5-8 برای کنه مناسب است."
+                }
+            },
+            {
+                crop: "خیار",
+                symptom: "رشد ضعیف گیاه",
+                pest: "تریپس",
+                description: "تریپس‌ها باعث نقره‌ای شدن برگ‌ها و کاهش رشد خیار می‌شوند.",
+                control: [
+                    "شیمیایی: سم اسپینوساد (0.4 لیتر/هکتار).",
+                    "بیولوژیک: استفاده از شکارگرهای طبیعی مانند Orius.",
+                    "فرهنگی: حذف علف‌های هرز اطراف مزرعه."
+                ],
+                severityImpact: "متوسط: 10-20% آلودگی نیاز به بررسی دارد.",
+                envImpact: {
+                    temperature: "دمای 25-35 درجه برای تریپس مناسب است.",
+                    humidity: "رطوبت بالا (بیش از 60%) خطر را کاهش می‌دهد.",
+                    soilPH: "pH خاک تأثیری ندارد."
+                }
+            },
+            {
+                crop: "پسته",
+                symptom: "حشرات روی گیاه",
+                pest: "سن پسته",
+                description: "سن پسته به میوه‌ها آسیب می‌رساند و کیفیت محصول را کاهش می‌دهد.",
+                control: [
+                    "شیمیایی: سم دیازینون (1.5 لیتر/هکتار).",
+                    "مکانیکی: نصب تله‌های چسبناک.",
+                    "فرهنگی: برداشت زودهنگام میوه‌ها."
+                ],
+                severityImpact: "بالا: بیش از 10% آلودگی به محصول آسیب جدی می‌زند.",
+                envImpact: {
+                    temperature: "دمای 25-35 درجه برای سن پسته ایده‌آل است.",
+                    humidity: "رطوبت پایین خطر را افزایش می‌دهد.",
+                    soilPH: "pH خاک تأثیری ندارد."
+                }
+            },
+            {
+                crop: "گندم",
+                symptom: "سوراخ روی برگ",
+                pest: "ملخ",
+                description: "ملخ‌ها با جویدن برگ‌ها باعث خسارت گسترده به گندم می‌شوند.",
+                control: [
+                    "شیمیایی: سم کلرپیریفوس (1 لیتر/هکتار).",
+                    "بیولوژیک: استفاده از پرندگان شکارگر.",
+                    "فرهنگی: کاشت گیاهان مقاوم در اطراف."
+                ],
+                severityImpact: "شدید: بیش از 5% آلودگی نیاز به اقدام فوری دارد.",
+                envImpact: {
+                    temperature: "دمای 20-30 درجه برای ملخ مناسب است.",
+                    humidity: "رطوبت پایین خطر را افزایش می‌دهد.",
+                    soilPH: "pH خاک تأثیری ندارد."
+                }
+            },
+            {
+                crop: "گوجه‌فرنگی",
+                symptom: "زرد شدن برگ‌ها",
+                pest: "ماینر برگ",
+                description: "ماینر برگ تونل‌هایی در برگ ایجاد می‌کند که باعث زردی می‌شود.",
+                control: [
+                    "شیمیایی: سم ابامکتین (0.3 لیtrx/هکتار).",
+                    "مکانیکی: حذف برگ‌های آلوده.",
+                    "فرهنگی: تناوب زراعی."
+                ],
+                severityImpact: "متوسط: 15-25% آلودگی قابل کنترل است.",
+                envImpact: {
+                    temperature: "دمای 20-30 درجه برای ماینر مناسب است.",
+                    humidity: "رطوبت بالا خطر را افزایش می‌دهد.",
+                    soilPH: "pH خاک تأثیری ندارد."
+                }
+            },
+            {
+                crop: "زعفران",
+                symptom: "رشد ضعیف گیاه",
+                pest: "قارچ ریشه",
+                description: "قارچ‌های ریشه باعث پوسیدگی ریشه و کاهش رشد زعفران می‌شوند.",
+                control: [
+                    "شیمیایی: قارچ‌کش مانکوزب (2 کیلوگرم/هکتار).",
+                    "فرهنگی: بهبود زهکشی خاک.",
+                    "بیولوژیک: استفاده از قارچ‌های مفید مثل تریکودرما."
+                ],
+                severityImpact: "بالا: بیش از 10% آلودگی خطرناک است.",
+                envImpact: {
+                    temperature: "دمای 15-25 درجه برای قارچ مناسب است.",
+                    humidity: "رطوبت بالای 80% خطر را افزایش می‌دهد.",
+                    soilPH: "pH خاک زیر 6 خطر قارچ را بیشتر می‌کند."
+                }
+            },
+            {
+                crop: "برنج",
+                symptom: "لکه‌های قارچی",
+                pest: "بلاست برنج",
+                description: "بلاست برنج لکه‌های قهوه‌ای روی برگ و ساقه ایجاد می‌کند.",
+                control: [
+                    "شیمیایی: قارچ‌کش پروپیکونازول.",
+                    "فرهنگی: کاهش تراکم کاشت.",
+                    "بیولوژیک: استفاده از باکتری‌های مفید."
+                ],
+                severityImpact: "شدید: بیش از 10% آلودگی به محصول آسیب جدی می‌زند.",
+                envImpact: {
+                    temperature: "دمای 20-30 درجه برای بلاست مناسب است.",
+                    humidity: "رطوبت بالای 85% خطر را افزایش می‌دهد.",
+                    soilPH: "pH خاک 5.5-7 برای بلاست مناسب است."
+                }
+            },
+            {
+                crop: "خیار",
+                symptom: "زرد شدن برگ‌ها",
+                pest: "ویروس موزاییک",
+                description: "ویروس موزاییک باعث زردی و پیچ‌خوردگی برگ‌های خیار می‌شود.",
+                control: [
+                    "شیمیایی: کنترل ناقلین (مثل شته) با سموم مناسب.",
+                    "فرهنگی: حذف گیاهان آلوده.",
+                    "بیولوژیک: استفاده از ارقام مقاوم."
+                ],
+                severityImpact: "بالا: بیش از 15% آلودگی خطرناک است.",
+                envImpact: {
+                    temperature: "دمای 20-30 درجه برای ویروس مناسب است.",
+                    humidity: "رطوبت بالا انتقال ویروس را تسریع می‌کند.",
+                    soilPH: "pH خاک تأثیری ندارد."
+                }
+            }
+        ];
+
+        // مدیریت آپلود تصویر
+        document.getElementById('image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('preview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // ثبت گزارش
+        function submitReport() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                processReport();
+            }, 1000); // انیمیشن لودینگ
+        }
+
+        function processReport() {
+            const crop = document.getElementById('crop').value;
+            const symptoms = document.getElementById('symptoms').value || document.getElementById('custom-symptoms').value;
+            const severity = document.getElementById('severity').value;
+            const location = document.getElementById('location').value;
+            const temperature = document.getElementById('temperature').value;
+            const humidity = document.getElementById('humidity').value;
+            const soilPH = document.getElementById('soilPH').value;
+            const image = document.getElementById('image').files[0];
+            const resultDiv = document.getElementById('result');
+
+            if (!crop) {
+                resultDiv.innerHTML = '<p style="color: red;">لطفاً محصول را انتخاب کنید.</p>';
+                return;
+            }
+
+            // جستجو در بانک آفات
+            let pest = pestDatabase.find(p => p.crop === crop && (!symptoms || p.symptom === symptoms));
+            if (!pest && symptoms) {
+                pest = pestDatabase.find(p => p.crop === crop); // آفت عمومی‌تر
+            }
+
+            let resultHTML = '';
+            if (pest) {
+                resultHTML = `
+                    <h3>نتیجه تحلیل:</h3>
+                    <p><strong>آفت شناسایی‌شده:</strong> ${pest.pest} (احتمال: ${symptoms ? '90%' : '70%'})</p>
+                    <p><strong>توضیحات:</strong> ${pest.description}</p>
+                    <p><strong>روش‌های کنترلی:</strong></p>
+                    <ul>${pest.control.map(c => `<li>${c}</li>`).join('')}</ul>
+                    <p><strong>تأثیر شدت:</strong> ${pest.severityImpact}</p>
+                `;
+                if (severity) {
+                    resultHTML += `<p><strong>شدت گزارش‌شده:</strong> ${severity}%</p>`;
+                    if (severity > 20) {
+                        resultHTML += `<p style="color: red;"><strong>هشدار:</strong> شدت آفت بالاست، فوراً اقدام کنید!</p>`;
+                    }
+                }
+                if (location) {
+                    resultHTML += `<p><strong>منطقه:</strong> ${location}</p>`;
+                }
+                // تحلیل داده‌های محیطی
+                if (temperature || humidity || soilPH) {
+                    resultHTML += `<p><strong>تحلیل شرایط محیطی:</strong></p>`;
+                    if (temperature) {
+                        resultHTML += `<p>دما: ${temperature}°C - ${pest.envImpact.temperature}</p>`;
+                    }
+                    if (humidity) {
+                        resultHTML += `<p>رطوبت: ${humidity}% - ${pest.envImpact.humidity}</p>`;
+                    }
+                    if (soilPH) {
+                        resultHTML += `<p>pH خاک: ${soilPH} - ${pest.envImpact.soilPH}</p>`;
+                    }
+                }
+                // تقویم پیشنهادی
+                resultHTML += `
+                    <p><strong>تقویم پیشنهادی:</strong></p>
+                    <ul>
+                        <li>اقدام فوری: بررسی مزرعه و اعمال روش کنترلی در 1-2 روز آینده.</li>
+                        <li>پیگیری: بررسی مجدد پس از 7 روز.</li>
+                    </ul>
+                `;
+            } else {
+                resultHTML = `
+                    <p style="color: red;">آفتی با این مشخصات یافت نشد.</p>
+                    <p>لطفاً اطلاعات بیشتری وارد کنید یا با کارشناس تماس بگیرید.</p>
+                `;
+            }
+
+            resultDiv.innerHTML = resultHTML;
+
+            // ذخیره گزارش
+            saveReport(crop, symptoms, severity, location, temperature, humidity, soilPH, pest ? pest.pest : 'ناشناخته');
+            if (severity) {
+                drawCharts(crop, severity, temperature, humidity, soilPH);
+            }
+        }
+
+        // ذخیره گزارش در LocalStorage
+        function saveReport(crop, symptoms, severity, location, temperature, humidity, soilPH, pest) {
+            const reports = JSON.parse(localStorage.getItem('pestReports') || '[]');
+            const report = {
+                crop,
+                symptoms: symptoms || 'نامشخص',
+                severity: severity || 'نامشخص',
+                location: location || 'نامشخص',
+                temperature: temperature || 'نامشخص',
+                humidity: humidity || 'نامشخص',
+                soilPH: soilPH || 'نامشخص',
+                pest,
+                date: new Date().toLocaleString('fa-IR')
+            };
+            reports.push(report);
+            localStorage.setItem('pestReports', JSON.stringify(reports));
+            displayHistory();
+        }
+
+        // نمایش تاریخچه گزارش‌ها
+        function displayHistory() {
+            const historyList = document.getElementById('history-list');
+            const reports = JSON.parse(localStorage.getItem('pestReports') || '[]');
+            historyList.innerHTML = '';
+            reports.forEach(report => {
+                historyList.innerHTML += `
+                    <div class="history-item">
+                        <p><strong>محصول:</strong> ${report.crop}</p>
+                        <p><strong>علائم:</strong> ${report.symptoms}</p>
+                        <p><strong>آفت:</strong> ${report.pest}</p>
+                        <p><strong>شدت:</strong> ${report.severity}%</p>
+                        <p><strong>منطقه:</strong> ${report.location}</p>
+                        <p><strong>دما:</strong> ${report.temperature}°C</p>
+                        <p><strong>رطوبت:</strong> ${report.humidity}%</p>
+                        <p><strong>pH خاک:</strong> ${report.soilPH}</p>
+                        <p><strong>تاریخ:</strong> ${report.date}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // رسم نمودارهای شدت و شرایط محیطی
+        function drawCharts(crop, severity, temperature, humidity, soilPH) {
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.innerHTML = `
+                <canvas id="severityChart" style="margin-bottom: 20px;"></canvas>
+                <canvas id="envChart"></canvas>
+            `;
+            // نمودار شدت آفت
+            const ctx1 = document.getElementById('severityChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['شدت گزارش‌شده'],
+                    datasets: [{
+                        label: `شدت آفت در ${crop}`,
+                        data: [severity],
+                        backgroundColor: severity > 20 ? '#FF5722' : '#4CAF50',
+                        borderColor: severity > 20 ? '#D32F2F' : '#388E3C',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true, max: 100, title: { display: true, text: 'درصد گیاهان آلوده' } },
+                        x: { title: { display: true, text: 'وضعیت' } }
+                    },
+                    plugins: { title: { display: true, text: `تحلیل شدت آفت برای ${crop}` } }
+                }
+            });
+            // نمودار شرایط محیطی
+            const ctx2 = document.getElementById('envChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['دما (°C)', 'رطوبت (%)', 'pH خاک'],
+                    datasets: [{
+                        label: 'شرایط محیطی',
+                        data: [
+                            temperature || 0,
+                            humidity || 0,
+                            soilPH || 0
+                        ],
+                        backgroundColor: ['#4CAF50', '#2196F3', '#FFC107'],
+                        borderColor: ['#388E3C', '#1976D2', '#FFA000'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'مقدار' } },
+                        x: { title: { display: true, text: 'پارامترهای محیطی' } }
+                    },
+                    plugins: { title: { display: true, text: 'تحلیل شرایط محیطی' } }
+                }
+            });
+        }
+
+        // بارگذاری تاریخچه در شروع
+        document.addEventListener('DOMContentLoaded', displayHistory);
+    </script>
+</body>
+</html>
