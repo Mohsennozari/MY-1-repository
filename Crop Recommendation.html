@@ -1,484 +1,456 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>پیشنهاد کشت محیطی (1000 محصول)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background: #f0f4f8;
-      color: #333;
-      direction: rtl;
-    }
-    header {
-      background: #1a3c5e;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 2rem auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      padding: 2rem;
-    }
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: #1a3c5e;
-    }
-    select, input {
-      width: 100%;
-      padding: 0.7rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-family: 'Vazirmatn', sans-serif;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    button {
-      padding: 0.8rem 1.5rem;
-      background: #1a3c5e;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin: 0.5rem;
-    }
-    button:hover {
-      background: #153046;
-    }
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    #error {
-      color: red;
-      margin-bottom: 1rem;
-      font-weight: bold;
-    }
-    .result {
-      margin-top: 2rem;
-      background: #f8fbff;
-      padding: 1.5rem;
-      border-radius: 8px;
-      border: 1px solid #d4e6ff;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 0.8rem;
-      text-align: right;
-    }
-    th {
-      background: #1a3c5e;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
-    .section-title {
-      font-size: 1.3rem;
-      color: #1a3c5e;
-      border-bottom: 2px solid #1a3c5e;
-      padding-bottom: 0.3rem;
-      margin-top: 2rem;
-    }
-    .search-section {
-      margin-bottom: 1.5rem;
-    }
-    #searchInput {
-      width: 100%;
-      padding: 0.7rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .filter-section {
-      margin-bottom: 1.5rem;
-    }
-    @media (max-width: 600px) {
-      .container {
-        padding: 1rem;
-      }
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم پیشنهاد محصول کشاورزی</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+            direction: rtl;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .advanced-form {
+            display: none;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .result-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        canvas {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #2c3e50;
+                color: #ecf0f1;
+            }
+            .container {
+                background: #34495e;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+            .advanced-form {
+                background: #2c3e50;
+            }
+            input, select {
+                background: #2c3e50;
+                color: #ecf0f1;
+                border-color: #7f8c8d;
+            }
+            .result-item {
+                border-color: #7f8c8d;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>پیشنهاد کشت بر اساس شرایط محیطی</header>
-  <div class="container">
-    <div id="error"></div>
-    <form id="envForm">
-      <div class="grid">
-        <div class="form-group">
-          <label for="climate">اقلیم منطقه</label>
-          <select id="climate" required aria-label="اقلیم منطقه">
-            <option value="">انتخاب کنید</option>
-            <option value="خشک">خشک</option>
-            <option value="نیمه‌خشک">نیمه‌خشک</option>
-            <option value="معتدل">معتدل</option>
-            <option value="مرطوب">مرطوب</option>
-            <option value="سرد">سرد</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="season">فصل کشت</label>
-          <select id="season" required aria-label="فصل کشت">
-            <option value="">انتخاب کنید</option>
-            <option value="بهار">بهار</option>
-            <option value="تابستان">تابستان</option>
-            <option value="پاییز">پاییز</option>
-            <option value="زمستان">زمستان</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="rainfall">بارندگی سالانه (mm)</label>
-          <input type="number" id="rainfall" step="1" min="0" required aria-label="بارندگی سالانه" placeholder="مثال: 300">
-        </div>
-        <div class="form-group">
-          <label for="elevation">ارتفاع از سطح دریا (m)</label>
-          <input type="number" id="elevation" step="1" min="0" required aria-label="ارتفاع از سطح دریا" placeholder="مثال: 1500">
-        </div>
-        <div class="form-group">
-          <label for="cropType">نوع کشت</label>
-          <select id="cropType" required aria-label="نوع کشت">
-            <option value="همه">همه</option>
-            <option value="زراعی">زراعی</option>
-            <option value="باغی">باغی</option>
-            <option value="گلخانه‌ای">گلخانه‌ای</option>
-            <option value="تجاری">تجاری</option>
-          </select>
-        </div>
-      </div>
-      <div class="search-section">
-        <label for="searchInput">جستجوی محصول</label>
-        <input type="text" id="searchInput" placeholder="نام محصول را وارد کنید..." aria-label="جستجوی محصول">
-      </div>
-      <div class="filter-section">
-        <h3>فیلترهای اضافی</h3>
-        <div class="grid">
-          <div class="form-group">
-            <label for="filterSalinity">تحمل شوری</label>
-            <select id="filterSalinity" aria-label="تحمل شوری">
-              <option value="همه">همه</option>
-              <option value="کم">کم</option>
-              <option value="متوسط">متوسط</option>
-              <option value="زیاد">زیاد</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="filterCategory">دسته‌بندی</label>
-            <select id="filterCategory" aria-label="دسته‌بندی محصول">
-              <option value="همه">همه</option>
-              <option value="غلات">غلات</option>
-              <option value="حبوبات">حبوبات</option>
-              <option value="دانه‌های روغنی">دانه‌های روغنی</option>
-              <option value="صنعتی">صنعتی</option>
-              <option value="علوفه‌ای">علوفه‌ای</option>
-              <option value="سبزیجات">سبزیجات</option>
-              <option value="میوه‌ها">میوه‌ها</option>
-              <option value="خشکبار">خشکبار</option>
-              <option value="مرکبات">مرکبات</option>
-              <option value="زینتی">زینتی</option>
-              <option value="دارویی">دارویی</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="profileName">نام پروفایل</label>
-        <input type="text" id="profileName" placeholder="مثلاً مزرعه 1" aria-label="نام پروفایل">
-      </div>
-      <div class="button-group">
-        <button type="submit">پیشنهاد محصولات</button>
-        <button type="button" onclick="resetForm()">پاک کردن</button>
-        <button type="button" onclick="saveProfile()">ذخیره پروفایل</button>
-        <button type="button" onclick="compareProfiles()">مقایسه پروفایل‌ها</button>
-        <button type="button" onclick="generatePDF()">تولید PDF</button>
-      </div>
-    </form>
-    <div class="result" id="result"></div>
-  </div>
+    <div class="container">
+        <h1>سیستم پیشنهاد محصول کشاورزی</h1>
+        <form id="inputForm">
+            <h2>ورودی‌های پایه</h2>
+            <div class="form-group">
+                <label for="tempMin">دمای حداقل (درجه سانتی‌گراد):</label>
+                <input type="number" id="tempMin" placeholder="مثال: 10" step="0.1">
+            </div>
+            <div class="form-group">
+                <label for="tempMax">دمای حداکثر (درجه سانتی‌گراد):</label>
+                <input type="number" id="tempMax" placeholder="مثال: 30" step="0.1">
+            </div>
+            <div class="form-group">
+                <label for="rainfall">میزان بارندگی سالیانه (میلی‌متر):</label>
+                <input type="number" id="rainfall" placeholder="مثال: 500" step="1">
+            </div>
+            <div class="form-group">
+                <label for="ph">pH خاک:</label>
+                <input type="number" id="ph" placeholder="مثال: 6.5" step="0.1" min="0" max="14">
+            </div>
+            <div class="form-group">
+                <label for="texture">بافت خاک:</label>
+                <select id="texture">
+                    <option value="">انتخاب کنید (اختیاری)</option>
+                    <option value="لومی">لومی</option>
+                    <option value="رسی">رسی</option>
+                    <option value="شنی">شنی</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="season">فصل کاشت:</label>
+                <select id="season">
+                    <option value="">انتخاب کنید (اختیاری)</option>
+                    <option value="بهار">بهار</option>
+                    <option value="تابستان">تابستان</option>
+                    <option value="پاییز">پاییز</option>
+                    <option value="زمستان">زمستان</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cultivationType">نوع کشت:</label>
+                <select id="cultivationType">
+                    <option value="">انتخاب کنید (اختیاری)</option>
+                    <option value="زراعی">زراعی</option>
+                    <option value="باغی">باغی</option>
+                    <option value="گلخانه‌ای">گلخانه‌ای</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="area">مساحت زمین (هکتار):</label>
+                <input type="number" id="area" placeholder="مثال: 1" step="0.1" min="0">
+            </div>
+            <div class="form-group">
+                <label for="latitude">عرض جغرافیایی:</label>
+                <input type="number" id="latitude" placeholder="مثال: 35.7" step="0.1">
+            </div>
+            <div class="form-group">
+                <label for="longitude">طول جغرافیایی:</label>
+                <input type="number" id="longitude" placeholder="مثال: 51.4" step="0.1">
+            </div>
+            <button type="button" onclick="toggleAdvancedForm()">نمایش ورودی‌های پیشرفته</button>
+            <div id="advancedForm" class="advanced-form">
+                <h2>ورودی‌های پیشرفته (خاک و اقلیم)</h2>
+                <div class="form-group">
+                    <label for="humidity">رطوبت نسبی (%):</label>
+                    <input type="number" id="humidity" placeholder="مثال: 60" step="1" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label for="altitude">ارتفاع از سطح دریا (متر):</label>
+                    <input type="number" id="altitude" placeholder="مثال: 1200" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="sunHours">ساعات آفتابی روزانه:</label>
+                    <input type="number" id="sunHours" placeholder="مثال: 8" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="nitrogen">نیتروژن خاک (mg/kg):</label>
+                    <input type="number" id="nitrogen" placeholder="مثال: 20" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="phosphorus">فسفر خاک (mg/kg):</label>
+                    <input type="number" id="phosphorus" placeholder="مثال: 15" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="potassium">پتاسیم خاک (mg/kg):</label>
+                    <input type="number" id="potassium" placeholder="مثال: 200" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="organicCarbon">کربن آلی خاک (%):</label>
+                    <input type="number" id="organicCarbon" placeholder="مثال: 1.5" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="ec">شوری خاک (EC, dS/m):</label>
+                    <input type="number" id="ec" placeholder="مثال: 0.5" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="waterHolding">ظرفیت نگهداری آب خاک (%):</label>
+                    <input type="number" id="waterHolding" placeholder="مثال: 30" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="calcium">کلسیم خاک (mg/kg):</label>
+                    <input type="number" id="calcium" placeholder="مثال: 1000" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="magnesium">منیزیم خاک (mg/kg):</label>
+                    <input type="number" id="magnesium" placeholder="مثال: 200" step="1">
+                </div>
+            </div>
+            <button type="submit">پیشنهاد محصول</button>
+        </form>
+        <div id="results"></div>
+        <canvas id="successChart"></canvas>
+    </div>
 
-  <script>
-    // پایگاه داده محصولات (100 محصول نمونه، مقیاس‌پذیر تا 1000)
-    const crops = [
-      { name: 'گندم', type: 'زراعی', category: 'غلات', climate: ['معتدل', 'نیمه‌خشک'], season: ['پاییز'], rainfall: { min: 300, max: 600 }, elevation: { min: 0, max: 2000 }, soil: ['لوم', 'لوم شنی'], pH: { min: 6, max: 7.5 }, ec: { max: 4 }, irrigation: 5000, yield: 4, success: 0.9, companions: ['یونجه', 'نخود'], nutrients: { N: 120, P: 60, K: 40 }, salinityTolerance: 'متوسط', guide: 'آبیاری منظم، خاک با زهکشی خوب' },
-      { name: 'جو', type: 'زراعی', category: 'غلات', climate: ['معتدل', 'نیمه‌خشک'], season: ['پاییز'], rainfall: { min: 250, max: 500 }, elevation: { min: 0, max: 2500 }, soil: ['لوم', 'لوم شنی'], pH: { min: 6, max: 8 }, ec: { max: 6 }, irrigation: 4000, yield: 3.5, success: 0.92, companions: ['شبدر', 'لوبیا'], nutrients: { N: 100, P: 50, K: 30 }, salinityTolerance: 'زیاد', guide: 'مناسب خاک‌های شور' },
-      { name: 'برنج', type: 'زراعی', category: 'غلات', climate: ['مرطوب', 'معتدل'], season: ['بهار'], rainfall: { min: 1000, max: 2000 }, elevation: { min: 0, max: 1000 }, soil: ['لوم رسی', 'رس'], pH: { min: 5.5, max: 7 }, ec: { max: 3 }, irrigation: 12000, yield: 5, success: 0.85, companions: ['لوبیا'], nutrients: { N: 150, P: 70, K: 50 }, salinityTolerance: 'کم', guide: 'نیاز به غرقابی' },
-      { name: 'ذرت', type: 'زراعی', category: 'غلات', climate: ['معتدل'], season: ['بهار'], rainfall: { min: 500, max: 800 }, elevation: { min: 0, max: 1500 }, soil: ['لوم', 'لوم شنی'], pH: { min: 5.8, max: 7.5 }, ec: { max: 4 }, irrigation: 6000, yield: 8, success: 0.88, companions: ['لوبیا', 'کدو'], nutrients: { N: 180, P: 80, K: 60 }, salinityTolerance: 'متوسط', guide: 'خاک حاصلخیز' },
-      { name: 'نخود', type: 'زراعی', category: 'حبوبات', climate: ['معتدل', 'نیمه‌خشک'], season: ['بهار'], rainfall: { min: 300, max: 600 }, elevation: { min: 500, max: 2000 }, soil: ['لوم', 'لوم شنی'], pH: { min: 6, max: 7.5 }, ec: { max: 3 }, irrigation: 3000, yield: 2, success: 0.87, companions: ['گندم'], nutrients: { N: 50, P: 60, K: 40 }, salinityTolerance: 'کم', guide: 'زهکشی خوب' },
-      { name: 'لوبیا', type: 'زراعی', category: 'حبوبات', climate: ['معتدل'], season: ['بهار'], rainfall: { min: 400, max: 700 }, elevation: { min: 0, max: 1500 }, soil: ['لوم'], pH: { min: 6, max: 7 }, ec: { max: 2 }, irrigation: 4000, yield: 2.5, success: 0.85, companions: ['ذرت'], nutrients: { N: 60, P: 70, K: 50 }, salinityTolerance: 'کم', guide: 'خاک غنی' },
-      { name: 'کلزا', type: 'زراعی', category: 'دانه‌های روغنی', climate: ['معتدل'], season: ['پاییز'], rainfall: { min: 400, max: 700 }, elevation: { min: 0, max: 2000 }, soil: ['لوم', 'لوم شنی'], pH: { min: 5.5, max: 7.5 }, ec: { max: 4 }, irrigation: 4000, yield: 3, success: 0.9, companions: ['گندم'], nutrients: { N: 140, P: 60, K: 40 }, salinityTolerance: 'متوسط', guide: 'خاک حاصلخیز' },
-      { name: 'کنجد', type: 'زراعی', category: 'دانه‌های روغنی', climate: ['خشک', 'نیمه‌خشک'], season: ['بهار'], rainfall: { min: 200, max: 500 }, elevation: { min: 0, max: 1500 }, soil: ['لوم شنی'], pH: { min: 5.5, max: 8 }, ec: { max: 5 }, irrigation: 3000, yield: 1.5, success: 0.93, companions: ['ذرت'], nutrients: { N: 80, P: 50, K: 30 }, salinityTolerance: 'زیاد', guide: 'مقاوم به خشکی' },
-      { name: 'چغندرقند', type: 'زراعی', category: 'صنعتی', climate: ['معتدل'], season: ['بهار'], rainfall: { min: 400, max: 800 }, elevation: { min: 0, max: 1500 }, soil: ['لوم', 'لوم سیلتی'], pH: { min: 6, max: 7.5 }, ec: { max: 7 }, irrigation: 7000, yield: 50, success: 0.9, companions: [], nutrients: { N: 160, P: 80, K: 100 }, salinityTolerance: 'زیاد', guide: 'خاک عمیق' },
-      { name: 'پنبه', type: 'زراعی', category: 'صنعتی', climate: ['نیمه‌خشک', 'معتدل'], season: ['بهار'], rainfall: { min: 300, max: 600 }, elevation: { min: 0, max: 1000 }, soil: ['لوم', 'لوم شنی'], pH: { min: 6, max: 7.5 }, ec: { max: 5 }, irrigation: 6000, yield: 3, success: 0.88, companions: [], nutrients: { N: 150, P: 70, K: 50 }, salinityTolerance: 'متوسط', guide: 'زهکشی خوب' },
-      { name: 'یونجه', type: 'زراعی', category: 'علوفه‌ای', climate: ['معتدل', 'نیمه‌خشک'], season: ['بهار'], rainfall: { min: 400, max: 800 }, elevation: { min: 0, max: 2000 }, soil: ['لوم', 'لوم سیلتی'], pH: { min: 6.5, max: 7.5 }, ec: { max: 4 }, irrigation: 8000, yield: 20, success: 0.9, companions: ['گندم'], nutrients: { N: 50, P: 80, K: 60 }, salinityTolerance: 'متوسط', guide: 'خاک عمیق' },
-      { name: 'شبدر', type: 'زراعی', category: 'علوفه‌ای', climate: ['معتدل'], season: ['بهار'], rainfall: { min: 500, max: 1000 }, elevation: { min: 0, max: 1500 }, soil: ['لوم', 'لوم رسی'], pH: { min: 6, max: 7 }, ec: { max: 3 }, irrigation: 6000, yield: 15, success: 0.87, companions: ['جو'], nutrients: { N: 40, P: 60, K: 50 }, salinityTolerance: 'کم', guide: 'خاک مرطوب' },
-      { name: 'سیب‌زمینی', type: 'زراعی', category: 'سبزیجات', climate: ['معتدل'], season: ['بهار'], rainfall: { min: 400, max: 700 }, elevation: { min: 0, max: 2000 }, soil: ['لوم شنی', 'لوم'], pH: { min: 5.5, max: 7 }, ec: { max: 3 }, irrigation: 5000, yield: 30, success: 0.85, companions: ['لوبیا'], nutrients: { N: 150, P: 100, K: 120 }, salinityTolerance: 'کم', guide: 'خاک سبک' },
-      { name: 'پیاز', type: 'زراعی', category: 'سبزیجات', climate: ['معتدل'], season: ['بهار'], rainfall: { min: 400, max: 700 }, elevation: { min: 0, max: 1500 }, soil: ['لوم', 'لوم سیلتی'], pH: { min: 6, max: 7.5 }, ec: { max: 3 }, irrigation: 4000, yield: 40, success: 0.88, companions: ['هویج'], nutrients: { N: 120, P: 80, K: 60 }, salinityTolerance: 'کم', guide: 'خاک غنی' },
-      { name: 'زعفران', type: 'تجاری', category: 'دارویی', climate: ['خشک', 'نیمه‌خشک'], season: ['پاییز'], rainfall: { min: 200, max: 400 }, elevation: { min: 1000, max: 2500 }, soil: ['لوم شنی', 'لوم'], pH: { min: 6, max: 8 }, ec: { max: 4 }, irrigation: 2000, yield: 0.01, success: 0.95, companions: [], nutrients: { N: 60, P: 40, K: 30 }, salinityTolerance: 'متوسط', guide: 'خاک سبک' },
-      { name: 'سیب', type: 'باغی', category: 'میوه‌ها', climate: ['معتدل', 'سرد'], season: ['بهار'], rainfall: { min: 500, max: 1000 }, elevation: { min: 500, max: 2500 }, soil: ['لوم', 'لوم شنی'], pH: { min: 5.5, max: 7 }, ec: { max: 2 }, irrigation: 8000, yield: 30, success: 0.9, companions: [], nutrients: { N: 100, P: 60, K: 80 }, salinityTolerance: 'کم', guide: 'خاک عمیق' },
-      { name: 'پسته', type: 'باغی', category: 'خشکبار', climate: ['خشک', 'نیمه‌خشک'], season: ['بهار'], rainfall: { min: 100, max: 400 }, elevation: { min: 500, max: 2000 }, soil: ['لوم شنی', 'شنی'], pH: { min: 6.5, max: 8 }, ec: { max: 8 }, irrigation: 6000, yield: 2, success: 0.93, companions: [], nutrients: { N: 80, P: 50, K: 40 }, salinityTolerance: 'زیاد', guide: 'مقاوم به شوری' },
-      { name: 'انگور', type: 'باغی', category: 'میوه‌ها', climate: ['معتدل', 'نیمه‌خشک'], season: ['بهار'], rainfall: { min: 300, max: 700 }, elevation: { min: 0, max: 2000 }, soil: ['لوم', 'لوم شنی'], pH: { min: 6, max: 7.5 }, ec: { max: 4 }, irrigation: 5000, yield: 20, success: 0.9, companions: [], nutrients: { N: 90, P: 50, K: 60 }, salinityTolerance: 'متوسط', guide: 'زهکشی خوب' },
-      { name: 'خرما', type: 'باغی', category: 'میوه‌ها', climate: ['خشک'], season: ['بهار'], rainfall: { min: 100, max: 300 }, elevation: { min: 0, max: 1000 }, soil: ['لوم شنی', 'شنی'], pH: { min: 6, max: 8.5 }, ec: { max: 10 }, irrigation: 10000, yield: 10, success: 0.95, companions: [], nutrients: { N: 100, P: 60, K: 80 }, salinityTolerance: 'زیاد', guide: 'مقاوم به گرما' },
-      { name: 'گوجه‌فرنگی', type: 'گلخانه‌ای', category: 'سبزیجات', climate: ['معتدل', 'مرطوب'], season: ['همه'], rainfall: { min: 300, max: 800 }, elevation: { min: 0, max: 1500 }, soil: ['لوم', 'لوم شنی'], pH: { min: 6, max: 7 }, ec: { max: 3 }, irrigation: 4000, yield: 50, success: 0.9, companions: ['ریحان'], nutrients: { N: 150, P: 80, K: 100 }, salinityTolerance: 'متوسط', guide: 'خاک غنی' },
-      // ... (80 محصول دیگر برای نمونه، قابل گسترش به 1000)
-    ];
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // پایگاه داده محصولات (50 محصول)
+        const products = [
+            { name: "گندم", category: "غلات", cultivationType: "زراعی", climate: { temp_min: 10, temp_max: 30, rainfall: 400, humidity: 50, altitude: 1000, sunHours: 6 }, soil: { ph_min: 6, ph_max: 7.5, texture: ["لومی", "رسی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["بهار", "پاییز"], yield_per_hectare: 4000, seed_needed: 150, fertilizer_needed: { N: 100, P: 50, K: 40 }, water_needed: 500 },
+            { name: "برنج", category: "غلات", cultivationType: "زراعی", climate: { temp_min: 20, temp_max: 35, rainfall: 1000, humidity: 70, altitude: 500, sunHours: 7 }, soil: { ph_min: 5.5, ph_max: 7, texture: ["رسی"], nitrogen: 25, phosphorus: 20, potassium: 200, organicCarbon: 1.5, ec: 0.7, waterHolding: 40, calcium: 1200, magnesium: 250 }, season: ["تابستان"], yield_per_hectare: 5000, seed_needed: 100, fertilizer_needed: { N: 120, P: 60, K: 50 }, water_needed: 1500 },
+            { name: "ذرت", category: "غلات", cultivationType: "زراعی", climate: { temp_min: 18, temp_max: 32, rainfall: 600, humidity: 60, altitude: 800, sunHours: 8 }, soil: { ph_min: 5.8, ph_max: 7.2, texture: ["لومی"], nitrogen: 30, phosphorus: 20, potassium: 180, organicCarbon: 1.2, ec: 0.6, waterHolding: 35, calcium: 1100, magnesium: 220 }, season: ["بهار", "تابستان"], yield_per_hectare: 6000, seed_needed: 25, fertilizer_needed: { N: 150, P: 70, K: 60 }, water_needed: 800 },
+            // ادامه محصولات تا 50 مورد (برای نمونه، چند محصول دیگر اضافه می‌شود)
+            { name: "جو", category: "غلات", cultivationType: "زراعی", climate: { temp_min: 8, temp_max: 28, rainfall: 350, humidity: 50, altitude: 1000, sunHours: 6 }, soil: { ph_min: 6, ph_max: 7.5, texture: ["لومی", "شنی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["پاییز"], yield_per_hectare: 3500, seed_needed: 120, fertilizer_needed: { N: 90, P: 40, K: 30 }, water_needed: 400 },
+            { name: "سیب‌زمینی", category: "سبزیجات", cultivationType: "زراعی", climate: { temp_min: 15, temp_max: 25, rainfall: 500, humidity: 60, altitude: 800, sunHours: 7 }, soil: { ph_min: 5.5, ph_max: 6.5, texture: ["شنی", "لومی"], nitrogen: 25, phosphorus: 20, potassium: 200, organicCarbon: 1.5, ec: 0.6, waterHolding: 35, calcium: 1200, magnesium: 250 }, season: ["بهار"], yield_per_hectare: 30000, seed_needed: 2000, fertilizer_needed: { N: 120, P: 80, K: 100 }, water_needed: 600 },
+            { name: "گوجه‌فرنگی", category: "سبزیجات", cultivationType: "زراعی", climate: { temp_min: 18, temp_max: 30, rainfall: 600, humidity: 65, altitude: 700, sunHours: 8 }, soil: { ph_min: 6, ph_max: 7, texture: ["لومی"], nitrogen: 20, phosphorus: 15, potassium: 180, organicCarbon: 1.2, ec: 0.5, waterHolding: 30, calcium: 1100, magnesium: 220 }, season: ["بهار", "تابستان"], yield_per_hectare: 25000, seed_needed: 0.5, fertilizer_needed: { N: 100, P: 50, K: 60 }, water_needed: 700 },
+            { name: "خیار", category: "سبزیجات", cultivationType: "زراعی", climate: { temp_min: 20, temp_max: 30, rainfall: 500, humidity: 70, altitude: 600, sunHours: 7 }, soil: { ph_min: 6, ph_max: 7.5, texture: ["لومی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["بهار", "تابستان"], yield_per_hectare: 20000, seed_needed: 1, fertilizer_needed: { N: 80, P: 40, K: 50 }, water_needed: 600 },
+            { name: "پیاز", category: "سبزیجات", cultivationType: "زراعی", climate: { temp_min: 13, temp_max: 25, rainfall: 400, humidity: 60, altitude: 800, sunHours: 6 }, soil: { ph_min: 6, ph_max: 7, texture: ["لومی", "شنی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["بهار"], yield_per_hectare: 30000, seed_needed: 5, fertilizer_needed: { N: 90, P: 50, K: 40 }, water_needed: 500 },
+            { name: "کلزا", category: "دانه‌های روغنی", cultivationType: "زراعی", climate: { temp_min: 10, temp_max: 25, rainfall: 500, humidity: 55, altitude: 900, sunHours: 6 }, soil: { ph_min: 6, ph_max: 7.5, texture: ["لومی", "رسی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["پاییز"], yield_per_hectare: 2000, seed_needed: 5, fertilizer_needed: { N: 100, P: 50, K: 40 }, water_needed: 400 },
+            { name: "یونجه", category: "علوفه", cultivationType: "زراعی", climate: { temp_min: 15, temp_max: 30, rainfall: 400, humidity: 50, altitude: 1000, sunHours: 7 }, soil: { ph_min: 6.5, ph_max: 7.5, texture: ["لومی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["بهار"], yield_per_hectare: 10000, seed_needed: 20, fertilizer_needed: { N: 30, P: 60, K: 50 }, water_needed: 600 },
+            { name: "سیب", category: "میوه‌ها", cultivationType: "باغی", climate: { temp_min: 10, temp_max: 25, rainfall: 600, humidity: 60, altitude: 1200, sunHours: 7 }, soil: { ph_min: 6, ph_max: 7, texture: ["لومی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["بهار"], yield_per_hectare: 20000, seed_needed: 0, fertilizer_needed: { N: 80, P: 40, K: 50 }, water_needed: 700 },
+            { name: "انگور", category: "میوه‌ها", cultivationType: "باغی", climate: { temp_min: 15, temp_max: 30, rainfall: 500, humidity: 55, altitude: 1000, sunHours: 8 }, soil: { ph_min: 6, ph_max: 7.5, texture: ["لومی", "شنی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["بهار"], yield_per_hectare: 15000, seed_needed: 0, fertilizer_needed: { N: 70, P: 30, K: 40 }, water_needed: 600 },
+            // محصولات دیگر تا 50 مورد (برای جلوگیری از طولانی شدن، بقیه به‌صورت نمونه هستند)
+            { name: "هلو", category: "میوه‌ها", cultivationType: "باغی", climate: { temp_min: 15, temp_max: 28, rainfall: 600, humidity: 60, altitude: 1000, sunHours: 7 }, soil: { ph_min: 6, ph_max: 7, texture: ["لومی"], nitrogen: 20, phosphorus: 15, potassium: 150, organicCarbon: 1, ec: 0.5, waterHolding: 30, calcium: 1000, magnesium: 200 }, season: ["بهار"], yield_per_hectare: 15000, seed_needed: 0, fertilizer_needed: { N: 80, P: 40, K: 50 }, water_needed: 700 },
+            // ... 37 محصول دیگر به همین ساختار اضافه شوند
+        ];
 
-    document.getElementById('envForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      suggestCrops();
-    });
-
-    document.getElementById('searchInput').addEventListener('input', function() {
-      suggestCrops(this.value.trim());
-    });
-
-    function suggestCrops(searchQuery = '') {
-      document.getElementById('error').textContent = '';
-
-      // دریافت ورودی‌ها
-      const inputs = {
-        climate: document.getElementById('climate').value,
-        season: document.getElementById('season').value,
-        rainfall: parseFloat(document.getElementById('rainfall').value),
-        elevation: parseFloat(document.getElementById('elevation').value),
-        cropType: document.getElementById('cropType').value,
-        filterSalinity: document.getElementById('filterSalinity').value,
-        filterCategory: document.getElementById('filterCategory').value,
-        profileName: document.getElementById('profileName').value.trim()
-      };
-
-      // اعتبارسنجی
-      if (!inputs.climate || !inputs.season || isNaN(inputs.rainfall) || isNaN(inputs.elevation)) {
-        document.getElementById('error').textContent = 'لطفاً تمام فیلدها را پر کنید.';
-        return;
-      }
-      if (inputs.rainfall < 0) {
-        document.getElementById('error').textContent = 'بارندگی نمی‌تواند منفی باشد.';
-        return;
-      }
-      if (inputs.elevation < 0) {
-        document.getElementById('error').textContent = 'ارتفاع نمی‌تواند منفی باشد.';
-        return;
-      }
-
-      // فیلتر محصولات
-      let filteredCrops = crops.filter(crop => {
-        const climateMatch = crop.climate.includes(inputs.climate);
-        const seasonMatch = crop.season.includes(inputs.season);
-        const rainfallMatch = inputs.rainfall >= crop.rainfall.min && inputs.rainfall <= crop.rainfall.max;
-        const elevationMatch = inputs.elevation >= crop.elevation.min && inputs.elevation <= crop.elevation.max;
-        const typeMatch = inputs.cropType === 'همه' || crop.type === inputs.cropType;
-        const salinityMatch = inputs.filterSalinity === 'همه' || crop.salinityTolerance === inputs.filterSalinity;
-        const categoryMatch = inputs.filterCategory === 'همه' || crop.category === inputs.filterCategory;
-        const searchMatch = searchQuery ? crop.name.includes(searchQuery) : true;
-        return climateMatch && seasonMatch && rainfallMatch && elevationMatch && typeMatch && salinityMatch && categoryMatch && searchMatch;
-      });
-
-      // ارزیابی محصولات
-      const cropResults = filteredCrops.map(crop => {
-        let score = 0;
-        const weights = {
-          climate: 0.3,
-          season: 0.2,
-          rainfall: 0.3,
-          elevation: 0.2
-        };
-
-        // اقلیم
-        score += crop.climate.includes(inputs.climate) ? weights.climate * 100 : 0;
-
-        // فصل
-        score += crop.season.includes(inputs.season) ? weights.season * 100 : 0;
-
-        // بارندگی
-        const rainfallDiff = Math.min(Math.abs(inputs.rainfall - crop.rainfall.min), Math.abs(inputs.rainfall - crop.rainfall.max));
-        const rainfallScore = inputs.rainfall >= crop.rainfall.min && inputs.rainfall <= crop.rainfall.max ? 1 : (rainfallDiff <= 100 ? 0.5 : 0);
-        score += rainfallScore * weights.rainfall * 100;
-
-        // ارتفاع
-        const elevationDiff = Math.min(Math.abs(inputs.elevation - crop.elevation.min), Math.abs(inputs.elevation - crop.elevation.max));
-        const elevationScore = inputs.elevation >= crop.elevation.min && inputs.elevation <= crop.elevation.max ? 1 : (elevationDiff <= 500 ? 0.5 : 0);
-        score += elevationScore * weights.elevation * 100;
-
-        // ضریب موفقیت
-        const successRate = crop.success * (score / 100);
-
-        // پیشنهادات تطبیق خاک
-        const soilAdjustments = [];
-        if (!crop.soil.includes('لوم')) {
-          soilAdjustments.push(`افزودن 10-20 تن/هکتار ماده آلی برای ایجاد بافت ${crop.soil.join(' یا ')}`);
-        }
-        if (crop.pH.min > 7 || crop.pH.max < 7) {
-          soilAdjustments.push(`تنظیم pH به ${crop.pH.min}-${crop.pH.max} با ${crop.pH.min > 7 ? 'آهک' : 'گوگرد'}`);
-        }
-        if (crop.ec.max < 4) {
-          soilAdjustments.push(`شستشوی خاک برای کاهش EC به کمتر از ${crop.ec.max} dS/m`);
+        // تابع نمایش/مخفی کردن فرم پیشرفته
+        function toggleAdvancedForm() {
+            const advancedForm = document.getElementById('advancedForm');
+            advancedForm.style.display = advancedForm.style.display === 'none' ? 'block' : 'none';
         }
 
-        return {
-          name: crop.name,
-          type: crop.type,
-          category: crop.category,
-          score: score.toFixed(1),
-          successRate: (successRate * 100).toFixed(1),
-          soil: crop.soil.join(', '),
-          pH: `${crop.pH.min}-${crop.pH.max}`,
-          ec: `کمتر از ${crop.ec.max}`,
-          irrigation: crop.irrigation,
-          yield: crop.yield,
-          companions: crop.companions.join(', ') || 'ندارد',
-          nutrients: `نیتروژن: ${crop.nutrients.N}، فسفر: ${crop.nutrients.P}، پتاسیم: ${crop.nutrients.K} (kg/ha)`,
-          guide: crop.guide,
-          soilAdjustments: soilAdjustments.join('; ') || 'نیاز به اصلاح خاصی نیست'
-        };
-      }).sort((a, b) => b.score - a.score);
+        // تابع محاسبه درصد تطبیق
+        function calculateMatchScore(userInput, product) {
+            let score = 0;
+            const maxScore = 100;
 
-      // نمایش نتایج
-      const resultHTML = `
-        <div class="section-title">محصولات پیشنهادی</div>
-        ${cropResults.length ? `
-          <table>
-            <tr>
-              <th>محصول</th>
-              <th>نوع</th>
-              <th>دسته‌بندی</th>
-              <th>امتیاز</th>
-              <th>ضریب موفقیت</th>
-              <th>خاک مناسب</th>
-              <th>pH</th>
-              <th>EC</th>
-              <th>آبیاری (m³/ha)</th>
-              <th>بازده (ton/ha)</th>
-              <th>محصولات مکمل</th>
-              <th>مواد مغذی</th>
-              <th>اصلاحات خاک</th>
-              <th>راهنما</th>
-            </tr>
-            ${cropResults.map(c => `
-              <tr>
-                <td>${c.name}</td>
-                <td>${c.type}</td>
-                <td>${c.category}</td>
-                <td>${c.score}%</td>
-                <td>${c.successRate}%</td>
-                <td>${c.soil}</td>
-                <td>${c.pH}</td>
-                <td>${c.ec}</td>
-                <td>${c.irrigation}</td>
-                <td>${c.yield}</td>
-                <td>${c.companions}</td>
-                <td>${c.nutrients}</td>
-                <td>${c.soilAdjustments}</td>
-                <td>${c.guide}</td>
-              </tr>
-            `).join('')}
-          </table>
-        ` : '<p>هیچ محصولی با شرایط شما یافت نشد.</p>'}
-      `;
-      document.getElementById('result').innerHTML = resultHTML;
+            // اقلیم (40%)
+            if (userInput.tempMin && userInput.tempMax && userInput.tempMin >= product.climate.temp_min && userInput.tempMax <= product.climate.temp_max) {
+                score += 15;
+            }
+            if (userInput.rainfall && Math.abs(userInput.rainfall - product.climate.rainfall) <= 200) {
+                score += 10;
+            }
+            if (userInput.humidity && Math.abs(userInput.humidity - product.climate.humidity) <= 20) {
+                score += 5;
+            }
+            if (userInput.altitude && Math.abs(userInput.altitude - product.climate.altitude) <= 500) {
+                score += 5;
+            }
+            if (userInput.sunHours && Math.abs(userInput.sunHours - product.climate.sunHours) <= 2) {
+                score += 5;
+            }
 
-      // ذخیره نتایج برای PDF و پروفایل
-      window.currentResults = { inputs, cropResults };
-    }
+            // خاک (40%)
+            if (userInput.ph && userInput.ph >= product.soil.ph_min && userInput.ph <= product.soil.ph_max) {
+                score += 10;
+            }
+            if (userInput.texture && product.soil.texture.includes(userInput.texture)) {
+                score += 5;
+            }
+            if (userInput.nitrogen && Math.abs(userInput.nitrogen - product.soil.nitrogen) <= 10) {
+                score += 5;
+            }
+            if (userInput.phosphorus && Math.abs(userInput.phosphorus - product.soil.phosphorus) <= 10) {
+                score += 5;
+            }
+            if (userInput.potassium && Math.abs(userInput.potassium - product.soil.potassium) <= 50) {
+                score += 5;
+            }
+            if (userInput.organicCarbon && Math.abs(userInput.organicCarbon - product.soil.organicCarbon) <= 0.5) {
+                score += 5;
+            }
+            if (userInput.ec && Math.abs(userInput.ec - product.soil.ec) <= 0.2) {
+                score += 5;
+            }
+            if (userInput.waterHolding && Math.abs(userInput.waterHolding - product.soil.waterHolding) <= 10) {
+                score += 5;
+            }
+            if (userInput.calcium && Math.abs(userInput.calcium - product.soil.calcium) <= 200) {
+                score += 5;
+            }
+            if (userInput.magnesium && Math.abs(userInput.magnesium - product.soil.magnesium) <= 50) {
+                score += 5;
+            }
 
-    function resetForm() {
-      document.getElementById('envForm').reset();
-      document.getElementById('result').innerHTML = '';
-      document.getElementById('error').textContent = '';
-      document.getElementById('searchInput').value = '';
-    }
+            // فصل (10%)
+            if (userInput.season && product.season.includes(userInput.season)) {
+                score += 10;
+            }
 
-    function saveProfile() {
-      const profileName = document.getElementById('profileName').value.trim();
-      if (!profileName) {
-        document.getElementById('error').textContent = 'لطفاً نام پروفایل را وارد کنید.';
-        return;
-      }
-      const profiles = JSON.parse(localStorage.getItem('envProfiles') || '{}');
-      profiles[profileName] = window.currentResults;
-      localStorage.setItem('envProfiles', JSON.stringify(profiles));
-      alert(`پروفایل "${profileName}" ذخیره شد.`);
-    }
+            // نوع کشت (10%)
+            if (userInput.cultivationType && product.cultivationType === userInput.cultivationType) {
+                score += 10;
+            }
 
-    function compareProfiles() {
-      const profiles = JSON.parse(localStorage.getItem('envProfiles') || '{}');
-      if (Object.keys(profiles).length < 2) {
-        document.getElementById('error').textContent = 'حداقل دو پروفایل برای مقایسه نیاز است.';
-        return;
-      }
-      let comparisonHTML = '<div class="section-title">مقایسه پروفایل‌ها</div><table><tr><th>پروفایل</th><th>اقلیم</th><th>تعداد محصولات</th></tr>';
-      for (const [name, profile] of Object.entries(profiles)) {
-        comparisonHTML += `
-          <tr>
-            <td>${name}</td>
-            <td>${profile.inputs.climate}</td>
-            <td>${profile.cropResults.length}</td>
-          </tr>
-        `;
-      }
-      comparisonHTML += '</table>';
-      document.getElementById('result').innerHTML = comparisonHTML;
-    }
-
-    function generatePDF() {
-      if (!window.currentResults) {
-        document.getElementById('error').textContent = 'ابتدا پیشنهادات را تولید کنید.';
-        return;
-      }
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFont('Vazirmatn', 'normal');
-      doc.setFontSize(12);
-      doc.text('گزارش پیشنهاد کشت', 10, 10);
-      doc.text(`پروفایل: ${window.currentResults.inputs.profileName || 'بدون نام'}`, 10, 20);
-      doc.text(`اقلیم: ${window.currentResults.inputs.climate}`, 10, 30);
-      doc.text(`فصل: ${window.currentResults.inputs.season}`, 10, 40);
-      doc.text(`بارندگی: ${window.currentResults.inputs.rainfall} mm`, 10, 50);
-      doc.text(`ارتفاع: ${window.currentResults.inputs.elevation} m`, 10, 60);
-      let y = 70;
-      window.currentResults.cropResults.forEach(crop => {
-        doc.text(`${crop.name} (${crop.type} - ${crop.category})`, 10, y);
-        doc.text(`امتیاز: ${crop.score}%، ضریب موفقیت: ${crop.successRate}%`, 15, y + 5);
-        doc.text(`خاک: ${crop.soil}، pH: ${crop.pH}، EC: ${crop.ec}`, 15, y + 10);
-        doc.text(`آبیاری: ${crop.irrigation} m³/ha، بازده: ${crop.yield} ton/ha`, 15, y + 15);
-        doc.text(`محصولات مکمل: ${crop.companions}`, 15, y + 20);
-        doc.text(`مواد مغذی: ${crop.nutrients}`, 15, y + 25);
-        doc.text(`اصلاحات خاک: ${crop.soilAdjustments}`, 15, y + 30);
-        doc.text(`راهنما: ${crop.guide}`, 15, y + 35);
-        y += 45;
-        if (y > 280) {
-          doc.addPage();
-          y = 10;
+            return (score / maxScore) * 100;
         }
-      });
-      doc.save(`گزارش_پیشنهاد_کشت_${window.currentResults.inputs.profileName || 'محیط'}.pdf`);
-    }
-  </script>
+
+        // تابع توصیه‌های بهبود
+        function recommendImprovements(userInput, product) {
+            const improvements = [];
+            if (userInput.ph) {
+                if (userInput.ph < product.soil.ph_min) {
+                    improvements.push(`افزایش pH خاک با افزودن آهک (هدف: ${product.soil.ph_min}-${product.soil.ph_max})`);
+                } else if (userInput.ph > product.soil.ph_max) {
+                    improvements.push(`کاهش pH خاک با افزودن گوگرد (هدف: ${product.soil.ph_min}-${product.soil.ph_max})`);
+                }
+            }
+            if (userInput.rainfall && userInput.rainfall < product.climate.rainfall - 200) {
+                improvements.push(`افزایش آبیاری برای جبران کمبود بارندگی (هدف: ${product.climate.rainfall} میلی‌متر)`);
+            }
+            if (userInput.nitrogen && userInput.nitrogen < product.soil.nitrogen) {
+                improvements.push(`افزودن کود نیتروژنی (هدف: ${product.soil.nitrogen} mg/kg)`);
+            }
+            if (userInput.phosphorus && userInput.phosphorus < product.soil.phosphorus) {
+                improvements.push(`افزودن کود فسفری (هدف: ${product.soil.phosphorus} mg/kg)`);
+            }
+            if (userInput.potassium && userInput.potassium < product.soil.potassium) {
+                improvements.push(`افزودن کود پتاسیمی (هدف: ${product.soil.potassium} mg/kg)`);
+            }
+            return improvements;
+        }
+
+        // تابع پیش‌بینی برداشت و مواد مورد نیاز
+        function predictYieldAndNeeds(product, area) {
+            return {
+                yield: product.yield_per_hectare * area,
+                seed: product.seed_needed * area,
+                fertilizer: {
+                    N: product.fertilizer_needed.N * area,
+                    P: product.fertilizer_needed.P * area,
+                    K: product.fertilizer_needed.K * area
+                },
+                water: product.water_needed * area
+            };
+        }
+
+        // مدیریت فرم
+        document.getElementById('inputForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // دریافت ورودی‌ها
+            const userInput = {
+                tempMin: parseFloat(document.getElementById('tempMin').value) || 10,
+                tempMax: parseFloat(document.getElementById('tempMax').value) || 30,
+                rainfall: parseFloat(document.getElementById('rainfall').value) || 500,
+                humidity: parseFloat(document.getElementById('humidity').value) || 60,
+                altitude: parseFloat(document.getElementById('altitude').value) || 1000,
+                sunHours: parseFloat(document.getElementById('sunHours').value) || 7,
+                ph: parseFloat(document.getElementById('ph').value) || 6.5,
+                texture: document.getElementById('texture').value || 'لومی',
+                nitrogen: parseFloat(document.getElementById('nitrogen').value) || 20,
+                phosphorus: parseFloat(document.getElementById('phosphorus').value) || 15,
+                potassium: parseFloat(document.getElementById('potassium').value) || 150,
+                organicCarbon: parseFloat(document.getElementById('organicCarbon').value) || 1,
+                ec: parseFloat(document.getElementById('ec').value) || 0.5,
+                waterHolding: parseFloat(document.getElementById('waterHolding').value) || 30,
+                calcium: parseFloat(document.getElementById('calcium').value) || 1000,
+                magnesium: parseFloat(document.getElementById('magnesium').value) || 200,
+                season: document.getElementById('season').value || 'بهار',
+                cultivationType: document.getElementById('cultivationType').value || 'زراعی',
+                area: parseFloat(document.getElementById('area').value) || 1,
+                latitude: parseFloat(document.getElementById('latitude').value) || 35.7,
+                longitude: parseFloat(document.getElementById('longitude').value) || 51.4
+            };
+
+            // پردازش پیشنهادات
+            const recommendations = [];
+            products.forEach(product => {
+                const score = calculateMatchScore(userInput, product);
+                if (score > 50) { // آستانه برای پیشنهاد
+                    const improvements = recommendImprovements(userInput, product);
+                    const prediction = predictYieldAndNeeds(product, userInput.area);
+                    recommendations.push({
+                        product: product.name,
+                        category: product.category,
+                        success_rate: score,
+                        improvements: improvements,
+                        prediction: prediction
+                    });
+                }
+            });
+
+            // نمایش نتایج
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            recommendations.forEach(rec => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <h3>محصول: ${rec.product} (${rec.category})</h3>
+                    <p>درصد موفقیت: ${rec.success_rate.toFixed(2)}%</p>
+                    <p>توصیه‌های بهبود: ${rec.improvements.length ? rec.improvements.join(', ') : 'نیازی به بهبود نیست'}</p>
+                    <p>پیش‌بینی برداشت: ${rec.prediction.yield.toFixed(2)} کیلوگرم</p>
+                    <p>بذر مورد نیاز: ${rec.prediction.seed.toFixed(2)} کیلوگرم</p>
+                    <p>کود مورد نیاز: نیتروژن: ${rec.prediction.fertilizer.N.toFixed(2)} کیلوگرم، فسفر: ${rec.prediction.fertilizer.P.toFixed(2)} کیلوگرم، پتاسیم: ${rec.prediction.fertilizer.K.toFixed(2)} کیلوگرم</p>
+                    <p>آب مورد نیاز: ${rec.prediction.water.toFixed(2)} میلی‌متر</p>
+                `;
+                resultsDiv.appendChild(resultItem);
+            });
+
+            // تولید نمودار
+            const ctx = document.getElementById('successChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: recommendations.map(rec => rec.product),
+                    datasets: [{
+                        label: 'درصد موفقیت',
+                        data: recommendations.map(rec => rec.success_rate),
+                        backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF'],
+                        borderColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'درصد موفقیت'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'محصولات'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        title: {
+                            display: true,
+                            text: 'درصد موفقیت محصولات پیشنهادی'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
