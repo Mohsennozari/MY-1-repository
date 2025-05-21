@@ -174,12 +174,22 @@
     <h1>برنامه مدیریت آب کشاورزی با تحلیل</h1>
     <form id="waterForm" onsubmit="event.preventDefault(); calculateAndSave();">
       <label for="location">موقعیت مزرعه</label>
-      <input type="text" id="location" placeholder="مثلاً کرج یا 35.8, 50.9" aria-label="موقعیت مزرعه" required />
+      <input type="text" id="location" placeholder="مثلاً کرج یا 35.8, 50.9" required />
       <small class="help-text">نام شهر یا مختصات جغرافیایی</small>
       <div class="error-message" id="locationError">لطفا موقعیت مزرعه را وارد کنید.</div>
 
+      <label for="landArea">مساحت زمین (هکتار)</label>
+      <input type="number" id="landArea" min="0" step="0.01" placeholder="مثلاً 1.5" required />
+      <small class="help-text">مساحت زمین به هکتار</small>
+      <div class="error-message" id="landAreaError">لطفا مساحت زمین را به درستی وارد کنید.</div>
+
+      <label for="soilDepth">ضخامت خاک (میلی‌متر)</label>
+      <input type="number" id="soilDepth" min="0" step="1" placeholder="مثلاً 30" required />
+      <small class="help-text">ضخامت خاک به میلی‌متر</small>
+      <div class="error-message" id="soilDepthError">لطفا ضخامت خاک را به درستی وارد کنید.</div>
+
       <label for="soilType">نوع خاک</label>
-      <select id="soilType" aria-label="نوع خاک" required>
+      <select id="soilType" required>
         <option value="" disabled selected>انتخاب کنید</option>
         <option value="1.0">شنی (خاک سبک)</option>
         <option value="1.1">لومی (خاک متوسط)</option>
@@ -188,7 +198,7 @@
       <div class="error-message" id="soilTypeError">لطفا نوع خاک را انتخاب کنید.</div>
 
       <label for="crop">نوع گیاه</label>
-      <select id="crop" aria-label="نوع گیاه" required>
+      <select id="crop" required>
         <option value="" disabled selected>انتخاب کنید</option>
         <option value="0.7">گندم</option>
         <option value="1.05">برنج</option>
@@ -198,7 +208,7 @@
       <div class="error-message" id="cropError">لطفا نوع گیاه را انتخاب کنید.</div>
 
       <label for="stage">مرحله رشد گیاه</label>
-      <select id="stage" aria-label="مرحله رشد گیاه" required>
+      <select id="stage" required>
         <option value="" disabled selected>انتخاب کنید</option>
         <option value="1">اولیه</option>
         <option value="1.1">میانی</option>
@@ -207,27 +217,27 @@
       <div class="error-message" id="stageError">لطفا مرحله رشد را انتخاب کنید.</div>
 
       <label for="et0">ET₀ (تبخیر و تعرق) mm/day</label>
-      <input type="number" id="et0" min="0" step="0.01" placeholder="مثلاً 5.2" aria-label="ET₀" required />
+      <input type="number" id="et0" min="0" step="0.01" required />
       <small class="help-text">مقدار تبخیر و تعرق روزانه (میلیمتر) از ایستگاه هواشناسی</small>
       <div class="error-message" id="et0Error">لطفا مقدار ET₀ را به درستی وارد کنید.</div>
 
       <label for="efficiency">راندمان آبیاری (%)</label>
-      <input type="number" id="efficiency" min="1" max="100" step="1" placeholder="مثلاً 80" aria-label="راندمان آبیاری" required />
+      <input type="number" id="efficiency" min="1" max="100" required />
       <small class="help-text">راندمان سیستم آبیاری بین 1 تا 100 درصد</small>
       <div class="error-message" id="efficiencyError">لطفا راندمان آبیاری را بین 1 تا 100 درصد وارد کنید.</div>
 
       <label for="rainfall">مقدار بارش (mm)</label>
-      <input type="number" id="rainfall" min="0" step="0.1" placeholder="مثلاً 2.5" aria-label="مقدار بارش" required />
+      <input type="number" id="rainfall" min="0" step="0.1" required />
       <small class="help-text">بارش روزانه یا دوره مورد نظر</small>
       <div class="error-message" id="rainfallError">لطفا مقدار بارش را به درستی وارد کنید.</div>
 
       <label for="ec">شوری آب (dS/m)</label>
-      <input type="number" id="ec" min="0" step="0.01" placeholder="مثلاً 1.2" aria-label="شوری آب" required />
+      <input type="number" id="ec" min="0" step="0.01" required />
       <small class="help-text">میزان شوری آب آبیاری</small>
       <div class="error-message" id="ecError">لطفا مقدار شوری آب را به درستی وارد کنید.</div>
 
       <label for="irrigation">نوع سیستم آبیاری</label>
-      <select id="irrigation" aria-label="نوع سیستم آبیاری" required>
+      <select id="irrigation" required>
         <option value="" disabled selected>انتخاب کنید</option>
         <option value="0.9">قطره‌ای</option>
         <option value="0.75">بارانی</option>
@@ -248,67 +258,29 @@
     // اعتبارسنجی ورودی‌ها با نمایش خطا
     function validateInputs() {
       let isValid = true;
-      const et0 = document.getElementById('et0');
-      const efficiency = document.getElementById('efficiency');
-      const rainfall = document.getElementById('rainfall');
-      const ec = document.getElementById('ec');
-      const selects = ['soilType', 'crop', 'stage', 'irrigation'];
-      const textInputs = ['location'];
-      
-      // پاک کردن کلاس خطا و پیام‌های خطا
-      [et0, efficiency, rainfall, ec].forEach(el => {
-        el.classList.remove('error');
-        document.getElementById(el.id + 'Error').style.display = 'none';
-      });
-      selects.forEach(id => {
-        const el = document.getElementById(id);
-        el.classList.remove('error');
-        document.getElementById(id + 'Error').style.display = 'none';
-      });
-      textInputs.forEach(id => {
-        const el = document.getElementById(id);
-        el.classList.remove('error');
-        document.getElementById(id + 'Error').style.display = 'none';
-      });
+      const inputs = [
+        { id: 'location', errorId: 'locationError' },
+        { id: 'landArea', errorId: 'landAreaError' },
+        { id: 'soilDepth', errorId: 'soilDepthError' },
+        { id: 'soilType', errorId: 'soilTypeError' },
+        { id: 'crop', errorId: 'cropError' },
+        { id: 'stage', errorId: 'stageError' },
+        { id: 'et0', errorId: 'et0Error' },
+        { id: 'efficiency', errorId: 'efficiencyError' },
+        { id: 'rainfall', errorId: 'rainfallError' },
+        { id: 'ec', errorId: 'ecError' },
+        { id: 'irrigation', errorId: 'irrigationError' },
+      ];
 
-      // چک کردن ورودی‌های عددی
-      if (isNaN(et0.value) || et0.value === '' || et0.value < 0) {
-        et0.classList.add('error');
-        document.getElementById('et0Error').style.display = 'block';
-        isValid = false;
-      }
-      if (isNaN(efficiency.value) || efficiency.value === '' || efficiency.value < 1 || efficiency.value > 100) {
-        efficiency.classList.add('error');
-        document.getElementById('efficiencyError').style.display = 'block';
-        isValid = false;
-      }
-      if (isNaN(rainfall.value) || rainfall.value === '' || rainfall.value < 0) {
-        rainfall.classList.add('error');
-        document.getElementById('rainfallError').style.display = 'block';
-        isValid = false;
-      }
-      if (isNaN(ec.value) || ec.value === '' || ec.value < 0) {
-        ec.classList.add('error');
-        document.getElementById('ecError').style.display = 'block';
-        isValid = false;
-      }
-
-      // چک کردن انتخاب‌ها
-      selects.forEach(id => {
+      inputs.forEach(({ id, errorId }) => {
         const el = document.getElementById(id);
-        if (!el.value) {
+        const errorEl = document.getElementById(errorId);
+        el.classList.remove('error');
+        errorEl.style.display = 'none';
+
+        if (!el.value || (el.type === 'number' && (isNaN(el.value) || el.value < 0))) {
           el.classList.add('error');
-          document.getElementById(id + 'Error').style.display = 'block';
-          isValid = false;
-        }
-      });
-
-      // چک کردن متن موقعیت
-      textInputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el.value.trim()) {
-          el.classList.add('error');
-          document.getElementById(id + 'Error').style.display = 'block';
+          errorEl.style.display = 'block';
           isValid = false;
         }
       });
@@ -320,7 +292,9 @@
       if (!validateInputs()) return;
 
       const data = {
-        location: sanitizeInput(document.getElementById('location').value.trim()),
+        location: document.getElementById('location').value.trim(),
+        landArea: parseFloat(document.getElementById('landArea').value), // مساحت زمین
+        soilDepth: parseFloat(document.getElementById('soilDepth').value), // ضخامت خاک
         soilFactor: parseFloat(document.getElementById('soilType').value),
         cropFactor: parseFloat(document.getElementById('crop').value),
         stageFactor: parseFloat(document.getElementById('stage').value),
@@ -337,11 +311,27 @@
       let waterNeed = (data.et0 * kc) / (data.efficiency / 100);
       waterNeed = Math.max(waterNeed - data.rainfall, 0);
 
+      // محاسبه نیاز آبی بر اساس مساحت و ضخامت خاک
+      const areaInSquareMeters = data.landArea * 10000; // تبدیل هکتار به متر مربع
+      const totalWaterNeed = waterNeed * areaInSquareMeters; // نیاز آبی کل به میلی‌متر
+      const totalWaterVolume = (totalWaterNeed * data.soilDepth) / 1000; // حجم آب به لیتر (تبدیل میلی‌متر به متر)
+
       data.waterNeed = waterNeed.toFixed(2);
+      data.totalWaterNeed = totalWaterNeed.toFixed(2);
+      data.totalWaterVolume = totalWaterVolume.toFixed(2);
 
       // پیام شوری آب
       let ecMsg = data.ec > 3 ? 'شوری زیاد - خطرناک' : data.ec > 1.7 ? 'شوری متوسط - بااحتیاط' : 'شوری مناسب';
       data.ecMessage = ecMsg;
+
+      // هشدارها و توصیه‌ها
+      data.warnings = [];
+      if (data.ec > 3) {
+        data.warnings.push('⚠️ شوری آب بسیار بالا است. ممکن است نیاز به تغییر منابع آب داشته باشید.');
+      }
+      if (data.rainfall > 10) {
+        data.warnings.push('☔ بارش قابل توجهی وجود دارد. می‌توانید از آبیاری کمتری استفاده کنید.');
+      }
 
       showResult(data);
       saveData(data);
@@ -352,44 +342,43 @@
       renderHistory(); // Refresh history
     }
 
-    // توابع تحلیل و نمایش توضیحات به کشاورز
     function showResult(data) {
-      const analysis = generateAnalysis(data);
       document.getElementById('result').innerHTML = `
         <div class="analysis-section">
           <h3>📊 تحلیل کامل وضعیت آبیاری</h3>
-          
           <div class="stats-box" style="margin-bottom:15px;">
             <div class="stat-item" style="margin-bottom:8px;">
               <span class="stat-label" style="font-weight:bold;">نیاز آبی روزانه:</span>
               <span class="stat-value" style="margin-right:10px;">${data.waterNeed} میلی‌متر</span>
               ${getWaterNeedStatus(data.waterNeed)}
             </div>
-            
+            <div class="stat-item">
+              <span class="stat-label" style="font-weight:bold;">نیاز آبی کل:</span>
+              <span class="stat-value" style="margin-right:10px;">${data.totalWaterNeed} میلی‌متر</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label" style="font-weight:bold;">حجم آب لازم:</span>
+              <span class="stat-value" style="margin-right:10px;">${data.totalWaterVolume} لیتر</span>
+            </div>
             <div class="stat-item">
               <span class="stat-label" style="font-weight:bold;">بهره‌وری سیستم آبیاری:</span>
               <span class="stat-value" style="margin-right:10px;">${data.efficiency}%</span>
               ${getEfficiencyStatus(data.efficiency)}
             </div>
           </div>
-
           <div class="factor-breakdown" style="margin-bottom:15px;">
             <h4>🔍 عوامل مؤثر در محاسبه:</h4>
             <ul>
-              <li>ضریب گیاه: ${data.cropFactor} (${getCropName(data.cropFactor)})</li>
-              <li>مرحله رشد: ${data.stageFactor}x (${getStageName(data.stageFactor)})</li>
-              <li>نوع خاک: ${data.soilFactor}x (${getSoilName(data.soilFactor)})</li>
+              <li>ضریب گیاه: ${data.cropFactor}</li>
+              <li>مرحله رشد: ${data.stageFactor}x</li>
+              <li>نوع خاک: ${data.soilFactor}x</li>
               <li>ضریب سیستم آبیاری: ${data.irrigationFactor}x</li>
             </ul>
           </div>
-
           <div class="alert-message" style="margin-bottom:15px;">
             <h4>🚨 هشدارها و توصیه‌ها:</h4>
-            <p>${getSalinityWarning(data.ec)}</p>
-            <p>${getRainfallImpact(data.rainfall)}</p>
-            <p>${getIrrigationRecommendation(data.waterNeed, data.irrigationFactor)}</p>
+            ${data.warnings.map(warning => `<p>${warning}</p>`).join('')}
           </div>
-
           <div class="comparison-chart">
             <h4>📈 مقایسه با میانگین منطقه</h4>
             <div class="chart-bar" style="width: ${Math.min(data.waterNeed, 15) * 6.5}%; max-width: 100%;">
@@ -401,117 +390,50 @@
       `;
     }
 
-    // وضعیت نیاز آبی
     function getWaterNeedStatus(value) {
       if (value > 10) return `<span class="status-badge بالا">نیاز آبی بالا</span>`;
       if (value > 5) return `<span class="status-badge متوسط">نیاز آبی متوسط</span>`;
       return `<span class="status-badge مناسب">نیاز آبی مناسب</span>`;
     }
 
-    // وضعیت راندمان آبیاری
     function getEfficiencyStatus(value) {
       if (value > 85) return `<div class="progress-bar" style="width:100%; background-color:#27ae60;">عالی</div>`;
       if (value > 60) return `<div class="progress-bar" style="width:70%; background-color:#f39c12;">قابل قبول</div>`;
       return `<div class="progress-bar" style="width:40%; background-color:#e74c3c;">نیاز به بهبود</div>`;
     }
 
-    // پیام هشدار شوری آب
-    function getSalinityWarning(ec) {
-      if (ec > 3) return '❌ شوری آب بسیار بالا! ممکن است باعث کاهش شدید عملکرد محصول شود. توصیه می‌شود از سیستم شستشوی خاک استفاده کنید.';
-      if (ec > 1.7) return '⚠️ شوری آب در حد متوسط است. نظارت دقیق بر EC آب و استفاده از روش‌های کاهش شوری توصیه می‌شود.';
-      return '✅ شوری آب در محدوده ایمن است و مشکلی برای گیاه ایجاد نمی‌کند.';
-    }
-
-    // تاثیر بارش
-    function getRainfallImpact(rainfall) {
-      if (rainfall > 10) return `☔ بارش قابل توجه (${rainfall} میلی‌متر) رخ داده است. نیاز آبی شما حدود 30٪ کاهش یافته است.`;
-      if (rainfall > 5) return `🌧️ بارش متوسط (${rainfall} میلی‌متر) رخ داده است. نیاز آبی شما حدود 15٪ کاهش یافته است.`;
-      return '☀️ بارش ناچیز بوده است، نیاز آبی کامل است.';
-    }
-
-    // توصیه آبیاری بر اساس نیاز و سیستم
-    function getIrrigationRecommendation(waterNeed, irrigationFactor) {
-      if (waterNeed > 15 && irrigationFactor < 0.7) {
-        return '🔔 سیستم آبیاری فعلی شما برای نیاز آبی بالا مناسب نیست. پیشنهاد می‌شود سیستم آبیاری قطره‌ای را در نظر بگیرید.';
-      }
-      if (waterNeed > 10) {
-        return '⏱️ برنامه آبیاری پیشنهادی: 3 نوبت در روز، هر نوبت 45 دقیقه.';
-      }
-      return '🕒 برنامه آبیاری پیشنهادی: 2 نوبت در روز، هر نوبت 30 دقیقه.';
-    }
-
-    // نام گیاه بر اساس ضریب
-    function getCropName(factor) {
-      switch(factor) {
-        case 0.7: return 'گندم';
-        case 1.05: return 'برنج';
-        case 0.85: return 'ذرت';
-        case 0.95: return 'سیب‌زمینی';
-        default: return 'نامشخص';
-      }
-    }
-
-    // نام مرحله رشد بر اساس ضریب
-    function getStageName(factor) {
-      switch(factor) {
-        case 1: return 'اولیه';
-        case 1.1: return 'میانی';
-        case 1.25: return 'نهایی';
-        default: return 'نامشخص';
-      }
-    }
-
-    // نام خاک بر اساس ضریب
-    function getSoilName(factor) {
-      switch(factor) {
-        case 1.0: return 'شنی (سبک)';
-        case 1.1: return 'لومی (متوسط)';
-        case 1.2: return 'رسی (سنگین)';
-        default: return 'نامشخص';
-      }
-    }
-
-    // ذخیره داده‌ها در localStorage
     function saveData(data) {
       let records = JSON.parse(localStorage.getItem('waterRecords')) || [];
       records.push(data);
       localStorage.setItem('waterRecords', JSON.stringify(records));
     }
 
-    // نمایش تاریخچه محاسبات
     function renderHistory() {
       let records = JSON.parse(localStorage.getItem('waterRecords')) || [];
       if (records.length === 0) {
         document.getElementById('history').innerHTML = 'رکوردی وجود ندارد.';
         return;
       }
-      let html = `<table><thead><tr><th>تاریخ</th><th>مزرعه</th><th>نیاز آبی (mm/day)</th><th>شوری</th><th>حذف</th></tr></thead><tbody>`;
+      let html = `<table><thead><tr><th>تاریخ</th><th>مزرعه</th><th>نیاز آبی (mm/day)</th><th>حجم آب (لیتر)</th><th>شوری</th><th>حذف</th></tr></thead><tbody>`;
       records.forEach((rec, index) => {
         html += `<tr>
           <td>${rec.date}</td>
           <td>${rec.location}</td>
           <td>${rec.waterNeed}</td>
+          <td>${rec.totalWaterVolume}</td>
           <td>${rec.ecMessage}</td>
-          <td><button class="delete-btn" onclick="deleteRecord(${index})" aria-label="حذف رکورد شماره ${index + 1}">حذف</button></td>
+          <td><button class="delete-btn" onclick="deleteRecord(${index})">حذف</button></td>
         </tr>`;
       });
       html += `</tbody></table>`;
       document.getElementById('history').innerHTML = html;
     }
 
-    // حذف رکورد از تاریخچه
     function deleteRecord(index) {
       let records = JSON.parse(localStorage.getItem('waterRecords')) || [];
       records.splice(index, 1);
       localStorage.setItem('waterRecords', JSON.stringify(records));
       renderHistory();
-    }
-
-    // جلوگیری از XSS ساده
-    function sanitizeInput(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
     }
 
     window.onload = renderHistory;
