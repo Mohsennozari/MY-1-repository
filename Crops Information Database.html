@@ -1,0 +1,641 @@
+<!DOCTYPE html><html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  <title>اطلاعات محصولات کشاورزی</title>
+  <style>
+    *{
+        font-family: 'Vazirmatn', Tahoma, sans-serif;
+       
+    }
+    body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+      direction: rtl;
+      background-color: #f0fdf4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #005e4b;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    input[type="text"] {
+          border-radius: 20px;
+           text-align: center;
+      width: 90%;
+      margin: 1rem auto;
+      display: block;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .product {
+      background-color: white;
+      margin: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .product h3 {
+      margin-top: 0;
+      color: #2e7d32;
+    }
+    .performance {
+          border-radius: 20px;
+      margin-top: 0.5rem;
+    }
+    .label {
+      
+        font-family: 'Vazirmatn', Tahoma, sans-serif;
+      font-weight: bold;
+      color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>پایگاه اطلاعاتی محصولات کشاورزی</h1>
+  </header>
+  <input type="text" id="search" placeholder="نام محصول را وارد کنید..." oninput="filterProducts()" />
+  <div id="productList"></div>  <script>
+    const products = [
+      
+  // محصولات زراعی
+  {
+    name: "گندم",
+    type: "زراعی",
+    season: "پاییزه و بهاره",
+    climate: "معتدل تا نیمه‌خشک",
+    growthPeriod: "120 تا 160 روز",
+    varieties: ["پیشتاز", "چمران-2", "سیروان", "کیش", "مهدوی"],
+    water: "4000 تا 6000 مترمکعب در هکتار",
+    fertilizer: "150N - 80P - 60K کیلوگرم در هکتار",
+    temperature: "12 تا 25 درجه سانتی‌گراد",
+    rainfall: "حداقل 300 میلی‌متر سالانه",
+    soil: "خاک‌های لومی یا رسی لومی",
+    texture: "متوسط تا سنگین",
+    pH: "6 تا 7.5",
+    salinity: "EC < 4 dS/m",
+    pests: ["سن گندم", "شته سبز"],
+    performance: {
+      poor: "2000 کیلوگرم در هکتار",
+      average: "4000 کیلوگرم",
+      good: "6000 کیلوگرم",
+      excellent: "8000 کیلوگرم"
+    }
+  },
+  {
+    name: "ذرت",
+    type: "زراعی",
+    season: "بهاره",
+    climate: "گرم و مرطوب",
+    growthPeriod: "100 تا 120 روز",
+    varieties: ["سینگل کراس 704", "تک‌روزه 500", "SC647", "SC700", "KSC704"],
+    water: "7000 تا 10000 مترمکعب در هکتار",
+    fertilizer: "200N - 90P - 80K کیلوگرم",
+    temperature: "20 تا 35 درجه",
+    rainfall: "500 تا 1000 میلی‌متر",
+    soil: "خاک‌های حاصلخیز با زهکشی مناسب",
+    texture: "لومی شنی تا رسی",
+    pH: "6 تا 7.5",
+    salinity: "EC < 3 dS/m",
+    pests: ["کرم برگ‌خوار ذرت", "کرم ساقه‌خوار"],
+    performance: {
+      poor: "4 تن در هکتار",
+      average: "8 تن",
+      good: "12 تن",
+      excellent: "16 تن"
+    }
+  },
+  {
+    name: "جو",
+    type: "زراعی",
+    season: "پاییزه و بهاره",
+    climate: "معتدل تا سرد",
+    growthPeriod: "90 تا 120 روز",
+    varieties: ["آریا", "سایر واریته‌ها"],
+    water: "3000 تا 5000 مترمکعب در هکتار",
+    fertilizer: "120N - 60P - 40K کیلوگرم",
+    temperature: "10 تا 20 درجه سانتی‌گراد",
+    rainfall: "300 تا 600 میلی‌متر",
+    soil: "خاک‌های لومی و رسی",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["سن گندم", "شته"],
+    performance: {
+      poor: "1500 کیلوگرم در هکتار",
+      average: "3000 کیلوگرم",
+      good: "4500 کیلوگرم",
+      excellent: "6000 کیلوگرم"
+    }
+  },
+  {
+    name: "برنج",
+    type: "زراعی",
+    season: "تابستانه",
+    climate: "گرم و مرطوب",
+    growthPeriod: "120 تا 150 روز",
+    varieties: ["هندی", "بومی", "دوسر"],
+    water: "8000 تا 12000 مترمکعب در هکتار",
+    fertilizer: "150N - 70P - 60K کیلوگرم",
+    temperature: "20 تا 35 درجه سانتی‌گراد",
+    rainfall: "1000 تا 2000 میلی‌متر",
+    soil: "خاک‌های رسی و غنی",
+    texture: "متوسط تا سنگین",
+    pH: "5.5 تا 7",
+    salinity: "EC < 1.5 dS/m",
+    pests: ["کرم ساقه‌خوار", "مگس برنج"],
+    performance: {
+      poor: "3000 کیلوگرم در هکتار",
+      average: "6000 کیلوگرم",
+      good: "8000 کیلوگرم",
+      excellent: "10000 کیلوگرم"
+    }
+  },
+  {
+    name: "گوجه‌فرنگی",
+    type: "زراعی",
+    season: "بهاره و تابستانه",
+    climate: "گرم و معتدل",
+    growthPeriod: "90 تا 120 روز",
+    varieties: ["هیبرید 8320", "F1 Rio Grande", "Super Strain B", "Peto 86", "Sun 636"],
+    water: "5000 تا 7000 مترمکعب در هکتار",
+    fertilizer: "180N - 60P - 90K کیلوگرم",
+    temperature: "18 تا 30 درجه",
+    rainfall: "400 تا 700 میلی‌متر",
+    soil: "سبک و غنی با زهکشی مناسب",
+    texture: "لومی شنی",
+    pH: "6 تا 7",
+    salinity: "EC < 2.5 dS/m",
+    pests: ["سفیدبالک", "پروانه مینوز برگ"],
+    performance: {
+      poor: "20 تن در هکتار",
+      average: "40 تن",
+      good: "60 تن",
+      excellent: "80 تن"
+    }
+  },
+  {
+    name: "سیب‌زمینی",
+    type: "زراعی",
+    season: "بهاره و تابستانه",
+    climate: "معتدل",
+    growthPeriod: "90 تا 120 روز",
+    varieties: ["آگریا", "دزفولی", "رومانی"],
+    water: "6000 تا 8000 مترمکعب در هکتار",
+    fertilizer: "200N - 80P - 100K کیلوگرم",
+    temperature: "15 تا 25 درجه",
+    rainfall: "500 تا 800 میلی‌متر",
+    soil: "خاک‌های لومی و رسی",
+    texture: "متوسط",
+    pH: "5.5 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم سیب‌زمینی", "شته"],
+    performance: {
+      poor: "10 تن در هکتار",
+      average: "20 تن",
+      good: "30 تن",
+      excellent: "40 تن"
+    }
+  },
+  {
+    name: "چغندر قند",
+    type: "زراعی",
+    season: "بهاره",
+    climate: "معتدل",
+    growthPeriod: "120 تا 150 روز",
+    varieties: ["چغندر قند معمولی", "چغندر قند زودرس"],
+    water: "5000 تا 7000 مترمکعب در هکتار",
+    fertilizer: "150N - 70P - 80K کیلوگرم",
+    temperature: "10 تا 25 درجه",
+    rainfall: "400 تا 600 میلی‌متر",
+    soil: "خاک‌های لومی و رسی",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم چغندر", "شته"],
+    performance: {
+      poor: "20 تن در هکتار",
+      average: "40 تن",
+      good: "60 تن",
+      excellent: "80 تن"
+    }
+  },
+  {
+    name: "عدس",
+    type: "زراعی",
+    season: "پاییزه",
+    climate: "معتدل",
+    growthPeriod: "90 تا 120 روز",
+    varieties: ["عدس سبز", "عدس قهوه‌ای"],
+    water: "3000 تا 5000 مترمکعب در هکتار",
+    fertilizer: "100N - 50P - 40K کیلوگرم",
+    temperature: "10 تا 20 درجه",
+    rainfall: "300 تا 500 میلی‌متر",
+    soil: "خاک‌های لومی و رسی",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["شته", "کرم"],
+    performance: {
+      poor: "800 کیلوگرم در هکتار",
+      average: "1500 کیلوگرم",
+      good: "2000 کیلوگرم",
+      excellent: "3000 کیلوگرم"
+    }
+  },
+  {
+    name: "نخود",
+    type: "زراعی",
+    season: "پاییزه",
+    climate: "معتدل",
+    growthPeriod: "90 تا 120 روز",
+    varieties: ["نخود زودرس", "نخود دیررس"],
+    water: "3000 تا 5000 مترمکعب در هکتار",
+    fertilizer: "100N - 50P - 40K کیلوگرم",
+    temperature: "10 تا 20 درجه",
+    rainfall: "300 تا 500 میلی‌متر",
+    soil: "خاک‌های لومی و رسی",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["شته", "کرم"],
+    performance: {
+      poor: "800 کیلوگرم در هکتار",
+      average: "1500 کیلوگرم",
+      good: "2000 کیلوگرم",
+      excellent: "3000 کیلوگرم"
+    }
+  },
+  {
+    name: "کنجد",
+    type: "زراعی",
+    season: "تابستانه",
+    climate: "گرم و خشک",
+    growthPeriod: "90 تا 120 روز",
+    varieties: ["کنجد سفید", "کنجد سیاه"],
+    water: "4000 تا 6000 مترمکعب در هکتار",
+    fertilizer: "100N - 50P - 40K کیلوگرم",
+    temperature: "20 تا 30 درجه",
+    rainfall: "300 تا 500 میلی‌متر",
+    soil: "خاک‌های لومی و رسی",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["شته", "کرم"],
+    performance: {
+      poor: "500 کیلوگرم در هکتار",
+      average: "1000 کیلوگرم",
+      good: "1500 کیلوگرم",
+      excellent: "2000 کیلوگرم"
+    }
+  },
+  {
+    name: "سیب‌زمینی شیرین",
+    type: "زراعی",
+    season: "تابستانه",
+    climate: "گرم و مرطوب",
+    growthPeriod: "90 تا 120 روز",
+    varieties: ["سیب‌زمینی شیرین زودرس", "سیب‌زمینی شیرین دیررس"],
+    water: "6000 تا 8000 مترمکعب در هکتار",
+    fertilizer: "150N - 70P - 60K کیلوگرم",
+    temperature: "20 تا 30 درجه",
+    rainfall: "500 تا 800 میلی‌متر",
+    soil: "خاک‌های لومی و رسی",
+    texture: "متوسط",
+    pH: "5.5 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم سیب‌زمینی", "شته"],
+    performance: {
+      poor: "10 تن در هکتار",
+      average: "20 تن",
+      good: "30 تن",
+      excellent: "40 تن"
+    }
+  },
+
+  // محصولات باغی
+  {
+    name: "سیب درختی",
+    type: "باغی",
+    season: "بهار (شکوفه) تا پاییز (برداشت)",
+    climate: "سردسیر تا معتدل",
+    growthPeriod: "150 تا 180 روز",
+    varieties: ["رد دلیشز", "گلدن دلیشز", "گالا", "فوجی", "استارکینگ"],
+    water: "8000 تا 12000 مترمکعب در هکتار",
+    fertilizer: "120N - 80P - 100K کیلوگرم در هکتار",
+    temperature: "7 تا 24 درجه سانتی‌گراد",
+    rainfall: "500 تا 800 میلی‌متر",
+    soil: "خاک‌های نیمه‌سنگین با زهکشی مناسب",
+    texture: "لومی شنی تا رسی لومی",
+    pH: "6 تا 7",
+    salinity: "EC < 1.7 dS/m",
+    pests: ["کرم سیب", "شته سبز سیب"],
+    performance: {
+      poor: "10 تن در هکتار",
+      average: "20 تن",
+      good: "35 تن",
+      excellent: "50 تن"
+    }
+  },
+  {
+    name: "پسته",
+    type: "باغی",
+    season: "بهار (شروع رشد) تا تابستان (برداشت)",
+    climate: "خشک و نیمه‌خشک",
+    growthPeriod: "180 تا 200 روز",
+    varieties: ["احمدآقایی", "اکبری", "فندقی", "کله‌قوچی", "بادامی"],
+    water: "6000 تا 8000 مترمکعب در هکتار",
+    fertilizer: "100N - 50P - 100K کیلوگرم در هکتار",
+    temperature: "15 تا 35 درجه",
+    rainfall: "100 تا 300 میلی‌متر",
+    soil: "خاک‌های سبک تا نیمه‌سنگین با زهکشی خوب",
+    texture: "شنی لومی تا لومی رسی",
+    pH: "7 تا 8",
+    salinity: "EC < 8 dS/m",
+    pests: ["پسیل پسته", "زنجرک پسته"],
+    performance: {
+      poor: "500 کیلوگرم در هکتار",
+      average: "1000 کیلوگرم",
+      good: "2000 کیلوگرم",
+      excellent: "3500 کیلوگرم"
+    }
+  },
+  {
+    name: "انگور",
+    type: "باغی",
+    season: "بهار (شکوفه) تا تابستان (برداشت)",
+    climate: "معتدل تا گرم",
+    growthPeriod: "150 تا 180 روز",
+    varieties: ["شاهانی", "فخری", "کشمش"],
+    water: "6000 تا 8000 مترمکعب در هکتار",
+    fertilizer: "100N - 50P - 80K کیلوگرم در هکتار",
+    temperature: "15 تا 30 درجه",
+    rainfall: "400 تا 600 میلی‌متر",
+    soil: "خاک‌های لومی با زهکشی مناسب",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم خوشه‌چین", "شته"],
+    performance: {
+      poor: "5 تن در هکتار",
+      average: "10 تن",
+      good: "15 تن",
+      excellent: "20 تن"
+    }
+  },
+  {
+    name: "هلو",
+    type: "باغی",
+    season: "بهار (شکوفه) تا تابستان (برداشت)",
+    climate: "معتدل",
+    growthPeriod: "150 تا 180 روز",
+    varieties: ["هلوی زودرس", "هلوی دیررس"],
+    water: "8000 تا 10000 مترمکعب در هکتار",
+    fertilizer: "120N - 80P - 100K کیلوگرم در هکتار",
+    temperature: "15 تا 30 درجه",
+    rainfall: "500 تا 800 میلی‌متر",
+    soil: "خاک‌های لومی با زهکشی مناسب",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم هلو", "شته"],
+    performance: {
+      poor: "5 تن در هکتار",
+      average: "10 تن",
+      good: "15 تن",
+      excellent: "20 تن"
+    }
+  },
+  {
+    name: "آلبالو",
+    type: "باغی",
+    season: "بهار (شکوفه) تا تابستان (برداشت)",
+    climate: "سردسیر تا معتدل",
+    growthPeriod: "150 تا 180 روز",
+    varieties: ["آلبالو شیرین", "آلبالو ترش"],
+    water: "6000 تا 8000 مترمکعب در هکتار",
+    fertilizer: "100N - 50P - 80K کیلوگرم در هکتار",
+    temperature: "10 تا 25 درجه",
+    rainfall: "400 تا 600 میلی‌متر",
+    soil: "خاک‌های لومی با زهکشی مناسب",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم آلبالو", "شته"],
+    performance: {
+      poor: "5 تن در هکتار",
+      average: "10 تن",
+      good: "15 تن",
+      excellent: "20 تن"
+    }
+  },
+  {
+    name: "گلابی",
+    type: "باغی",
+    season: "بهار (شکوفه) تا تابستان (برداشت)",
+    climate: "معتدل",
+    growthPeriod: "150 تا 180 روز",
+    varieties: ["گلابی زودرس", "گلابی دیررس"],
+    water: "8000 تا 10000 مترمکعب در هکتار",
+    fertilizer: "120N - 80P - 100K کیلوگرم در هکتار",
+    temperature: "10 تا 25 درجه",
+    rainfall: "500 تا 800 میلی‌متر",
+    soil: "خاک‌های لومی با زهکشی مناسب",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم گلابی", "شته"],
+    performance: {
+      poor: "5 تن در هکتار",
+      average: "10 تن",
+      good: "15 تن",
+      excellent: "20 تن"
+    }
+  },
+  {
+    name: "کیوی",
+    type: "باغی",
+    season: "بهار (شکوفه) تا پاییز (برداشت)",
+    climate: "معتدل",
+    growthPeriod: "150 تا 180 روز",
+    varieties: ["کیوی سبز", "کیوی زرد"],
+    water: "8000 تا 10000 مترمکعب در هکتار",
+    fertilizer: "120N - 80P - 100K کیلوگرم در هکتار",
+    temperature: "10 تا 25 درجه",
+    rainfall: "500 تا 800 میلی‌متر",
+    soil: "خاک‌های لومی با زهکشی مناسب",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم کیوی", "شته"],
+    performance: {
+      poor: "5 تن در هکتار",
+      average: "10 تن",
+      good: "15 تن",
+      excellent: "20 تن"
+    }
+  },
+  {
+    name: "زردآلو",
+    type: "باغی",
+    season: "بهار (شکوفه) تا تابستان (برداشت)",
+    climate: "معتدل",
+    growthPeriod: "150 تا 180 روز",
+    varieties: ["زردآلو زودرس", "زردآلو دیررس"],
+    water: "8000 تا 10000 مترمکعب در هکتار",
+    fertilizer: "120N - 80P - 100K کیلوگرم در هکتار",
+    temperature: "10 تا 25 درجه",
+    rainfall: "500 تا 800 میلی‌متر",
+    soil: "خاک‌های لومی با زهکشی مناسب",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم زردآلو", "شته"],
+    performance: {
+      poor: "5 تن در هکتار",
+      average: "10 تن",
+      good: "15 تن",
+      excellent: "20 تن"
+    }
+  },
+  {
+    name: "توت",
+    type: "باغی",
+    season: "بهار (شکوفه) تا تابستان (برداشت)",
+    climate: "معتدل",
+    growthPeriod: "150 تا 180 روز",
+    varieties: ["توت سفید", "توت سیاه"],
+    water: "6000 تا 8000 مترمکعب در هکتار",
+    fertilizer: "100N - 50P - 80K کیلوگرم در هکتار",
+    temperature: "10 تا 25 درجه",
+    rainfall: "400 تا 600 میلی‌متر",
+    soil: "خاک‌های لومی با زهکشی مناسب",
+    texture: "متوسط",
+    pH: "6 تا 7",
+    salinity: "EC < 2 dS/m",
+    pests: ["کرم توت", "شته"],
+    performance: {
+      poor: "5 تن در هکتار",
+      average: "10 تن",
+      good: "15 تن",
+      excellent: "20 تن"
+    }
+  },
+
+  // محصولات گلخانه‌ای
+  {
+    name: "گوجه‌فرنگی",
+    type: "گلخانه‌ای",
+    season: "بهاره و تابستانه",
+    climate: "گرم و معتدل",
+    growthPeriod: "90 تا 120 روز",
+    varieties: ["هیبرید 8320", "F1 Rio Grande", "Super Strain B", "Peto 86", "Sun 636"],
+    water: "5000 تا 7000 مترمکعب در هکتار",
+    fertilizer: "180N - 60P - 90K کیلوگرم",
+    temperature: "18 تا 30 درجه",
+    rainfall: "400 تا 700 میلی‌متر",
+    soil: "سبک و غنی با زهکشی مناسب",
+    texture: "لومی شنی",
+    pH: "6 تا 7",
+    salinity: "EC < 2.5 dS/m",
+    pests: ["سفیدبالک", "پروانه مینوز برگ"],
+    performance: {
+      poor: "20 تن در هکتار",
+      average: "40 تن",
+      good: "60 تن",
+      excellent: "80 تن"
+    }
+  },
+  {
+    name: "خیار",
+    type: "گلخانه‌ای",
+    season: "بهاره و تابستانه",
+    climate: "گرم و معتدل",
+    growthPeriod: "50 تا 70 روز",
+    varieties: ["هیبرید", "محلی"],
+    water: "6000 تا 8000 مترمکعب در هکتار",
+    fertilizer: "150N - 70P - 80K کیلوگرم",
+    temperature: "18 تا 30 درجه",
+    rainfall: "500 تا 700 میلی‌متر",
+    soil: "خاک‌های سبک و غنی",
+    texture: "لومی شنی",
+    pH: "6 تا 7",
+    salinity: "EC < 2.5 dS/m",
+    pests: ["مگس سفید", "شته"],
+    performance: {
+      poor: "15 تن در هکتار",
+      average: "30 تن",
+      good: "45 تن",
+      excellent: "60 تن"
+    }
+  },
+  {
+    name: "فلفل دلمه‌ای",
+    type: "گلخانه‌ای",
+    season: "بهاره و تابستانه",
+    climate: "گرم و معتدل",
+    growthPeriod: "70 تا 90 روز",
+    varieties: ["فلفل دلمه‌ای سبز", "فلفل دلمه‌ای قرمز"],
+    water: "5000 تا 7000 مترمکعب در هکتار",
+    fertilizer: "150N - 60P - 90K کیلوگرم",
+    temperature: "18 تا 30 درجه",
+    rainfall: "400 تا 700 میلی‌متر",
+    soil: "خاک‌های سبک و غنی",
+    texture: "لومی شنی",
+    pH: "6 تا 7",
+    salinity: "EC < 2.5 dS/m",
+    pests: ["مگس سفید", "شته"],
+    performance: {
+      poor: "10 تن در هکتار",
+      average: "20 تن",
+      good: "30 تن",
+      excellent: "40 تن"
+    }
+  },
+  
+    ];
+
+    function filterProducts() {
+      const query = document.getElementById("search").value.toLowerCase();
+      const productList = document.getElementById("productList");
+      productList.innerHTML = "";
+
+      products.filter(p => p.name.toLowerCase().includes(query)).forEach(p => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <h3>${p.name} (${p.type})</h3>
+          <p><span class="label">فصل کاشت:</span> ${p.season}</p>
+          <p><span class="label">اقلیم مناسب:</span> ${p.climate}</p>
+          <p><span class="label">دوره رشد:</span> ${p.growthPeriod}</p>
+          <p><span class="label">ارقام رایج:</span> ${p.varieties.join(", ")}</p>
+          <p><span class="label">نیاز آبی:</span> ${p.water}</p>
+          <p><span class="label">نیاز کودی:</span> ${p.fertilizer}</p>
+          <p><span class="label">دمای مناسب:</span> ${p.temperature}</p>
+          <p><span class="label">بارش مورد نیاز:</span> ${p.rainfall}</p>
+          <p><span class="label">نوع خاک:</span> ${p.soil}</p>
+          <p><span class="label">بافت خاک:</span> ${p.texture}</p>
+          <p><span class="label">pH خاک:</span> ${p.pH}</p>
+          <p><span class="label">شوری قابل تحمل:</span> ${p.salinity}</p>
+          <p><span class="label">آفات شایع:</span> ${p.pests.join(", ")}</p>
+          <div class="performance">
+            <p><span class="label">عملکرد:</span></p>
+            <ul>
+              <li>ضعیف: ${p.performance.poor}</li>
+              <li>متوسط: ${p.performance.average}</li>
+              <li>خوب: ${p.performance.good}</li>
+              <li>عالی: ${p.performance.excellent}</li>
+            </ul>
+          </div>
+        `;
+        productList.appendChild(div);
+      });
+    }
+
+    filterProducts();
+  </script></body>
+</html>
