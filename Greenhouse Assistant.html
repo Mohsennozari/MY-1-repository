@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دستیار گلخانه هوشمند</title>
+    <style>
+        :root {
+            --primary: #2E7D32; /* سبز زیتونی */
+            --secondary: #4FC3F7; /* آبی آسمانی */
+            --accent: #FF7043; /* نارنجی گرم */
+            --background: #F5F5F5;
+            --card: #FFFFFF;
+            --text: #1A1A1A;
+            --border: #E0E0E0;
+            --dark-bg: #121212;
+            --dark-card: #1E1E1E;
+            --dark-text: #E0E0E0;
+            --dark-border: #333;
+        }
+        body {
+            font-family: 'Vazir', -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: var(--background);
+            color: var(--text);
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+        body.dark-mode {
+            background: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        body.dark-mode .container, body.dark-mode .dashboard, body.dark-mode .tabcontent {
+            background: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+        body.dark-mode input, body.dark-mode select {
+            background: #2C2C2C;
+            color: var(--dark-text);
+            border-color: var(--dark-border);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 0 20px;
+        }
+        .dashboard {
+            background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .dashboard p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: var(--text);
+        }
+        .tab {
+            display: flex;
+            background: var(--card);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .tab button {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .tab button:hover, .tab button.active {
+            background: var(--primary);
+            color: #FFFFFF;
+        }
+        .tabcontent {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 15px 15px;
+            background: var(--card);
+            animation: fadeIn 0.3s ease;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        label {
+            display: block;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+            background: var(--card);
+            color: var(--text);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        select:focus, input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 5px rgba(79, 195, 247, 0.3);
+            outline: none;
+        }
+        .tooltip {
+            position: absolute;
+            top: -30px;
+            left: 10px;
+            background: var(--secondary);
+            color: #FFFFFF;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: none;
+            z-index: 10;
+        }
+        .form-group:hover .tooltip {
+            display: block;
+        }
+        button.submit-btn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: #FFFFFF;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            opacity: 0.5;
+        }
+        button.submit-btn.enabled {
+            opacity: 1;
+            cursor: pointer;
+        }
+        button.submit-btn.enabled:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .error {
+            color: var(--accent);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        #result, #history {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: var(--card);
+            border: 1px solid var(--border);
+        }
+        .history-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+        .history-item:hover {
+            background: #e3f2fd;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            h1 { font-size: 24px; }
+            .tab button { font-size: 14px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
+    <div class="container">
+        <h1>دستیار گلخانه هوشمند</h1>
+        <div class="dashboard">
+            <h3>وضعیت گلخانه</h3>
+            <p id="dashboard-temp">دما: 25°C</p>
+            <p id="dashboard-humidity">رطوبت: 60%</p>
+            <p id="dashboard-irrigation">آبیاری: خاموش</p>
+            <p id="dashboard-crop">محصول فعال: خیار</p>
+        </div>
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'environment')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20m10-10H2"/>
+                </svg>
+                محیط
+            </button>
+            <button class="tablinks" onclick="openTab(event, 'irrigation')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 12h16"/>
+                </svg>
+                آبیاری
+            </button>
+            <button class="tablinks" onclick="openTab(event, 'crop')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 20h18M12 4v16"/>
+                </svg>
+                کشت
+            </button>
+            <button class="tablinks" onclick="openTab(event, 'pests')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 8a4 4 0 014 4 4 4 0 01-4 4 4 4 0 01-4-4 4 4 0 014-4zm0 0v4m-4 0h8"/>
+                </svg>
+                آفات
+            </button>
+            <button class="tablinks" onclick="openTab(event, 'fertilizer')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 4v16m-4 0h8"/>
+                </svg>
+                کوددهی
+            </button>
+            <button class="tablinks" onclick="openTab(event, 'reports')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 17v-6m6 6v-9m-6 9H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-4"/>
+                </svg>
+                گزارش‌ها
+            </button>
+        </div>
+        <!-- محیط -->
+        <div id="environment" class="tabcontent" style="display: block;">
+            <div class="form-group">
+                <label for="target-temp">دمای هدف (°C):</label>
+                <span class="tooltip">دمای ایده‌آل برای گیاه (10-40°C)</span>
+                <input type="number" id="target-temp" value="25" min="10" max="40" required oninput="validateEnvironment()">
+                <div class="error" id="temp-error">دما باید بین 10 تا 40 درجه باشد.</div>
+            </div>
+            <div class="form-group">
+                <label for="target-humidity">رطوبت هدف (%):</label>
+                <span class="tooltip">رطوبت ایده‌آل (20-90%)</span>
+                <input type="number" id="target-humidity" value="60" min="20" max="90" required oninput="validateEnvironment()">
+                <div class="error" id="humidity-error">رطوبت باید بین 20 تا 90 درصد باشد.</div>
+            </div>
+            <div class="form-group">
+                <label for="target-light">سطح نور:</label>
+                <span class="tooltip">نور مورد نیاز گیاه</span>
+                <select id="target-light">
+                    <option value="کم">کم</option>
+                    <option value="متوسط" selected>متوسط</option>
+                    <option value="زیاد">زیاد</option>
+                </select>
+            </div>
+            <button class="submit-btn" id="env-submit" onclick="setEnvironment()">تنظیم محیط</button>
+        </div>
+        <!-- آبیاری -->
+        <div id="irrigation" class="tabcontent">
+            <div class="form-group">
+                <label for="irrigation-schedule">زمان‌بندی آبیاری:</label>
+                <span class="tooltip">دوره آبیاری گیاه</span>
+                <select id="irrigation-schedule" required oninput="validateIrrigation()">
+                    <option value="">انتخاب کنید</option>
+                    <option value="روزانه">روزانه</option>
+                    <option value="هفتگی">هفتگی</option>
+                </select>
+                <div class="error" id="schedule-error">لطفاً زمان‌بندی را انتخاب کنید.</div>
+            </div>
+            <div class="form-group">
+                <label for="irrigation-duration">مدت‌زمان (دقیقه):</label>
+                <span class="tooltip">مدت هر آبیاری (1-60 دقیقه)</span>
+                <input type="number" id="irrigation-duration" value="10" min="1" max="60">
+            </div>
+            <button class="submit-btn" id="irr-submit" onclick="setIrrigation()">تنظیم آبیاری</button>
+        </div>
+        <!-- کشت -->
+        <div id="crop" class="tabcontent">
+            <div class="form-group">
+                <label for="crop-type">محصول:</label>
+                <span class="tooltip">محصولی که کشت می‌کنید</span>
+                <select id="crop-type" required oninput="validateCrop()">
+                    <option value="">انتخاب کنید</option>
+                    <option value="خیار">خیار</option>
+                    <option value="گوجه">گوجه</option>
+                </select>
+                <div class="error" id="crop-error">لطفاً محصول را انتخاب کنید.</div>
+            </div>
+            <div class="form-group">
+                <label for="crop-date">تاریخ کاشت:</label>
+                <span class="tooltip">تاریخ شروع کشت</span>
+                <input type="date" id="crop-date" value="">
+            </div>
+            <button class="submit-btn" id="crop-submit" onclick="setCrop()">ثبت کشت</button>
+        </div>
+        <!-- آفات -->
+        <div id="pests" class="tabcontent">
+            <div class="form-group">
+                <label for="pest-image">تصویر آفت (اختیاری):</label>
+                <span class="tooltip">عکس برگ یا میوه آسیب‌دیده</span>
+                <input type="file" id="pest-image" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="pest-type">نوع آفت:</label>
+                <span class="tooltip">آفت مشاهده‌شده</span>
+                <select id="pest-type" required oninput="validatePest()">
+                    <option value="">انتخاب کنید</option>
+                    <option value="سفیدبالک">سفیدبالک</option>
+                    <option value="کنه">کنه</option>
+                </select>
+                <div class="error" id="pest-error">لطفاً نوع آفت یا تصویر را وارد کنید.</div>
+            </div>
+            <div class="form-group">
+                <label for="pest-date">تاریخ سم‌پاشی:</label>
+                <span class="tooltip">تاریخ استفاده از سم</span>
+                <input type="date" id="pest-date">
+            </div>
+            <button class="submit-btn" id="pest-submit" onclick="setPest()">ثبت آفت</button>
+        </div>
+        <!-- کوددهی -->
+        <div id="fertilizer" class="tabcontent">
+            <div class="form-group">
+                <label for="fertilizer-type">نوع کود:</label>
+                <span class="tooltip">کود مورد استفاده</span>
+                <select id="fertilizer-type" required oninput="validateFertilizer()">
+                    <option value="">انتخاب کنید</option>
+                    <option value="نیتروژن">نیتروژن</option>
+                    <option value="پتاسیم">پتاسیم</option>
+                </select>
+                <div class="error" id="fertilizer-error">لطفاً نوع کود را انتخاب کنید.</div>
+            </div>
+            <div class="form-group">
+                <label for="fertilizer-amount">مقدار (گرم):</label>
+                <span class="tooltip">مقدار کود در هر مترمربع</span>
+                <input type="number" id="fertilizer-amount" value="10" min="1" max="100">
+            </div>
+            <button class="submit-btn" id="fertilizer-submit" onclick="setFertilizer()">ثبت کوددهی</button>
+        </div>
+        <!-- گزارش‌ها -->
+        <div id="reports" class="tabcontent">
+            <button class="submit-btn" onclick="generateReport()">تولید گزارش</button>
+            <button class="submit-btn" onclick="exportData()">صادر کردن داده‌ها</button>
+            <div id="result"></div>
+            <div id="chart-container"></div>
+        </div>
+        <div id="history">
+            <h3>تاریخچه فعالیت‌ها</h3>
+            <select id="history-filter" onchange="displayHistory()">
+                <option value="all">همه</option>
+                <option value="environment">محیط</option>
+                <option value="irrigation">آبیاری</option>
+                <option value="crop">کشت</option>
+                <option value="pests">آفات</option>
+                <option value="fertilizer">کوددهی</option>
+            </select>
+            <div id="history-list"></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // داده‌های نمونه محدود
+        const greenhouseData = {
+            environment: { temp: 25, humidity: 60, light: 'متوسط' },
+            irrigation: { schedule: 'خاموش', duration: 10 },
+            crops: [
+                { type: 'خیار', date: '1404/02/01', status: 'جوانه‌زنی' },
+                { type: 'گوجه', date: '1404/01/15', status: 'گل‌دهی' }
+            ],
+            pests: [{ type: 'سفیدبالک', date: '1404/02/10', treatment: 'مالاتیون' }],
+            fertilizers: [{ type: 'نیتروژن', amount: 10, date: '1404/02/05' }],
+            history: [
+                { type: 'محیط', details: 'دما: 25°C, رطوبت: 60%, نور: متوسط', date: '1404/02/01' },
+                { type: 'آبیاری', details: 'زمان‌بندی: روزانه, مدت: 10 دقیقه', date: '1404/02/01' },
+                { type: 'کشت', details: 'محصول: خیار, تاریخ کاشت: 1404/02/01', date: '1404/02/01' },
+                { type: 'آفات', details: 'آفت: سفیدبالک, سم: مالاتیون', date: '1404/02/10' },
+                { type: 'کوددهی', details: 'کود: نیتروژن, مقدار: 10 گرم', date: '1404/02/05' }
+            ]
+        };
+
+        // تغییر تم
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        // مدیریت تب‌ها
+        function openTab(evt, tabName) {
+            document.querySelectorAll('.tabcontent').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.tablinks').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).style.display = 'block';
+            evt.currentTarget.classList.add('active');
+        }
+
+        // اعتبارسنجی فرم محیط
+        function validateEnvironment() {
+            const temp = document.getElementById('target-temp').value;
+            const humidity = document.getElementById('target-humidity').value;
+            const tempError = document.getElementById('temp-error');
+            const humidityError = document.getElementById('humidity-error');
+            const submitBtn = document.getElementById('env-submit');
+            let isValid = true;
+
+            if (!temp || temp < 10 || temp > 40) {
+                tempError.style.display = 'block';
+                isValid = false;
+            } else {
+                tempError.style.display = 'none';
+            }
+            if (!humidity || humidity < 20 || humidity > 90) {
+                humidityError.style.display = 'block';
+                isValid = false;
+            } else {
+                humidityError.style.display = 'none';
+            }
+            submitBtn.classList.toggle('enabled', isValid);
+        }
+
+        // تنظیم محیط
+        function setEnvironment() {
+            if (!document.getElementById('env-submit').classList.contains('enabled')) return;
+            const temp = parseFloat(document.getElementById('target-temp').value);
+            const humidity = parseFloat(document.getElementById('target-humidity').value);
+            const light = document.getElementById('target-light').value;
+            greenhouseData.environment = { temp, humidity, light };
+            greenhouseData.history.push({
+                type: 'محیط',
+                details: `دما: ${temp}°C, رطوبت: ${humidity}%, نور: ${light}`,
+                date: new Date().toLocaleDateString('fa-IR')
+            });
+            saveData();
+            updateDashboard();
+            document.getElementById('result').innerHTML = '<p style="color: #2E7D32;">محیط تنظیم شد.</p>';
+            if (temp > 30 || humidity < 50) {
+                document.getElementById('result').innerHTML += '<p style="color: #FF7043;">هشدار: شرایط محیطی غیرعادی است!</p>';
+            }
+        }
+
+        // اعتبارسنجی فرم آبیاری
+        function validateIrrigation() {
+            const schedule = document.getElementById('irrigation-schedule').value;
+            const scheduleError = document.getElementById('schedule-error');
+            const submitBtn = document.getElementById('irr-submit');
+            if (!schedule) {
+                scheduleError.style.display = 'block';
+                submitBtn.classList.remove('enabled');
+            } else {
+                scheduleError.style.display = 'none';
+                submitBtn.classList.add('enabled');
+            }
+        }
+
+        // تنظیم آبیاری
+        function setIrrigation() {
+            if (!document.getElementById('irr-submit').classList.contains('enabled')) return;
+            const schedule = document.getElementById('irrigation-schedule').value;
+            const duration = parseInt(document.getElementById('irrigation-duration').value) || 10;
+            greenhouseData.irrigation = { schedule, duration };
+            greenhouseData.history.push({
+                type: 'آبیاری',
+                details: `زمان‌بندی: ${schedule}, مدت: ${duration} دقیقه`,
+                date: new Date().toLocaleDateString('fa-IR')
+            });
+            saveData();
+            updateDashboard();
+            document.getElementById('result').innerHTML = '<p style="color: #2E7D32;">آبیاری تنظیم شد.</p>';
+        }
+
+        // اعتبارسنجی فرم کشت
+        function validateCrop() {
+            const crop = document.getElementById('crop-type').value;
+            const cropError = document.getElementById('crop-error');
+            const submitBtn = document.getElementById('crop-submit');
+            if (!crop) {
+                cropError.style.display = 'block';
+                submitBtn.classList.remove('enabled');
+            } else {
+                cropError.style.display = 'none';
+                submitBtn.classList.add('enabled');
+            }
+        }
+
+        // ثبت کشت
+        function setCrop() {
+            if (!document.getElementById('crop-submit').classList.contains('enabled')) return;
+            const type = document.getElementById('crop-type').value;
+            const date = document.getElementById('crop-date').value || new Date().toLocaleDateString('fa-IR');
+            greenhouseData.crops.push({ type, date, status: 'جوانه‌زنی' });
+            greenhouseData.history.push({
+                type: 'کشت',
+                details: `محصول: ${type}, تاریخ کاشت: ${date}`,
+                date: new Date().toLocaleDateString('fa-IR')
+            });
+            saveData();
+            updateDashboard();
+            document.getElementById('result').innerHTML = '<p style="color: #2E7D32;">کشت ثبت شد.</p>';
+        }
+
+        // اعتبارسنجی فرم آفات
+        function validatePest() {
+            const pest = document.getElementById('pest-type').value;
+            const image = document.getElementById('pest-image').files.length;
+            const pestError = document.getElementById('pest-error');
+            const submitBtn = document.getElementById('pest-submit');
+            if (!pest && !image) {
+                pestError.style.display = 'block';
+                submitBtn.classList.remove('enabled');
+            } else {
+                pestError.style.display = 'none';
+                submitBtn.classList.add('enabled');
+            }
+        }
+
+        // ثبت آفت
+        function setPest() {
+            if (!document.getElementById('pest-submit').classList.contains('enabled')) return;
+            const image = document.getElementById('pest-image').files.length ? 'تصویر آپلود شد' : 'بدون تصویر';
+            const type = document.getElementById('pest-type').value || 'نامشخص';
+            const date = document.getElementById('pest-date').value || new Date().toLocaleDateString('fa-IR');
+            // شبیه‌سازی تشخیص آفت (برای آینده: TensorFlow.js)
+            const treatment = type === 'سفیدبالک' ? 'مالاتیون' : 'قارچ‌کش';
+            greenhouseData.pests.push({ type, date, treatment, image });
+            greenhouseData.history.push({
+                type: 'آفات',
+                details: `آفت: ${type}, سم: ${treatment}, تصویر: ${image}`,
+                date
+            });
+            saveData();
+            document.getElementById('result').innerHTML = `<p style="color: #2E7D32;">آفت ثبت شد. پیشنهاد: ${treatment}</p>`;
+            if (new Date(date) > new Date(new Date().setDate(new Date().getDate() - 21))) {
+                document.getElementById('result').innerHTML += '<p style="color: #FF7043;">هشدار: فاصله سم‌پاشی تا برداشت کمتر از 21 روز است!</p>';
+            }
+        }
+
+        // اعتبارسنجی فرم کوددهی
+        function validateFertilizer() {
+            const fertilizer = document.getElementById('fertilizer-type').value;
+            const fertilizerError = document.getElementById('fertilizer-error');
+            const submitBtn = document.getElementById('fertilizer-submit');
+            if (!fertilizer) {
+                fertilizerError.style.display = 'block';
+                submitBtn.classList.remove('enabled');
+            } else {
+                fertilizerError.style.display = 'none';
+                submitBtn.classList.add('enabled');
+            }
+        }
+
+        // ثبت کوددهی
+        function setFertilizer() {
+            if (!document.getElementById('fertilizer-submit').classList.contains('enabled')) return;
+            const type = document.getElementById('fertilizer-type').value;
+            const amount = parseInt(document.getElementById('fertilizer-amount').value) || 10;
+            const date = new Date().toLocaleDateString('fa-IR');
+            greenhouseData.fertilizers.push({ type, amount, date });
+            greenhouseData.history.push({
+                type: 'کوددهی',
+                details: `کود: ${type}, مقدار: ${amount} گرم`,
+                date
+            });
+            saveData();
+            document.getElementById('result').innerHTML = '<p style="color: #2E7D32;">کوددهی ثبت شد.</p>';
+            if (amount > 50) {
+                document.getElementById('result').innerHTML += '<p style="color: #FF7043;">هشدار: مقدار کود زیاد است!</p>';
+            }
+        }
+
+        // ذخیره داده‌ها
+        function saveData() {
+            localStorage.setItem('greenhouseData', JSON.stringify(greenhouseData));
+        }
+
+        // به‌روزرسانی داشبورد
+        function updateDashboard() {
+            document.getElementById('dashboard-temp').innerText = `دما: ${greenhouseData.environment.temp}°C`;
+            document.getElementById('dashboard-humidity').innerText = `رطوبت: ${greenhouseData.environment.humidity}%`;
+            document.getElementById('dashboard-irrigation').innerText = `آبیاری: ${greenhouseData.irrigation.schedule}`;
+            document.getElementById('dashboard-crop').innerText = `محصول فعال: ${greenhouseData.crops[greenhouseData.crops.length - 1]?.type || 'هیچ'}`;
+        }
+
+        // نمایش تاریخچه
+        function displayHistory() {
+            const filter = document.getElementById('history-filter').value;
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = '';
+            greenhouseData.history
+                .filter(item => filter === 'all' || item.type === filter)
+                .forEach(item => {
+                    historyList.innerHTML += `
+                        <div class="history-item">
+                            <p><strong>نوع:</strong> ${item.type}</p>
+                            <p><strong>جزئیات:</strong> ${item.details}</p>
+                            <p><strong>تاریخ:</strong> ${item.date}</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // تولید گزارش
+        function generateReport() {
+            const result = document.getElementById('result');
+            const activeCrop = greenhouseData.crops[greenhouseData.crops.length - 1]?.type || 'هیچ';
+            const waterUsage = greenhouseData.irrigation.schedule === 'روزانه' ? 100 : 50; // شبیه‌سازی
+            const production = activeCrop === 'خیار' ? 5 : 4; // تن/هکتار
+            result.innerHTML = `
+                <h3>گزارش گلخانه</h3>
+                <p><strong>محیط:</strong> دما: ${greenhouseData.environment.temp}°C, رطوبت: ${greenhouseData.environment.humidity}%, نور: ${greenhouseData.environment.light}</p>
+                <p><strong>آبیاری:</strong> ${greenhouseData.irrigation.schedule}, ${greenhouseData.irrigation.duration} دقیقه, مصرف: ${waterUsage} لیتر/روز</p>
+                <p><strong>کشت:</strong> محصول: ${activeCrop}, وضعیت: ${greenhouseData.crops[greenhouseData.crops.length - 1]?.status || 'نامشخص'}</p>
+                <p><strong>آفات:</strong> ${greenhouseData.pests.length ? greenhouseData.pests[greenhouseData.pests.length - 1].type : 'هیچ'}</p>
+                <p><strong>کوددهی:</strong> ${greenhouseData.fertilizers.length ? greenhouseData.fertilizers[greenhouseData.fertilizers.length - 1].type : 'هیچ'}</p>
+                <p><strong>پیش‌بینی تولید:</strong> ${production} تن/هکتار در 3 ماه</p>
+            `;
+            drawReportChart();
+        }
+
+        // نمودار گزارش
+        function drawReportChart() {
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.innerHTML = '<canvas id="reportChart"></canvas>';
+            const ctx = document.getElementById('reportChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['دما (°C)', 'رطوبت (%)', 'مصرف آب (لیتر)'],
+                    datasets: [{
+                        label: 'وضعیت گلخانه',
+                        data: [
+                            greenhouseData.environment.temp,
+                            greenhouseData.environment.humidity,
+                            greenhouseData.irrigation.schedule === 'روزانه' ? 100 : 50
+                        ],
+                        backgroundColor: ['#2E7D32', '#4FC3F7', '#FF7043'],
+                        borderColor: ['#1B5E20', '#0288D1', '#D84315'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true, title: { display: true, text: 'مقدار' } } },
+                    plugins: { title: { display: true, text: 'وضعیت گلخانه', font: { size: 18 } } }
+                }
+            });
+        }
+
+        // صادرات داده‌ها
+        function exportData() {
+            const dataStr = JSON.stringify(greenhouseData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'greenhouse_data.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            document.getElementById('result').innerHTML = '<p style="color: #2E7D32;">داده‌ها صادر شد.</p>';
+        }
+
+        // بارگذاری اولیه
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedData = JSON.parse(localStorage.getItem('greenhouseData'));
+            if (savedData) Object.assign(greenhouseData, savedData);
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') document.body.classList.add('dark-mode');
+            updateDashboard();
+            displayHistory();
+            validateEnvironment();
+            validateIrrigation();
+            validateCrop();
+            validatePest();
+            validateFertilizer();
+        });
+    </script>
+</body>
+</html>
