@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>چت‌بات هوشمند کشاورزی</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        @font-face {
-            font-family: 'Vazir';
-            src: url('Vazir.woff2') format('woff2');
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', 'Vazir', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background: linear-gradient(135deg, #E8F5E9 0%, #C5E1A5 100%);
@@ -55,7 +54,7 @@
             text-shadow: 0 0 3px rgba(46, 125, 50, 0.3);
         }
 
-        header .back-btn, header .lang-btn, header .history-btn {
+        header .back-btn, header .history-btn {
             cursor: pointer;
             width: 24px;
             height: 24px;
@@ -64,7 +63,7 @@
             transition: transform 0.2s, fill 0.2s;
         }
 
-        header .back-btn:hover, header .lang-btn:hover, header .history-btn:hover {
+        header .back-btn:hover, header .history-btn:hover {
             transform: scale(1.2);
             fill: #FF6D00;
         }
@@ -99,13 +98,18 @@
         }
 
         .message {
-            margin: 10px;
-            padding: 12px;
+            margin: 15px;
+            padding: 15px;
             border-radius: 10px;
             max-width: 80%;
             font-size: 14px;
             animation: fadeIn 0.3s ease-in;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .message:hover {
+            transform: scale(1.02);
         }
 
         .user-message {
@@ -124,12 +128,15 @@
             margin-right: auto;
             text-align: right;
             box-shadow: 0 0 8px rgba(46, 125, 50, 0.2);
+            border-radius: 20px;
+            padding: 20px;
         }
 
         .chat-input {
             display: flex;
             margin-top: 10px;
             align-items: center;
+            gap: 10px;
         }
 
         .chat-input input {
@@ -156,7 +163,6 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
-            margin-left: 10px;
             transition: all 0.2s;
         }
 
@@ -165,10 +171,6 @@
             color: #F5F5F5;
             box-shadow: 0 0 12px #FF6D00;
             transform: scale(1.05);
-        }
-
-        .detail-level {
-            margin-left: 10px;
         }
 
         .detail-level select {
@@ -311,20 +313,15 @@
             <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none"/>
         </svg>
         <h1>چت‌بات هوشمند کشاورزی</h1>
-        <div>
-            <svg class="lang-btn" onclick="toggleLanguage()" viewBox="0 0 24 24">
-                <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14h2v6h-2zm0 8h2v2h-2z" fill="currentColor"/>
-            </svg>
-            <svg class="history-btn" onclick="showHistory()" viewBox="0 0 24 24">
-                <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-9 14H7v-2h3v2zm0-4H7v-2h3v2zm0-4H7V7h3v2zm7 8h-3v-2h3v2zm0-4h-3v-2h3v2zm0-4h-3V7h3v2z" fill="currentColor"/>
-            </svg>
-        </div>
+        <svg class="history-btn" onclick="showHistory()" viewBox="0 0 24 24">
+            <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-9 14H7v-2h3v2zm0-4H7v-2h3v2zm0-4H7V7h3v2zm7 8h-3v-2h3v2zm0-4h-3v-2h3v2zm0-4h-3V7h3v2z" fill="currentColor"/>
+        </svg>
     </header>
 
     <section class="chat-container">
         <h2 id="chatTitle">دستیار هوشمند کشاورزی</h2>
         <div id="chatBox" class="chat-box">
-            <div class="bot-message" id="welcomeMessage">سلام! من چت‌بات هوشمند کشاورزی هستم. درباره انتخاب محصول، مدیریت آفات، خاک، آبیاری یا بازار بپرسید. مثلاً: "چه محصولی برای خاک شنی در بهار مناسب است؟"</div>
+            <div class="bot-message" id="welcomeMessage">سلام! من چت‌بات هوشمند کشاورزی هستم. درباره انتخاب محصول، مدیریت آفات، خاک، آبیاری یا بازار بپرسید. مثلاً: "چه محصولی برای خاک شنی در بهار در خراسان مناسب است؟"</div>
         </div>
         <div class="chat-input">
             <input type="text" id="userInput" placeholder="سؤالم را اینجا بنویس..." onkeypress="if(event.key === 'Enter') sendMessage()">
@@ -358,30 +355,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@jspdf/js@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
     <script>
         const translations = {
-            fa: {
-                title: 'دستیار هوشمند کشاورزی',
-                welcome: 'سلام! من چت‌بات هوشمند کشاورزی هستم. درباره انتخاب محصول، مدیریت آفات، خاک، آبیاری یا بازار بپرسید. مثلاً: "چه محصولی برای خاک شنی در بهار مناسب است؟"',
-                placeholder: 'سؤالم را اینجا بنویس...',
-                send: 'ارسال',
-                download: 'دانلود گزارش',
-                history: 'تاریخچه گفت‌وگوها',
-                detail: { short: 'کوتاه', medium: 'متوسط', detailed: 'جامع' },
-                clarify: 'لطفاً جزئیات بیشتری ارائه دهید (مثلاً نوع خاک، فصل یا منطقه).'
-            },
-            en: {
-                title: 'Smart Farming Assistant',
-                welcome: 'Hello! I’m your smart farming chatbot. Ask about crop selection, pest control, soil, irrigation, or market trends. E.g., "What crop is suitable for sandy soil in spring?"',
-                placeholder: 'Type your question here...',
-                send: 'Send',
-                download: 'Download Report',
-                history: 'Conversation History',
-                detail: { short: 'Short', medium: 'Medium', detailed: 'Detailed' },
-                clarify: 'Please provide more details (e.g., soil type, season, or region).'
-            }
+            title: 'دستیار هوشمند کشاورزی',
+            welcome: 'سلام! من چت‌بات هوشمند کشاورزی هستم. درباره انتخاب محصول، مدیریت آفات، خاک، آبیاری یا بازار بپرسید. مثلاً: "چه محصولی برای خاک شنی در بهار در خراسان مناسب است؟"',
+            placeholder: 'سؤالم را اینجا بنویس...',
+            send: 'ارسال',
+            download: 'دانلود گزارش',
+            history: 'تاریخچه گفت‌وگوها',
+            detail: { short: 'کوتاه', medium: 'متوسط', detailed: 'جامع' },
+            clarify: 'لطفاً جزئیات بیشتری ارائه دهید (مثلاً نوع خاک، فصل یا منطقه).',
+            error: 'لطفاً سؤالی بنویسید.'
         };
-        let currentLang = 'fa';
 
         const normalRanges = {
             soil_ph: { min: 6, max: 7.5, unit: '', name: 'pH خاک' },
@@ -394,14 +380,14 @@
 
         const knowledgeBase = {
             'محصول|کشت|زراعت': {
-                short: 'برای خاک {{soil}} در {{season}}، {{crop}} مناسب است.',
-                medium: 'برای خاک {{soil}} در {{season}}، {{crop}} پیشنهاد می‌شود. نیاز آبی: {{water}} mm، pH: {{ph}}.',
-                detailed: 'برای خاک {{soil}} در {{season}}، {{crop}} مناسب است. نیاز آبی: {{water}} mm، pH خاک: {{ph}}، دما: {{temp}}°C. خاک را با کود نیتروژن‌دار تقویت کنید. بازده تقریبی: {{yield}} تن/هکتار.',
+                short: 'برای خاک {{soil}} در {{season}} در {{region}}، {{crop}} مناسب است.',
+                medium: 'برای خاک {{soil}} در {{season}} در {{region}}، {{crop}} پیشنهاد می‌شود. نیاز آبی: {{water}} mm، pH: {{ph}}.',
+                detailed: 'برای خاک {{soil}} در {{season}} در {{region}}، {{crop}} مناسب است. نیاز آبی: {{water}} mm، pH خاک: {{ph}}، دما: {{temp}}°C. خاک را با کود نیتروژن‌دار تقویت کنید. بازده تقریبی: {{yield}} تن/هکتار.',
                 category: 'crop',
                 chart: 'yield',
                 suggestions: ['نیازهای آبی {{crop}} چیست؟', 'چگونه خاک را برای {{crop}} آماده کنم؟', 'بازده {{crop}} چقدر است؟'],
                 riskScore: 10,
-                followUp: 'نوع خاک و فصل کشت شما چیست؟'
+                followUp: 'نوع خاک، فصل کشت و منطقه شما چیست؟'
             },
             'آفات|حشرات|بیماری': {
                 short: 'برای آفات {{crop}}، از {{pesticide}} استفاده کنید.',
@@ -446,7 +432,7 @@
             'سلام|هی': {
                 short: 'سلام! سؤالی درباره کشاورزی دارید؟',
                 medium: 'سلام! درباره کشت، آفات، خاک یا بازار سؤالی دارید؟',
-                detailed: 'سلام! من چت‌بات کشاورزی شما هستم. درباره انتخاب محصول، مدیریت آفات، خاک، آبیاری یا بازار سؤال کنید. مثلاً: "چه محصولی برای خاک شنی مناسب است؟"',
+                detailed: 'سلام! من چت‌بات کشاورزی شما هستم. درباره انتخاب محصول، مدیریت آفات، خاک، آبیاری یا بازار سؤال کنید. مثلاً: "چه محصولی برای خاک شنی در بهار در خراسان مناسب است؟"',
                 category: 'general',
                 suggestions: ['چه محصولی برای خاک شنی مناسب است؟', 'چگونه آفات گندم را کنترل کنم؟', 'pH خاکم پایین است، چه کنم؟'],
                 riskScore: 0,
@@ -459,117 +445,68 @@
                 category: 'general',
                 suggestions: ['چگونه خاکم را بهبود دهم؟', 'چه محصولی برای بهار مناسب است؟', 'چگونه آفات را کنترل کنم؟'],
                 riskScore: 0,
-                followUp: translations.fa.clarify
+                followUp: translations.clarify
             }
         };
 
-        const knowledgeBaseEn = {
-            'crop|planting|farming': {
-                short: 'For {{soil}} soil in {{season}}, {{crop}} is suitable.',
-                medium: 'For {{soil}} soil in {{season}}, {{crop}} is recommended. Water need: {{water}} mm, pH: {{ph}}.',
-                detailed: 'For {{soil}} soil in {{season}}, {{crop}} is suitable. Water need: {{water}} mm, soil pH: {{ph}}, temp: {{temp}}°C. Enrich soil with nitrogen fertilizer. Approx yield: {{yield}} ton/ha.',
-                category: 'crop',
-                chart: 'yield',
-                suggestions: ['What are {{crop}} water needs?', 'How to prepare soil for {{crop}}?', 'What’s {{crop}} yield?'],
-                riskScore: 10,
-                followUp: 'What’s your soil type and planting season?'
-            },
-            'pests|insects|disease': {
-                short: 'For {{crop}} pests, use {{pesticide}}.',
-                medium: '{{crop}} pests include {{pest}}. Use {{pesticide}} ({{dose}}).',
-                detailed: '{{crop}} pests include {{pest}}. Apply {{pesticide}} ({{dose}}) every 7-10 days. Natural methods like neem oil are effective. Check soil.',
-                category: 'pest',
-                chart: null,
-                suggestions: ['What are natural methods for {{pest}}?', 'How to prevent {{crop}} pests?', 'How to use {{pesticide}}?'],
-                riskScore: 20,
-                followUp: 'What symptoms do you see on the plant?'
-            },
-            'soil|fertilizer': {
-                short: 'For {{soil}} soil, add {{fertilizer}}.',
-                medium: '{{soil}} soil with pH {{ph}} needs {{fertilizer}}. Apply every {{interval}}.',
-                detailed: '{{soil}} soil with pH {{ph}} and EC {{ec}} needs {{fertilizer}} every {{interval}}. Annual soil testing is recommended. Add compost for texture.',
-                category: 'soil',
-                chart: 'soil_ph',
-                suggestions: ['How to adjust soil pH?', 'How to use {{fertilizer}}?', 'What’s soil testing?'],
-                riskScore: 15,
-                followUp: 'What’s your soil pH and texture?'
-            },
-            'irrigation|water': {
-                short: 'For {{crop}}, {{water}} mm water per week is needed.',
-                medium: 'For {{crop}}, {{water}} mm water per week via {{method}} is recommended.',
-                detailed: 'For {{crop}}, {{water}} mm water per week via {{method}} (e.g., drip) is ideal. Increase by 20% in heat. Keep soil moist.',
-                category: 'irrigation',
-                chart: 'water',
-                suggestions: ['What’s {{method}} irrigation?', 'How to reduce water use?', 'What’s {{crop}} irrigation schedule?'],
-                riskScore: 10,
-                followUp: 'What irrigation method do you use?'
-            },
-            'market|price|sales': {
-                short: '{{crop}} price is about {{price}} IRR/kg.',
-                medium: '{{crop}} price is about {{price}} IRR/kg. {{region}} market has good demand.',
-                detailed: '{{crop}} price is about {{price}} IRR/kg in {{region}}. Demand is high in {{season}}. Direct sales to co-ops are more profitable.',
-                category: 'market',
-                chart: 'price',
-                suggestions: ['How to sell {{crop}}?', 'What’s {{region}} market demand?', 'What’s {{crop}} price outlook?'],
-                riskScore: 5,
-                followUp: 'What’s your crop and where do you sell?'
-            },
-            'hello|hi': {
-                short: 'Hello! Got a farming question?',
-                medium: 'Hello! Ask about crops, pests, soil, or markets.',
-                detailed: 'Hello! I’m your farming chatbot. Ask about crop selection, pest control, soil, irrigation, or markets. E.g., "What crop is good for sandy soil?"',
-                category: 'general',
-                suggestions: ['What crop is good for sandy soil?', 'How to control wheat pests?', 'My soil pH is low, what to do?'],
-                riskScore: 0,
-                followUp: 'What farming topic interests you?'
-            },
-            'default': {
-                short: 'I didn’t understand. Ask about farming.',
-                medium: 'Sorry, I didn’t understand. Ask about crops, pests, or soil.',
-                detailed: 'Sorry, I didn’t understand. You can ask about crop selection, pest control, soil, irrigation, or markets. E.g., "How to improve my soil?"',
-                category: 'general',
-                suggestions: ['How to improve my soil?', 'What crop is good for spring?', 'How to control pests?'],
-                riskScore: 0,
-                followUp: translations.en.clarify
-            }
+        const fuseOptions = {
+            keys: ['key', 'suggestions'],
+            threshold: 0.3,
+            includeScore: true,
+            minMatchCharLength: 2
         };
 
-        function fuzzyMatch(str1, str2) {
-            str1 = str1.toLowerCase().replace(/[^\w\s]/g, '');
-            str2 = str2.toLowerCase().replace(/[^\w\s]/g, '');
-            const len1 = str1.length, len2 = str2.length;
-            if (len1 === 0 || len2 === 0) return 0;
-            const matrix = Array(len2 + 1).fill().map(() => Array(len1 + 1).fill(0));
-            for (let i = 0; i <= len1; i++) matrix[0][i] = i;
-            for (let j = 0; j <= len2; j++) matrix[j][0] = j;
-            for (let j = 1; j <= len2; j++) {
-                for (let i = 1; i <= len1; i++) {
-                    const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
-                    matrix[j][i] = Math.min(
-                        matrix[j - 1][i] + 1,
-                        matrix[j][i - 1] + 1,
-                        matrix[j - 1][i - 1] + cost
-                    );
-                }
-            }
-            const distance = matrix[len2][len1];
-            return 1 - distance / Math.max(len1, len2);
+        let dynamicKnowledgeBase = loadData('dynamicKnowledgeBase') || {};
+        let knowledgeBaseFuse = null;
+
+        function initializeFuse() {
+            const kb = { ...knowledgeBase, ...dynamicKnowledgeBase };
+            const fuseData = Object.entries(kb).map(([key, value]) => ({ key, ...value }));
+            knowledgeBaseFuse = new Fuse(fuseData, fuseOptions);
         }
 
         function loadData(key) {
-            return JSON.parse(localStorage.getItem(key)) || [];
+            try {
+                return JSON.parse(localStorage.getItem(key)) || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveData(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+            }
         }
 
         function saveChatHistory(message, isUser) {
             const history = loadData('chatHistory');
-            history.push({ message, isUser, date: new Date().toISOString(), lang: currentLang });
-            localStorage.setItem('chatHistory', JSON.stringify(history));
+            history.push({ message, isUser, date: new Date().toISOString() });
+            saveData('chatHistory', history);
         }
 
         function saveUnknownQuestion(question, matchedScore) {
             const unknowns = loadData('unknownQuestions');
             unknowns.push({ question, matchedScore, date: new Date().toISOString() });
-            localStorage.setItem('unknownQuestions', JSON.stringify(unknowns));
+            saveData('unknownQuestions', unknowns);
+        }
+
+        function addDynamicKnowledge(question, response, category = 'general') {
+            const key = question.toLowerCase().replace(/[^\w\s]/g, '');
+            dynamicKnowledgeBase[key] = {
+                short: response,
+                medium: response,
+                detailed: response,
+                category,
+                chart: null,
+                suggestions: [],
+                riskScore: 0,
+                followUp: translations.clarify
+            };
+            saveData('dynamicKnowledgeBase', dynamicKnowledgeBase);
+            initializeFuse();
         }
 
         function analyzeFarmRisks(soilData, cropData) {
@@ -579,19 +516,19 @@
             const risks = [];
 
             if (latestSoil.ph < normalRanges.soil_ph.min || latestSoil.ph > normalRanges.soil_ph.max) {
-                risks.push('ریسک خاک: pH غیرنرمال ({{ph}}) می‌تواند رشد محصول را کاهش دهد.');
+                risks.push(`ریسک خاک: pH غیرنرمال (${latestSoil.ph || '6.5'}) می‌تواند رشد محصول را کاهش دهد.`);
                 totalRiskScore += 20;
             }
             if (latestSoil.ec > normalRanges.soil_ec.max) {
-                risks.push('ریسک شوری: EC بالا ({{ec}} dS/m) ممکن است به ریشه‌ها آسیب بزند.');
+                risks.push(`ریسک شوری: EC بالا (${latestSoil.ec || '1'} dS/m) ممکن است به ریشه‌ها آسیب بزند.`);
                 totalRiskScore += 15;
             }
             if (latestCrop.water > normalRanges.water.max) {
-                risks.push('ریسک آبیاری: مصرف آب بالا ({{water}} mm) ممکن است هزینه‌ها را افزایش دهد.');
+                risks.push(`ریسک آبیاری: مصرف آب بالا (${latestCrop.water || '500'} mm) ممکن است هزینه‌ها را افزایش دهد.`);
                 totalRiskScore += 10;
             }
             if (latestCrop.yield < normalRanges.yield.min) {
-                risks.push('ریسک محصول: عملکرد پایین ({{yield}} تن/هکتار) ممکن است سودآوری را کاهش دهد.');
+                risks.push(`ریسک محصول: عملکرد پایین (${latestCrop.yield || '5'} تن/هکتار) ممکن است سودآوری را کاهش دهد.`);
                 totalRiskScore += 15;
             }
 
@@ -600,59 +537,77 @@
 
         function processInput(input) {
             input = input.trim().toLowerCase();
+            if (!input) return { response: translations.error, chartParameter: null, suggestions: [], followUp: translations.clarify };
+
             const soilData = loadData('soilData');
             const cropData = loadData('cropData');
             const latestSoil = soilData[soilData.length - 1] || {};
             const latestCrop = cropData[cropData.length - 1] || {};
-            const kb = currentLang === 'fa' ? knowledgeBase : knowledgeBaseEn;
             const detailLevel = document.getElementById('detailLevel').value;
-            let bestMatch = { key: 'default', score: 0, response: kb.default[detailLevel], chartParameter: null, suggestions: kb.default.suggestions, followUp: kb.default.followUp };
+            let region = latestCrop.region || 'تهران';
 
-            for (const [key, data] of Object.entries(kb)) {
-                const regex = new RegExp(key.replace('|', '|'), 'i');
-                let score = 0;
-                if (regex.test(input)) {
-                    score = 1;
-                } else {
-                    const terms = key.split('|');
-                    score = Math.max(...terms.map(term => fuzzyMatch(input, term)));
+            // شناسایی منطقه از ورودی کاربر
+            const regions = ['تهران', 'خراسان', 'مازندران', 'خوزستان', 'اصفهان', 'فارس', 'گیلان'];
+            for (const r of regions) {
+                if (input.includes(r.toLowerCase())) {
+                    region = r;
+                    break;
                 }
-                if (score > bestMatch.score && score > 0.75) {
-                    bestMatch = {
-                        key,
-                        score,
-                        response: data[detailLevel],
-                        chartParameter: data.chart,
-                        suggestions: data.suggestions || [],
-                        followUp: data.followUp || translations[currentLang].clarify
-                    };
-                }
+            }
+
+            // تطبیق فازی با Fuse.js
+            const results = knowledgeBaseFuse.search(input);
+            let bestMatch = {
+                key: 'default',
+                score: 0,
+                response: knowledgeBase.default[detailLevel],
+                chartParameter: null,
+                suggestions: knowledgeBase.default.suggestions,
+                followUp: knowledgeBase.default.followUp
+            };
+
+            if (results.length > 0 && results[0].score < 0.4) {
+                bestMatch = {
+                    key: results[0].item.key,
+                    score: 1 - results[0].score,
+                    response: results[0].item[detailLevel],
+                    chartParameter: results[0].item.chart,
+                    suggestions: results[0].item.suggestions || [],
+                    followUp: results[0].item.followUp || translations.clarify
+                };
             }
 
             let response = bestMatch.response;
             const matchedKeys = [bestMatch.key];
-            if (input.includes(' و ') || input.includes(' and ')) {
-                const parts = input.split(/ و | and /i);
+            if (input.includes(' و ') || input.includes('،')) {
+                const parts = input.split(/ و |،/i);
                 const additionalResponses = [];
                 for (const part of parts) {
-                    for (const [key, data] of Object.entries(kb)) {
-                        if (key === bestMatch.key) continue;
-                        const regex = new RegExp(key.replace('|', '|'), 'i');
-                        let score = regex.test(part) ? 1 : Math.max(...key.split('|').map(term => fuzzyMatch(part, term)));
-                        if (score > 0.75) {
-                            additionalResponses.push(data[detailLevel]);
-                            matchedKeys.push(key);
-                            if (data.chart && !bestMatch.chartParameter) {
-                                bestMatch.chartParameter = data.chart;
-                            }
-                            bestMatch.suggestions = [...new Set([...bestMatch.suggestions, ...(data.suggestions || [])])];
+                    const partResults = knowledgeBaseFuse.search(part);
+                    if (partResults.length > 0 && partResults[0].score < 0.4 && !matchedKeys.includes(partResults[0].item.key)) {
+                        additionalResponses.push(partResults[0].item[detailLevel]);
+                        matchedKeys.push(partResults[0].item.key);
+                        if (partResults[0].item.chart && !bestMatch.chartParameter) {
+                            bestMatch.chartParameter = partResults[0].item.chart;
                         }
+                        bestMatch.suggestions = [...new Set([...bestMatch.suggestions, ...(partResults[0].item.suggestions || [])])];
                     }
                 }
                 if (additionalResponses.length > 0) {
-                    response = `${response}<br><strong>${currentLang === 'fa' ? 'موضوعات مرتبط' : 'Related Topics'}:</strong><br>${additionalResponses.join('<br>')}`;
+                    response += `<br><strong>موضوعات مرتبط:</strong><br>${additionalResponses.join('<br>')}`;
                 }
             }
+
+            // توصیه‌های منطقه‌ای
+            const regionTips = {
+                'تهران': 'در تهران، خاک‌های لومی رایج است. آبیاری منظم و کود نیتروژن توصیه می‌شود.',
+                'خراسان': 'برای زعفران در خراسان، خاک با زهکشی خوب و آبیاری کم مناسب است.',
+                'مازندران': 'در مازندران، برنج نیاز به خاک غرقابی و آبیاری زیاد دارد.',
+                'خوزستان': 'در خوزستان، گرما زیاد است؛ آبیاری قطره‌ای و سایه‌بان توصیه می‌شود.',
+                'اصفهان': 'در اصفهان، کمبود آب شایع است؛ از روش‌های آبیاری کارآمد استفاده کنید.',
+                'فارس': 'در فارس، کشت پسته و انار با خاک سبک و آبیاری کم مناسب است.',
+                'گیلان': 'در گیلان، خاک مرطوب و کشت برنج یا چای توصیه می‌شود.'
+            };
 
             response = response
                 .replace('{{soil}}', latestSoil.type || 'شنی')
@@ -670,26 +625,33 @@
                 .replace('{{ec}}', latestSoil.ec || '1')
                 .replace('{{method}}', 'قطره‌ای')
                 .replace('{{price}}', latestCrop.price || '50000')
-                .replace('{{region}}', 'تهران');
+                .replace('{{region}}', region);
+
+            response += `<br><strong>توصیه منطقه‌ای (${region}):</strong> ${regionTips[region] || 'داده‌ای برای این منطقه موجود نیست.'}`;
 
             const { risks, totalRiskScore } = analyzeFarmRisks(soilData, cropData);
             if (risks) {
-                response += `<br><strong>${currentLang === 'fa' ? 'هشدارهای کشاورزی' : 'Farming Alerts'} (امتیاز ریسک: ${totalRiskScore}):</strong><br>${risks}`;
+                response += `<br><strong>هشدارهای کشاورزی (امتیاز ریسک: ${totalRiskScore}):</strong><br>${risks}`;
             }
 
             const reminders = [];
             if (latestCrop.water > normalRanges.water.max) {
-                reminders.push(currentLang === 'fa' ? 'یادآور: مصرف آب را بررسی کنید.' : 'Reminder: Check water usage.');
+                reminders.push('یادآور: مصرف آب را بررسی کنید.');
             }
             if (latestSoil.ph < normalRanges.soil_ph.min) {
-                reminders.push(currentLang === 'fa' ? 'یادآور: pH خاک را تنظیم کنید.' : 'Reminder: Adjust soil pH.');
+                reminders.push('یادآور: pH خاک را تنظیم کنید.');
             }
             if (reminders.length > 0) {
-                response += `<br><strong>${currentLang === 'fa' ? 'یادآورهای کشاورزی' : 'Farming Reminders'}:</strong><br>${reminders.join('<br>')}`;
+                response += `<br><strong>یادآورهای کشاورزی:</strong><br>${reminders.join('<br>')}`;
             }
 
             if (bestMatch.key === 'default') {
                 saveUnknownQuestion(input, bestMatch.score);
+                const unknowns = loadData('unknownQuestions');
+                const repeated = unknowns.filter(u => u.question === input).length;
+                if (repeated > 2) {
+                    addDynamicKnowledge(input, `پاسخ پیش‌فرض برای: ${input}`, 'general');
+                }
             }
 
             return { response, chartParameter: bestMatch.chartParameter, suggestions: bestMatch.suggestions, followUp: bestMatch.followUp };
@@ -701,7 +663,7 @@
             const allData = [...soilData, ...cropData];
 
             const filteredData = allData.filter(d => d[parameter]).map(d => ({
-                date: new Date(d.date).toLocaleDateString(currentLang === 'fa' ? 'fa-IR' : 'en-US'),
+                date: new Date(d.date).toLocaleDateString('fa-IR'),
                 value: parseFloat(d[parameter])
             }));
 
@@ -719,13 +681,13 @@
                         fill: false,
                         tension: 0.1
                     }, {
-                        label: currentLang === 'fa' ? 'حد نرمال (حداقل)' : 'Normal Range (Min)',
+                        label: 'حد نرمال (حداقل)',
                         data: filteredData.map(() => normalRanges[parameter].min),
                         borderColor: '#2E7D32',
                         borderDash: [5, 5],
                         fill: false
                     }, {
-                        label: currentLang === 'fa' ? 'حد نرمال (حداکثر)' : 'Normal Range (Max)',
+                        label: 'حد نرمال (حداکثر)',
                         data: filteredData.map(() => normalRanges[parameter].max),
                         borderColor: '#D32F2F',
                         borderDash: [5, 5],
@@ -735,11 +697,11 @@
                 options: {
                     scales: {
                         y: { beginAtZero: true, title: { display: true, text: normalRanges[parameter].unit, color: '#1A1A1A' }, ticks: { color: '#1A1A1A' } },
-                        x: { title: { display: true, text: currentLang === 'fa' ? 'تاریخ' : 'Date', color: '#1A1A1A' }, ticks: { color: '#1A1A1A' } }
+                        x: { title: { display: true, text: 'تاریخ', color: '#1A1A1A' }, ticks: { color: '#1A1A1A' } }
                     },
                     plugins: {
                         legend: { position: 'bottom', labels: { color: '#1A1A1A' } },
-                        title: { display: true, text: currentLang === 'fa' ? `روند ${normalRanges[parameter].name}` : `Trend of ${normalRanges[parameter].name}`, color: '#1A1A1A' }
+                        title: { display: true, text: `روند ${normalRanges[parameter].name}`, color: '#1A1A1A' }
                     }
                 }
             });
@@ -748,7 +710,7 @@
         function sendMessage() {
             const input = document.getElementById('userInput').value;
             if (!input.trim()) {
-                document.getElementById('error').textContent = translations[currentLang].error || 'لطفاً سؤالی بنویسید.';
+                document.getElementById('error').textContent = translations.error;
                 document.getElementById('error').style.display = 'block';
                 return;
             }
@@ -772,7 +734,9 @@
             const chartSection = document.getElementById('chartSection');
             if (chartParameter) {
                 chartSection.style.display = 'block';
-                document.getElementById('chatChart').getContext('2d').clearRect(0, 0, 400, 200);
+                const canvas = document.getElementById('chatChart');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 drawChart(chartParameter);
             } else {
                 chartSection.style.display = 'none';
@@ -795,53 +759,32 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'fa' ? 'en' : 'fa';
-            document.getElementById('chatTitle').textContent = translations[currentLang].title;
-            document.getElementById('welcomeMessage').textContent = translations[currentLang].welcome;
-            document.getElementById('userInput').placeholder = translations[currentLang].placeholder;
-            document.querySelector('.chat-input button:nth-child(3)').textContent = translations[currentLang].send;
-            document.querySelector('.chat-input button:nth-child(4)').textContent = translations[currentLang].download;
-            document.querySelector('.lang-btn').innerHTML = currentLang === 'fa' ? '<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14h2v6h-2zm0 8h2v2h-2z" fill="currentColor"/>' : '<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-14h2v6h-2zm0 8h2v2h-2z" fill="currentColor"/>';
-            document.getElementById('historyModal').querySelector('h3').textContent = translations[currentLang].history;
-            const detailSelect = document.getElementById('detailLevel');
-            detailSelect.innerHTML = `
-                <option value="short">${translations[currentLang].detail.short}</option>
-                <option value="medium" selected>${translations[currentLang].detail.medium}</option>
-                <option value="detailed">${translations[currentLang].detail.detailed}</option>
-            `;
-            updateSuggestions();
-        }
-
         function updateSuggestions() {
             const soilData = loadData('soilData');
             const cropData = loadData('cropData');
             const history = loadData('chatHistory');
             const latestSoil = soilData[soilData.length - 1] || {};
             const latestCrop = cropData[cropData.length - 1] || {};
-            const kb = currentLang === 'fa' ? knowledgeBase : knowledgeBaseEn;
             let suggestions = [];
 
             if (latestSoil.ph < normalRanges.soil_ph.min) {
-                suggestions.push(kb['خاک'].suggestions[0]);
+                suggestions.push(knowledgeBase['خاک'].suggestions[0]);
             }
             if (latestSoil.ec > normalRanges.soil_ec.max) {
-                suggestions.push(kb['خاک'].suggestions[1]);
+                suggestions.push(knowledgeBase['خاک'].suggestions[1]);
             }
             if (latestCrop.water > normalRanges.water.max) {
-                suggestions.push(kb['آبیاری'].suggestions[0]);
+                suggestions.push(knowledgeBase['آبیاری'].suggestions[0]);
             }
             if (latestCrop.yield < normalRanges.yield.min) {
-                suggestions.push(kb['محصول'].suggestions[2]);
+                suggestions.push(knowledgeBase['محصول'].suggestions[2]);
             }
 
             const recentQuestions = history.filter(h => h.isUser).slice(-3);
             recentQuestions.forEach(q => {
-                for (const [key, data] of Object.entries(kb)) {
-                    const regex = new RegExp(key.replace('|', '|'), 'i');
-                    if (regex.test(q.message.toLowerCase()) && data.suggestions) {
-                        suggestions.push(...data.suggestions);
-                    }
+                const results = knowledgeBaseFuse.search(q.message);
+                if (results.length > 0 && results[0].score < 0.4) {
+                    suggestions.push(...results[0].item.suggestions);
                 }
             });
 
@@ -868,8 +811,8 @@
             history.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'history-item';
-                const date = new Date(item.date).toLocaleString(currentLang === 'fa' ? 'fa-IR' : 'en-US');
-                div.innerHTML = `<strong>${date}</strong><br>${item.isUser ? (currentLang === 'fa' ? 'شما' : 'You') : (currentLang === 'fa' ? 'چت‌بات' : 'Chatbot')}: ${item.message}`;
+                const date = new Date(item.date).toLocaleString('fa-IR');
+                div.innerHTML = `<strong>${date}</strong><br>${item.isUser ? 'شما' : 'چت‌بات'}: ${item.message}`;
                 historyList.appendChild(div);
             });
             document.getElementById('historyModal').style.display = 'block';
@@ -894,16 +837,8 @@
             window.location.href = 'index.html';
         }
 
-        function addKnowledgeEntry(key, data) {
-            if (!knowledgeBase[key]) {
-                knowledgeBase[key] = data;
-                console.log(`New entry added to knowledge base: ${key}`);
-            } else {
-                console.warn(`Entry for ${key} already exists.`);
-            }
-        }
-
         window.onload = function() {
+            initializeFuse();
             updateSuggestions();
             const chatBox = document.getElementById('chatBox');
             chatBox.scrollTop = chatBox.scrollHeight;
