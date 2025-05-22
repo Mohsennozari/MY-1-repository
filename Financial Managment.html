@@ -2,992 +2,728 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مدیریت مالی هوشمند کشاورزی</title>
+    <title>AgriAdvisor Pro | مشاوره و مدیریت کود کشاورزی</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="سیستم هوشمند مشاوره کود و مدیریت هزینه‌های کشاورزی">
+    <meta name="keywords" content="کشاورزی, کود, محاسبه هزینه, مشاوره کشاورزی, AgriAdvisor">
+    <meta name="author" content="AgriAdvisor Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AgriAdvisor Pro | مشاوره هوشمند کشاورزی">
+    <meta property="og:description" content="سیستم تخصصی محاسبه هزینه کود و مشاوره کشاورزی">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous">
+
+    <!-- Toastify JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css">
+
     <style>
-        /* تنظیمات عمومی */
         :root {
-            --primary: #4CAF50;
-            --primary-light: #66BB6A;
-            --background: #F5F5F5;
-            --card: #FFFFFF;
-            --text: #1A1A1A;
-            --text-secondary: #4A4A4A;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --border: #E0E0E0;
-            --dark-bg: #121212;
-            --dark-card: #1E1E1E;
-            --dark-text: #E0E0E0;
-            --dark-border: #333;
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --secondary: #1976d2;
+            --secondary-light: #2196f3;
+            --bg: #f5fff8;
+            --text-dark: #222;
+            --text-medium: #444;
+            --white: #fff;
+            --gray-light: #eee;
+            --warning: #ff9800;
+            --error: #f44336;
+            --success: #4caf50;
+        }
+
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Vazir', -apple-system, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: var(--background);
-            color: var(--text);
-            transition: all 0.3s ease;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            transition: background-color 0.3s ease;
             line-height: 1.6;
-        }
-
-        body.dark-mode {
-            background: var(--dark-bg);
-            color: var(--dark-text);
-        }
-
-        body.dark-mode .container, body.dark-mode .dashboard, body.dark-mode .tabcontent {
-            background: var(--dark-card);
-            border-color: var(--dark-border);
-        }
-
-        body.dark-mode input, body.dark-mode select {
-            background: #2C2C2C;
-            color: var(--dark-text);
-            border-color: var(--dark-border);
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: var(--card);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.5s ease;
+            padding: 2rem 1rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        svg.logo {
+            width: 5rem;
+            height: 5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         h1 {
-            text-align: center;
-            font-size: 32px;
             font-weight: 700;
+            font-size: 1.75rem;
             color: var(--primary);
-            margin: 0 0 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .dashboard {
-            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: var(--shadow);
+        p.subtitle {
+            font-size: 1rem;
+            color: var(--text-medium);
+            margin-top: 0.5rem;
         }
 
-        .dashboard p {
-            margin: 5px 0;
-            font-size: 16px;
-            color: var(--text-secondary);
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .tab {
-            display: flex;
-            background: var(--card);
-            border-radius: 15px 15px 0 0;
-            overflow: hidden;
-            margin-bottom: 10px;
-            box-shadow: var(--shadow);
-        }
-
-        .tab button {
             flex: 1;
-            padding: 15px;
-            background: none;
-            border: none;
+            min-width: 12rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            background: var(--gray-light);
+            text-align: center;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--text-secondary);
+            font-weight: 600;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            border: 2px solid transparent;
         }
 
-        .tab button:hover, .tab button.active {
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .tab.active {
             background: var(--primary);
-            color: #FFFFFF;
+            color: var(--white);
+            border-color: var(--primary-light);
         }
 
-        .tabcontent {
-            padding: 25px;
-            border: 1px solid var(--border);
-            border-top: none;
-            border-radius: 0 0 15px 15px;
-            background: var(--card);
-            animation: fadeIn 0.3s ease;
+        .form-section {
+            display: none;
+            background: var(--white);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: slideDown 0.5s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .form-group {
-            margin-bottom: 20px;
-            position: relative;
+            margin-bottom: 1rem;
         }
 
         label {
             display: block;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
-        select, input[type="text"], input[type="number"], input[type="date"], input[type="checkbox"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 16px;
-            background: var(--card);
-            color: var(--text);
-            transition: border-color 0.3s, box-shadow 0.3s;
+        .input-icon {
+            position: relative;
         }
 
-        select:focus, input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-            outline: none;
-        }
-
-        .tooltip {
+        .input-icon i {
             position: absolute;
-            top: -30px;
-            left: 10px;
-            background: var(--primary);
-            color: #FFFFFF;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            display: none;
-            z-index: 10;
-        }
-
-        .form-group:hover .tooltip {
-            display: block;
-        }
-
-        button.submit-btn, button.report-btn {
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            color: #FFFFFF;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            width: 100%;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 10px;
-        }
-
-        button.submit-btn:hover, button.report-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        #result, #history {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            background: var(--card);
-            border: 1px solid var(--border);
-        }
-
-        .history-item {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-            transition: background 0.2s;
-        }
-
-        .history-item:hover {
-            background: #f1f8e9;
-        }
-
-        .loader {
-            display: none;
-            text-align: center;
-            padding: 15px;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
             color: var(--primary);
-            font-weight: 500;
         }
 
-        #chart-container {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            background: var(--card);
+        select,
+        input[type="number"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
         }
 
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
+        select:focus,
+        input:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+            background-color: var(--white);
+        }
+
+        button {
+            padding: 0.75rem;
             background: var(--primary);
-            color: #FFFFFF;
+            color: var(--white);
             border: none;
-            padding: 10px;
-            border-radius: 50%;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 18px;
-            box-shadow: var(--shadow);
+            width: 100%;
+            transition: all 0.3s ease;
         }
 
-        @media (max-width: 600px) {
+        button:hover {
+            background: #1b5e20;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            background: var(--white);
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        body.dark-mode {
+            --bg: #121212;
+            --text-dark: #f5f5f5;
+            --text-medium: #e0e0e0;
+            --white: #1e1e1e;
+            --gray-light: #333;
+        }
+
+        @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 1rem 0.75rem;
             }
-            h1 {
-                font-size: 24px;
+            .tabs {
+                flex-direction: column;
             }
-            .tab button {
-                font-size: 14px;
-                padding: 10px;
+            .form-section {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleDarkMode()">🌙</button>
-    <div class="container">
-        <h1>مدیریت مالی هوشمند کشاورزی</h1>
-        <div class="dashboard">
-            <h3>خلاصه وضعیت مالی</h3>
-            <p id="dashboard-profit">سود/زیان: 0 ریال</p>
-            <p id="dashboard-cashflow">جریان نقدی خالص: 0 ریال</p>
-            <p id="dashboard-inventory">موجودی کل: 0</p>
+<div class="container">
+    <header>
+        <button class="dark-mode-toggle" aria-label="تغییر حالت تاریک/روشن">
+            <i class="fas fa-moon"></i>
+        </button>
+        <div class="logo-container">
+            <svg class="logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="لوگوی AgriAdvisor">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#4CAF50"/>
+                <path d="M2 17L12 22L22 17" stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+                <h1>AgriAdvisor Pro</h1>
+                <p class="subtitle">سیستم هوشمند مشاوره کود و مدیریت هزینه‌های کشاورزی</p>
+            </div>
         </div>
-        <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'income')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2v20m10-10H2"/>
-                </svg>
-                درآمد
-            </button>
-            <button class="tablinks" onclick="openTab(event, 'expense')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 12H2"/>
-                </svg>
-                هزینه
-            </button>
-            <button class="tablinks" onclick="openTab(event, 'inventory')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 6H4v12h16V6z"/>
-                </svg>
-                موجودی
-            </button>
-            <button class="tablinks" onclick="openTab(event, 'debt')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2v4m0 12v4m-6-10h12"/>
-                </svg>
-                وام
-            </button>
-            <button class="tablinks" onclick="openTab(event, 'reports')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 17v-6m6 6v-9m-6 9H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2h-4"/>
-                </svg>
-                گزارش‌ها
-            </button>
-            <button class="tablinks" onclick="openTab(event, 'calendar')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 4H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zM16 2v4M8 2v4M3 10h18"/>
-                </svg>
-                تقویم
-            </button>
-        </div>
+    </header>
 
-        <!-- فرم درآمد -->
-        <div id="income" class="tabcontent" style="display: block;">
-            <div class="form-group">
-                <label for="income-source">منبع درآمد (اجباری):</label>
-                <span class="tooltip">منبع درآمد مثل فروش محصول یا یارانه</span>
-                <select id="income-source" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="فروش گندم">فروش گندم</option>
-                    <option value="فروش گوجه‌فرنگی">فروش گوجه‌فرنگی</option>
-                    <option value="فروش زعفران">فروش زعفران</option>
-                    <option value="فروش خیار">فروش خیار</option>
-                    <option value="فروش پسته">فروش پسته</option>
-                    <option value="فروش برنج">فروش برنج</option>
-                    <option value="یارانه دولتی">یارانه دولتی</option>
-                    <option value="سایر">سایر</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="income-product">محصول مرتبط (اختیاری):</label>
-                <span class="tooltip">محصول مرتبط با درآمد</span>
-                <select id="income-product">
-                    <option value="">انتخاب کنید</option>
-                    <option value="گندم">گندم</option>
-                    <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
-                    <option value="زعفران">زعفران</option>
-                    <option value="خیار">خیار</option>
-                    <option value="پسته">پسته</option>
-                    <option value="برنج">برنج</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="income-amount">مبلغ (ریال، اجباری):</label>
-                <span class="tooltip">مبلغ درآمد</span>
-                <input type="number" id="income-amount" min="0" placeholder="مثال: 5000000" required>
-            </div>
-            <div class="form-group">
-                <label for="income-date">تاریخ (اختیاری):</label>
-                <span class="tooltip">تاریخ دریافت درآمد</span>
-                <input type="date" id="income-date">
-            </div>
-            <div class="form-group">
-                <label for="income-recurring">تکرارشونده؟ (اختیاری):</label>
-                <span class="tooltip">درآمد ماهانه یا دوره‌ای</span>
-                <input type="checkbox" id="income-recurring"> ماهانه
-            </div>
-            <div class="form-group">
-                <label for="income-notes">یادداشت (اختیاری):</label>
-                <span class="tooltip">توضیحات اضافی مثل خریدار</span>
-                <input type="text" id="income-notes" placeholder="مثال: فروش به تعاونی">
-            </div>
-            <button class="submit-btn" onclick="submitIncome()">ثبت درآمد</button>
-        </div>
-
-        <!-- فرم هزینه -->
-        <div id="expense" class="tabcontent">
-            <div class="form-group">
-                <label for="expense-type">نوع هزینه (اجباری):</label>
-                <span class="tooltip">نوع هزینه مثل کود یا نیروی کار</span>
-                <select id="expense-type" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="کود">کود</option>
-                    <option value="سم">سم</option>
-                    <option value="نیروی کار">نیروی کار</option>
-                    <option value="ماشین‌آلات">ماشین‌آلات</option>
-                    <option value="آبیاری">آبیاری</option>
-                    <option value="مالیات">مالیات</option>
-                    <option value="سایر">سایر</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="expense-product">محصول مرتبط (اختیاری):</label>
-                <span class="tooltip">محصول مرتبط با هزینه</span>
-                <select id="expense-product">
-                    <option value="">انتخاب کنید</option>
-                    <option value="گندم">گندم</option>
-                    <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
-                    <option value="زعفران">زعفران</option>
-                    <option value="خیار">خیار</option>
-                    <option value="پسته">پسته</option>
-                    <option value="برنج">برنج</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="expense-amount">مبلغ (ریال، اجباری):</label>
-                <span class="tooltip">مبلغ هزینه</span>
-                <input type="number" id="expense-amount" min="0" placeholder="مثال: 2000000" required>
-            </div>
-            <div class="form-group">
-                <label for="expense-date">تاریخ (اختیاری):</label>
-                <span class="tooltip">تاریخ پرداخت هزینه</span>
-                <input type="date" id="expense-date">
-            </div>
-            <div class="form-group">
-                <label for="expense-recurring">تکرارشونده؟ (اختیاری):</label>
-                <span class="tooltip">هزینه ماهانه یا دوره‌ای</span>
-                <input type="checkbox" id="expense-recurring"> ماهانه
-            </div>
-            <div class="form-group">
-                <label for="expense-notes">یادداشت (اختیاری):</label>
-                <span class="tooltip">توضیحات اضافی مثل فروشنده</span>
-                <input type="text" id="expense-notes" placeholder="مثال: خرید کود از شرکت X">
-            </div>
-            <button class="submit-btn" onclick="submitExpense()">ثبت هزینه</button>
-        </div>
-
-        <!-- فرم موجودی -->
-        <div id="inventory" class="tabcontent">
-            <div class="form-group">
-                <label for="inventory-type">نوع موجودی (اجباری):</label>
-                <span class="tooltip">نوع موجودی مثل محصول یا تجهیزات</span>
-                <select id="inventory-type" required>
-                    <option value="">انتخاب کنید</option>
-                    <option value="گندم">گندم</option>
-                    <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
-                    <option value="زعفران">زعفران</option>
-                    <option value="کود">کود</option>
-                    <option value="ماشین‌آلات">ماشین‌آلات</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="inventory-quantity">مقدار (اجباری):</label>
-                <span class="tooltip">مقدار موجودی (مثل کیلوگرم)</span>
-                <input type="number" id="inventory-quantity" min="0" placeholder="مثال: 1000" required>
-            </div>
-            <div class="form-group">
-                <label for="inventory-unit">واحد (اختیاری):</label>
-                <span class="tooltip">واحد مثل کیلوگرم یا عدد</span>
-                <input type="text" id="inventory-unit" placeholder="مثال: کیلوگرم">
-            </div>
-            <div class="form-group">
-                <label for="inventory-notes">یادداشت (اختیاری):</label>
-                <span class="tooltip">توضیحات مثل محل ذخیره</span>
-                <input type="text" id="inventory-notes" placeholder="مثال: انبار شماره 1">
-            </div>
-            <button class="submit-btn" onclick="submitInventory()">ثبت موجودی</button>
-        </div>
-
-        <!-- فرم وام -->
-        <div id="debt" class="tabcontent">
-            <div class="form-group">
-                <label for="debt-amount">مبلغ وام (ریال، اجباری):</label>
-                <span class="tooltip">مبلغ وام دریافتی</span>
-                <input type="number" id="debt-amount" min="0" placeholder="مثال: 10000000" required>
-            </div>
-            <div class="form-group">
-                <label for="debt-interest">نرخ بهره (%) (اختیاری):</label>
-                <span class="tooltip">نرخ بهره سالیانه</span>
-                <input type="number" id="debt-interest" min="0" step="0.1" placeholder="مثال: 5">
-            </div>
-            <div class="form-group">
-                <label for="debt-due">سررسید (اختیاری):</label>
-                <span class="tooltip">تاریخ بازپرداخت</span>
-                <input type="date" id="debt-due">
-            </div>
-            <div class="form-group">
-                <label for="debt-notes">یادداشت (اختیاری):</label>
-                <span class="tooltip">توضیحات مثل نام بانک</span>
-                <input type="text" id="debt-notes" placeholder="مثال: وام از بانک کشاورزی">
-            </div>
-            <button class="submit-btn" onclick="submitDebt()">ثبت وام</button>
-        </div>
-
-        <!-- گزارش‌ها -->
-        <div id="reports" class="tabcontent">
-            <h2>گزارش‌های مالی</h2>
-            <button class="report-btn" onclick="generateBalanceSheet()">ترازنامه</button>
-            <button class="report-btn" onclick="generateIncomeStatement()">صورت سود و زیان</button>
-            <button class="report-btn" onclick="generateCashFlow()">صورت جریان نقدی</button>
-            <button class="report-btn" onclick="generateTaxReport()">گزارش مالیاتی</button>
-            <button class="report-btn" onclick="generateProductProfit()">سودآوری محصولات</button>
-            <button class="report-btn" onclick="predictNextThreeMonths()">پیش‌بینی 3 ماه</button>
-            <button class="report-btn" onclick="exportReport()">صادر کردن گزارش</button>
-            <div id="result"></div>
-            <div id="chart-container"></div>
-        </div>
-
-        <!-- تقویم مالی -->
-        <div id="calendar" class="tabcontent">
-            <h2>تقویم مالی</h2>
-            <div id="calendar-content"></div>
-        </div>
-
-        <div class="loader" id="loader">در حال پردازش...</div>
-        <div id="history">
-            <h2>تاریخچه تراکنش‌ها</h2>
-            <div class="form-group">
-                <label for="history-filter">فیلتر:</label>
-                <select id="history-filter" onchange="displayHistory()">
-                    <option value="all">همه</option>
-                    <option value="income">درآمد</option>
-                    <option value="expense">هزینه</option>
-                    <option value="inventory">موجودی</option>
-                    <option value="debt">وام</option>
-                </select>
-            </div>
-            <div id="history-list"></div>
-        </div>
+    <div class="tabs" role="tablist">
+        <div class="tab active" role="tab" aria-selected="true" onclick="switchTab(this, 'calculator')">محاسبه هزینه کود</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab(this, 'advice')">مشاوره کود مناسب</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab(this, 'products')">راهنمای محصولات</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab(this, 'fertilizers')">انواع کودها</div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // داده‌های مالی
-        const financialData = {
-            income: [],
-            expense: [],
-            inventory: [],
-            debt: [],
-            balanceSheet: { assets: 0, liabilities: 0, equity: 0 }
-        };
+    <section id="calculator" class="form-section active" role="tabpanel">
+        <form id="calculatorForm" onsubmit="event.preventDefault(); calculate();">
+            <div class="form-group">
+                <label for="area">مساحت زمین (هکتار)</label>
+                <div class="input-icon">
+                    <i class="fas fa-ruler-combined"></i>
+                    <input type="number" id="area" step="0.1" min="0" placeholder="مثال: 2.5" required aria-describedby="area-error">
+                </div>
+                <span id="area-error" class="error-message" style="color: var(--error); display: none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="cropCost">نوع محصول</label>
+                <select id="cropCost" required>
+                    <option value="wheat">گندم - 100 کیلو/هکتار</option>
+                    <option value="corn">ذرت - 120 کیلو/هکتار</option>
+                    <option value="barley">جو - 80 کیلو/هکتار</option>
+                    <option value="potato">سیب‌زمینی - 150 کیلو/هکتار</option>
+                    <option value="tomato">گوجه فرنگی - 130 کیلو/هکتار</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pricePerKilo">قیمت هر کیلو کود (تومان)</label>
+                <div class="input-icon">
+                    <i class="fas fa-tag"></i>
+                    <input type="number" id="pricePerKilo" step="0.1" min="0" value="3000" required aria-describedby="price-error">
+                </div>
+                <span id="price-error" class="error-message" style="color: var(--error); display: none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="discount">تخفیف (درصد)</label>
+                <div class="input-icon">
+                    <i class="fas fa-percentage"></i>
+                    <input type="number" id="discount" min="0" max="100" value="0" aria-describedby="discount-error">
+                </div>
+                <span id="discount-error" class="error-message" style="color: var(--error); display: none;"></span>
+            </div>
+            <div class="btn-group">
+                <button type="submit"><i class="fas fa-calculator"></i> محاسبه</button>
+                <button type="button" class="secondary" onclick="saveCalculation()"><i class="fas fa-save"></i> ذخیره</button>
+            </div>
+        </form>
+        <canvas id="costChart" aria-label="نمودار هزینه کود"></canvas>
+        <div class="result" id="costResult">
+            <h3>نتایج محاسبه</h3>
+            <p>لطفاً مقادیر را وارد کنید و روی دکمه «محاسبه» کلیک کنید.</p>
+        </div>
+    </section>
 
-        // تغییر تم
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        }
+    <section id="advice" class="form-section" role="tabpanel">
+        <form id="adviceForm" onsubmit="event.preventDefault(); getAdvice();">
+            <div class="form-group">
+                <label for="plant">نوع گیاه</label>
+                <select id="plant" required>
+                    <option value="wheat">گندم</option>
+                    <option value="corn">ذرت</option>
+                    <option value="potato">سیب‌زمینی</option>
+                    <option value="tomato">گوجه فرنگی</option>
+                    <option value="rice">برنج</option>
+                    <option value="cotton">پنبه</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="soilType">نوع خاک</label>
+                <select id="soilType" required>
+                    <option value="sandy">شنی</option>
+                    <option value="clay">رسی</option>
+                    <option value="loamy">لومی</option>
+                    <option value="silty">سیلت</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="soilPh">میزان pH خاک</label>
+                <div class="input-icon">
+                    <i class="fas fa-flask"></i>
+                    <input type="number" id="soilPh" step="0.1" min="4" max="9" placeholder="مثال: 6.5" required aria-describedby="soilPh-error">
+                </div>
+                <span id="soilPh-error" class="error-message" style="color: var(--error); display: none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="climate">شرایط آب و هوایی</label>
+                <select id="climate" required>
+                    <option value="dry">خشک</option>
+                    <option value="moderate">معتدل</option>
+                    <option value="humid">مرطوب</option>
+                    <option value="semi-arid">نیمه خشک</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="season">فصل کاشت</label>
+                <select id="season" required>
+                    <option value="spring">بهار</option>
+                    <option value="summer">تابستان</option>
+                    <option value="fall">پاییز</option>
+                    <option value="winter">زمستان</option>
+                </select>
+            </div>
+            <div class="btn-group">
+                <button type="submit"><i class="fas fa-lightbulb"></i> دریافت مشاوره</button>
+                <button type="button" class="secondary" onclick="printAdvice()"><i class="fas fa-print"></i> چاپ مشاوره</button>
+            </div>
+        </form>
+        <canvas id="adviceChart" aria-label="نمودار نیازهای کودی"></canvas>
+        <div class="result" id="adviceResult">
+            <h3>راهنمای مشاوره</h3>
+            <p>لطفاً اطلاعات را وارد کنید و مشاوره بگیرید.</p>
+        </div>
+    </section>
 
-        // مدیریت تب‌ها
-        function openTab(evt, tabName) {
-            document.querySelectorAll('.tabcontent').forEach(el => el.style.display = 'none');
-            document.querySelectorAll('.tablinks').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabName).style.display = 'block';
-            evt.currentTarget.classList.add('active');
-            if (tabName === 'calendar') displayCalendar();
-        }
+    <section id="products" class="form-section" role="tabpanel">
+        <div class="search-container">
+            <label for="productSearch">جستجوی محصولات</label>
+            <div class="input-icon">
+                <i class="fas fa-search"></i>
+                <input type="text" id="productSearch" oninput="searchProducts()" placeholder="نام محصول را وارد کنید..." aria-describedby="search-results">
+            </div>
+            <ul id="searchResults" aria-live="polite"></ul>
+        </div>
+        <div class="feature-list">
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>راهنمای کامل گندم</h3>
+                <p>نیازهای کودی، زمان مناسب کاشت و برداشت، آفات و بیماری‌های رایج گندم</p>
+                <button class="secondary" onclick="showProductDetail('wheat')">مشاهده جزئیات</button>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>راهنمای کامل ذرت</h3>
+                <p>نیازهای آبیاری، کودهای مناسب، روش‌های افزایش عملکرد ذرت</p>
+                <button class="secondary" onclick="showProductDetail('corn')">مشاهده جزئیات</button>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>راهنمای کامل سیب‌زمینی</h3>
+                <p>مدیریت کوددهی، کنترل آفات، روش‌های نگهداری سیب‌زمینی</p>
+                <button class="secondary" onclick="showProductDetail('potato')">مشاهده جزئیات</button>
+            </div>
+        </div>
+    </section>
 
-        // ثبت درآمد
-        function submitIncome() {
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            setTimeout(() => {
-                loader.style.display = 'none';
-                processIncome();
-            }, 500);
-        }
+    <section id="fertilizers" class="form-section" role="tabpanel">
+        <h3>انواع کودهای شیمیایی</h3>
+        <div class="product-card">
+            <h4>کودهای نیتروژنی</h4>
+            <p>کودهای حاوی نیتروژن که برای رشد سبزینه گیاهان ضروری هستند.</p>
+            <ul>
+                <li>اوره (46% نیتروژن)</li>
+                <li>نیترات آمونیوم (34% نیتروژن)</li>
+                <li>سولفات آمونیوم (21% نیتروژن)</li>
+            </ul>
+        </div>
+        <div class="product-card">
+            <h4>کودهای فسفاتی</h4>
+            <p>کودهای حاوی فسفر که برای رشد ریشه و تشکیل گل و میوه مهم هستند.</p>
+            <ul>
+                <li>سوپرفسفات تریپل (46% P₂O₅)</li>
+                <li>سوپرفسفات ساده (20% P₂O₅)</li>
+                <li>دی آمونیوم فسفات (46% P₂O₅)</li>
+            </ul>
+        </div>
+    </section>
 
-        function processIncome() {
-            const source = document.getElementById('income-source').value;
-            const product = document.getElementById('income-product').value;
-            const amount = document.getElementById('income-amount').value;
-            const date = document.getElementById('income-date').value || new Date().toLocaleDateString('fa-IR');
-            const recurring = document.getElementById('income-recurring').checked;
-            const notes = document.getElementById('income-notes').value;
-            const resultDiv = document.getElementById('result');
+    <footer class="footer">
+        <div class="container">
+            <p><i class="fas fa-phone"></i> پشتیبانی: 021-12345678</p>
+            <p><i class="fas fa-envelope"></i> ایمیل: info@agriadvisor.ir</p>
+            <p><i class="fas fa-map-marker-alt"></i> آدرس: تهران، خیابان آزادی</p>
+            <div class="social-icons">
+                <a href="#" aria-label="تلگرام"><i class="fab fa-telegram"></i></a>
+                <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="واتساپ"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="یوتوب"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>© 2025 AgriAdvisor Pro - تمام حقوق محفوظ است</p>
+        </div>
+    </footer>
 
-            if (!source || !amount) {
-                resultDiv.innerHTML = '<p style="color: red;">لطفاً منبع و مبلغ درآمد را وارد کنید.</p>';
-                return;
-            }
+    <div class="notification" id="notification" aria-live="assertive"></div>
+</div>
 
-            const income = { source, product: product || 'نامشخص', amount: parseFloat(amount), date, recurring, notes };
-            financialData.income.push(income);
-            financialData.balanceSheet.assets += parseFloat(amount);
-            financialData.balanceSheet.equity += parseFloat(amount);
-            saveData();
-            updateDashboard();
-            resultDiv.innerHTML = `<p style="color: green;">درآمد ${source} با مبلغ ${amount} ریال ثبت شد.</p>`;
-            displayHistory();
-        }
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
 
-        // ثبت هزینه
-        function submitExpense() {
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            setTimeout(() => {
-                loader.style.display = 'none';
-                processExpense();
-            }, 500);
-        }
+<script>
+    let costChart, adviceChart;
+    const plantNeeds = {
+        wheat: { N: 100, P: 60, K: 50, description: "گندم به نیتروژن برای رشد ساقه و برگ نیاز دارد." },
+        corn: { N: 150, P: 80, K: 70, description: "ذرت به نیتروژن زیادی نیاز دارد. کمبود باعث زردی برگ می‌شود." },
+        potato: { N: 120, P: 90, K: 150, description: "سیب‌زمینی به پتاسیم زیادی نیاز دارد." },
+        tomato: { N: 130, P: 70, K: 140, description: "گوجه فرنگی در مراحل مختلف نیازهای غذایی متفاوتی دارد." },
+        rice: { N: 110, P: 50, K: 80, description: "برنج در خاک غرقاب نیاز به مدیریت خاص کود دارد." },
+        cotton: { N: 140, P: 60, K: 90, description: "پنبه به نیتروژن برای تشکیل غوزه نیاز دارد." }
+    };
 
-        function processExpense() {
-            const type = document.getElementById('expense-type').value;
-            const product = document.getElementById('expense-product').value;
-            const amount = document.getElementById('expense-amount').value;
-            const date = document.getElementById('expense-date').value || new Date().toLocaleDateString('fa-IR');
-            const recurring = document.getElementById('expense-recurring').checked;
-            const notes = document.getElementById('expense-notes').value;
-            const resultDiv = document.getElementById('result');
+    const savedCalculations = JSON.parse(localStorage.getItem('savedCalculations')) || [];
 
-            if (!type || !amount) {
-                resultDiv.innerHTML = '<p style="color: red;">لطفاً نوع و مبلغ هزینه را وارد کنید.</p>';
-                return;
-            }
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        document.querySelector('.dark-mode-toggle i').classList.toggle('fa-moon', !isDarkMode);
+        document.querySelector('.dark-mode-toggle i').classList.toggle('fa-sun', isDarkMode);
+        showNotification(isDarkMode ? 'حالت تاریک فعال شد' : 'حالت روشن فعال شد');
+    }
 
-            const expense = { type, product: product || 'نامشخص', amount: parseFloat(amount), date, recurring, notes };
-            financialData.expense.push(expense);
-            financialData.balanceSheet.assets -= parseFloat(amount);
-            financialData.balanceSheet.equity -= parseFloat(amount);
-            saveData();
-            updateDashboard();
-            resultDiv.innerHTML = `<p style="color: green;">هزینه ${type} با مبلغ ${amount} ریال ثبت شد.</p>`;
-            displayHistory();
-        }
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = `notification show ${type}`;
+        setTimeout(() => notification.classList.remove('show'), 3000);
+    }
 
-        // ثبت موجودی
-        function submitInventory() {
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            setTimeout(() => {
-                loader.style.display = 'none';
-                processInventory();
-            }, 500);
-        }
-
-        function processInventory() {
-            const type = document.getElementById('inventory-type').value;
-            const quantity = document.getElementById('inventory-quantity').value;
-            const unit = document.getElementById('inventory-unit').value || 'نامشخص';
-            const notes = document.getElementById('inventory-notes').value;
-            const resultDiv = document.getElementById('result');
-
-            if (!type || !quantity) {
-                resultDiv.innerHTML = '<p style="color: red;">لطفاً نوع و مقدار موجودی را وارد کنید.</p>';
-                return;
-            }
-
-            const inventory = { type, quantity: parseFloat(quantity), unit, notes, date: new Date().toLocaleDateString('fa-IR') };
-            financialData.inventory.push(inventory);
-            saveData();
-            updateDashboard();
-            resultDiv.innerHTML = `<p style="color: green;">موجودی ${type} با مقدار ${quantity} ${unit} ثبت شد.</p>`;
-            if (quantity < 10) {
-                resultDiv.innerHTML += `<p style="color: red;">هشدار: موجودی ${type} کم است!</p>`;
-            }
-            displayHistory();
-        }
-
-        // ثبت وام
-        function submitDebt() {
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            setTimeout(() => {
-                loader.style.display = 'none';
-                processDebt();
-            }, 500);
-        }
-
-        function processDebt() {
-            const amount = document.getElementById('debt-amount').value;
-            const interest = document.getElementById('debt-interest').value || 0;
-            const due = document.getElementById('debt-due').value || 'نامشخص';
-            const notes = document.getElementById('debt-notes').value;
-            const resultDiv = document.getElementById('result');
-
-            if (!amount) {
-                resultDiv.innerHTML = '<p style="color: red;">لطفاً مبلغ وام را وارد کنید.</p>';
-                return;
-            }
-
-            const debt = { amount: parseFloat(amount), interest: parseFloat(interest), due, notes, date: new Date().toLocaleDateString('fa-IR') };
-            financialData.debt.push(debt);
-            financialData.balanceSheet.assets += parseFloat(amount);
-            financialData.balanceSheet.liabilities += parseFloat(amount);
-            saveData();
-            updateDashboard();
-            resultDiv.innerHTML = `<p style="color: green;">وام با مبلغ ${amount} ریال ثبت شد.</p>`;
-            if (due && new Date(due) < new Date(new Date().setDate(new Date().getDate() + 7))) {
-                resultDiv.innerHTML += `<p style="color: red;">هشدار: سررسید وام نزدیک است!</p>`;
-            }
-            displayHistory();
-        }
-
-        // ذخیره داده‌ها
-        function saveData() {
-            localStorage.setItem('financialData', JSON.stringify(financialData));
-        }
-
-        // به‌روزرسانی داشبورد
-        function updateDashboard() {
-            const totalIncome = financialData.income.reduce((sum, item) => sum + item.amount, 0);
-            const totalExpense = financialData.expense.reduce((sum, item) => sum + item.amount, 0);
-            const profit = totalIncome - totalExpense;
-            const cashFlow = totalIncome - totalExpense;
-            const totalInventory = financialData.inventory.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('dashboard-profit').innerText = `سود/زیان: ${profit.toLocaleString('fa-IR')} ریال`;
-            document.getElementById('dashboard-cashflow').innerText = `جریان نقدی خالص: ${cashFlow.toLocaleString('fa-IR')} ریال`;
-            document.getElementById('dashboard-inventory').innerText = `موجودی کل: ${totalInventory.toLocaleString('fa-IR')}`;
-            if (cashFlow < 0) {
-                document.getElementById('dashboard-cashflow').style.color = 'red';
-            } else {
-                document.getElementById('dashboard-cashflow').style.color = 'green';
-            }
-        }
-
-        // نمایش تاریخچه
-        function displayHistory() {
-            const filter = document.getElementById('history-filter').value;
-            const historyList = document.getElementById('history-list');
-            historyList.innerHTML = '';
-            if (filter === 'all' || filter === 'income') {
-                financialData.income.forEach(item => {
-                    historyList.innerHTML += `
-                        <div class="history-item">
-                            <p><strong>نوع:</strong> درآمد - ${item.source}</p>
-                            <p><strong>محصول:</strong> ${item.product}</p>
-                            <p><strong>مبلغ:</strong> ${item.amount.toLocaleString('fa-IR')} ریال</p>
-                            <p><strong>تاریخ:</strong> ${item.date}</p>
-                            <p><strong>تکرارشونده:</strong> ${item.recurring ? 'بله' : 'خیر'}</p>
-                            <p><strong>یادداشت:</strong> ${item.notes || 'نامشخص'}</p>
-                        </div>
-                    `;
-                });
-            }
-            if (filter === 'all' || filter === 'expense') {
-                financialData.expense.forEach(item => {
-                    historyList.innerHTML += `
-                        <div class="history-item">
-                            <p><strong>نوع:</strong> هزینه - ${item.type}</p>
-                            <p><strong>محصول:</strong> ${item.product}</p>
-                            <p><strong>مبلغ:</strong> ${item.amount.toLocaleString('fa-IR')} ریال</p>
-                            <p><strong>تاریخ:</strong> ${item.date}</p>
-                            <p><strong>تکرارشونده:</strong> ${item.recurring ? 'بله' : 'خیر'}</p>
-                            <p><strong>یادداشت:</strong> ${item.notes || 'نامشخص'}</p>
-                        </div>
-                    `;
-                });
-            }
-            if (filter === 'all' || filter === 'inventory') {
-                financialData.inventory.forEach(item => {
-                    historyList.innerHTML += `
-                        <div class="history-item">
-                            <p><strong>نوع:</strong> موجودی - ${item.type}</p>
-                            <p><strong>مقدار:</strong> ${item.quantity.toLocaleString('fa-IR')} ${item.unit}</p>
-                            <p><strong>تاریخ:</strong> ${item.date}</p>
-                            <p><strong>یادداشت:</strong> ${item.notes || 'نامشخص'}</p>
-                        </div>
-                    `;
-                });
-            }
-            if (filter === 'all' || filter === 'debt') {
-                financialData.debt.forEach(item => {
-                    historyList.innerHTML += `
-                        <div class="history-item">
-                            <p><strong>نوع:</strong> وام</p>
-                            <p><strong>مبلغ:</strong> ${item.amount.toLocaleString('fa-IR')} ریال</p>
-                            <p><strong>نرخ بهره:</strong> ${item.interest}%</p>
-                            <p><strong>سررسید:</strong> ${item.due}</p>
-                            <p><strong>تاریخ:</strong> ${item.date}</p>
-                            <p><strong>یادداشت:</strong> ${item.notes || 'نامشخص'}</p>
-                        </div>
-                    `;
-                });
-            }
-        }
-
-        // تولید ترازنامه
-        function generateBalanceSheet() {
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <h3>ترازنامه</h3>
-                <p><strong>دارایی‌ها:</strong> ${financialData.balanceSheet.assets.toLocaleString('fa-IR')} ریال</p>
-                <p><strong>بدهی‌ها:</strong> ${financialData.balanceSheet.liabilities.toLocaleString('fa-IR')} ریال</p>
-                <p><strong>حقوق صاحبان سهام:</strong> ${financialData.balanceSheet.equity.toLocaleString('fa-IR')} ریال</p>
-            `;
-            drawBalanceChart();
-        }
-
-        // تولید صورت سود و زیان
-        function generateIncomeStatement() {
-            const totalIncome = financialData.income.reduce((sum, item) => sum + item.amount, 0);
-            const totalExpense = financialData.expense.reduce((sum, item) => sum + item.amount, 0);
-            const profit = totalIncome - totalExpense;
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <h3>صورت سود و زیان</h3>
-                <p><strong>کل درآمدها:</strong> ${totalIncome.toLocaleString('fa-IR')} ریال</p>
-                <p><strong>کل هزینه‌ها:</strong> ${totalExpense.toLocaleString('fa-IR')} ریال</p>
-                <p><strong>سود/زیان:</strong> ${profit.toLocaleString('fa-IR')} ریال</p>
-            `;
-            drawProfitChart(totalIncome, totalExpense, profit);
-        }
-
-        // تولید صورت جریان نقدی
-        function generateCashFlow() {
-            const totalIncome = financialData.income.reduce((sum, item) => sum + item.amount, 0);
-            const totalExpense = financialData.expense.reduce((sum, item) => sum + item.amount, 0);
-            const cashFlow = totalIncome - totalExpense;
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <h3>صورت جریان نقدی</h3>
-                <p><strong>جریان نقدی ورودی:</strong> ${totalIncome.toLocaleString('fa-IR')} ریال</p>
-                <p><strong>جریان نقدی خروجی:</strong> ${totalExpense.toLocaleString('fa-IR')} ریال</p>
-                <p><strong>جریان نقدی خالص:</strong> ${cashFlow.toLocaleString('fa-IR')} ریال</p>
-                ${cashFlow < 0 ? '<p style="color: red;">هشدار: جریان نقدی منفی است!</p>' : ''}
-            `;
-            drawCashFlowChart(totalIncome, totalExpense, cashFlow);
-        }
-
-        // تولید گزارش مالیاتی
-        function generateTaxReport() {
-            const taxableIncome = financialData.income.filter(item => item.source !== 'یارانه دولتی').reduce((sum, item) => sum + item.amount, 0);
-            const deductibleExpenses = financialData.expense.filter(item => item.type !== 'مالیات').reduce((sum, item) => sum + item.amount, 0);
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <h3>گزارش مالیاتی</h3>
-                <p><strong>درآمد مشمول مالیات:</strong> ${taxableIncome.toLocaleString('fa-IR')} ریال</p>
-                <p><strong>هزینه‌های قابل کسر:</strong> ${deductibleExpenses.toLocaleString('fa-IR')} ریال</p>
-                <p><strong>سود مشمول مالیات:</strong> ${(taxableIncome - deductibleExpenses).toLocaleString('fa-IR')} ریال</p>
-                <p>توصیه: این گزارش را به اداره مالیات ارائه دهید.</p>
-            `;
-        }
-
-        // تولید گزارش سودآوری محصولات
-        function generateProductProfit() {
-            const products = [...new Set([...financialData.income.map(i => i.product), ...financialData.expense.map(e => e.product)])].filter(p => p !== 'نامشخص');
-            let resultHTML = '<h3>سودآوری محصولات</h3>';
-            products.forEach(product => {
-                const productIncome = financialData.income.filter(i => i.product === product).reduce((sum, i) => sum + i.amount, 0);
-                const productExpense = financialData.expense.filter(e => e.product === product).reduce((sum, e) => sum + e.amount, 0);
-                const profit = productIncome - productExpense;
-                resultHTML += `
-                    <p><strong>${product}:</strong></p>
-                    <p>درآمد: ${productIncome.toLocaleString('fa-IR')} ریال</p>
-                    <p>هزینه: ${productExpense.toLocaleString('fa-IR')} ریال</p>
-                    <p>سود/زیان: ${profit.toLocaleString('fa-IR')} ریال</p>
-                    ${profit < 0 ? '<p style="color: red;">هشدار: این محصول زیان‌ده است!</p>' : ''}
-                `;
-            });
-            document.getElementById('result').innerHTML = resultHTML;
-            drawProductProfitChart(products);
-        }
-
-        // پیش‌بینی 3 ماه آینده
-        function predictNextThreeMonths() {
-            const avgIncome = financialData.income.reduce((sum, item) => sum + item.amount, 0) / Math.max(1, financialData.income.length);
-            const avgExpense = financialData.expense.reduce((sum, item) => sum + item.amount, 0) / Math.max(1, financialData.expense.length);
-            const prediction = (avgIncome - avgExpense) * 3;
-            document.getElementById('result').innerHTML = `
-                <h3>پیش‌بینی 3 ماه آینده</h3>
-                <p><strong>سود احتمالی:</strong> ${prediction.toLocaleString('fa-IR')} ریال</p>
-                <p>بر اساس میانگین درآمدها و هزینه‌های فعلی</p>
-            `;
-        }
-
-        // صادر کردن گزارش
-        function exportReport() {
-            const dataStr = JSON.stringify(financialData, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'financial_report.json';
-            link.click();
-            URL.revokeObjectURL(url);
-            document.getElementById('result').innerHTML = '<p style="color: green;">گزارش با موفقیت صادر شد.</p>';
-        }
-
-        // نمایش تقویم مالی
-        function displayCalendar() {
-            const calendarContent = document.getElementById('calendar-content');
-            let html = '<h3>رویدادهای مالی</h3>';
-            financialData.debt.forEach(debt => {
-                if (debt.due !== 'نامشخص') {
-                    html += `<p>سررسید وام ${debt.amount.toLocaleString('fa-IR')} ریال: ${debt.due}</p>`;
-                }
-            });
-            financialData.expense.forEach(expense => {
-                if (expense.recurring) {
-                    html += `<p>هزینه تکرارشونده ${expense.type} (${expense.amount.toLocaleString('fa-IR')} ریال): هر ماه</p>`;
-                }
-            });
-            financialData.income.forEach(income => {
-                if (income.recurring) {
-                    html += `<p>درآمد تکرارشونده ${income.source} (${income.amount.toLocaleString('fa-IR')} ریال): هر ماه</p>`;
-                }
-            });
-            calendarContent.innerHTML = html || '<p>هیچ رویداد مالی ثبت نشده است.</p>';
-        }
-
-        // نمودار ترازنامه
-        function drawBalanceChart() {
-            const chartContainer = document.getElementById('chart-container');
-            chartContainer.innerHTML = '<canvas id="balanceChart"></canvas>';
-            const ctx = document.getElementById('balanceChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['دارایی‌ها', 'بدهی‌ها', 'حقوق صاحبان سهام'],
-                    datasets: [{
-                        label: 'ترازنامه',
-                        data: [
-                            financialData.balanceSheet.assets,
-                            financialData.balanceSheet.liabilities,
-                            financialData.balanceSheet.equity
-                        ],
-                        backgroundColor: ['#4CAF50', '#FF5722', '#2196F3'],
-                        borderColor: ['#388E3C', '#D32F2F', '#1976D2'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'مبلغ (ریال)' } } },
-                    plugins: { title: { display: true, text: 'ترازنامه مالی', font: { size: 18 } } }
-                }
-            });
-        }
-
-        // نمودار سود و زیان
-        function drawProfitChart(totalIncome, totalExpense, profit) {
-            const chartContainer = document.getElementById('chart-container');
-            chartContainer.innerHTML = '<canvas id="profitChart"></canvas>';
-            const ctx = document.getElementById('profitChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['درآمدها', 'هزینه‌ها', 'سود/زیان'],
-                    datasets: [{
-                        label: 'صورت سود و زیان',
-                        data: [totalIncome, totalExpense, profit],
-                        backgroundColor: ['#4CAF50', '#FF5722', profit >= 0 ? '#2196F3' : '#F44336'],
-                        borderColor: ['#388E3C', '#D32F2F', profit >= 0 ? '#1976D2' : '#D32F2F'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'مبلغ (ریال)' } } },
-                    plugins: { title: { display: true, text: 'صورت سود و زیان', font: { size: 18 } } }
-                }
-            });
-        }
-
-        // نمودار جریان نقدی
-        function drawCashFlowChart(totalIncome, totalExpense, cashFlow) {
-            const chartContainer = document.getElementById('chart-container');
-            chartContainer.innerHTML = '<canvas id="cashFlowChart"></canvas>';
-            const ctx = document.getElementById('cashFlowChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['ورودی نقدی', 'خروجی نقدی', 'جریان نقدی خالص'],
-                    datasets: [{
-                        label: 'صورت جریان نقدی',
-                        data: [totalIncome, totalExpense, cashFlow],
-                        backgroundColor: ['#4CAF50', '#FF5722', cashFlow >= 0 ? '#2196F3' : '#F44336'],
-                        borderColor: ['#388E3C', '#D32F2F', cashFlow >= 0 ? '#1976D2' : '#D32F2F'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: { y: { beginAtZero: true, title: { display: true, text: 'مبلغ (ریال)' } } },
-                    plugins: { title: { display: true, text: 'صورت جریان نقدی', font: { size: 18 } } }
-                }
-            });
-        }
-
-        // نمودار سودآوری محصولات
-        function drawProductProfitChart(products) {
-            const chartContainer = document.getElementById('chart-container');
-            chartContainer.innerHTML = '<canvas id="productProfitChart"></canvas>';
-            const ctx = document.getElementById('productProfitChart').getContext('2d');
-            const datasets = products.map(product => {
-                const profit = financialData.income.filter(i => i.product === product).reduce((sum, i) => sum + i.amount, 0) -
-                              financialData.expense.filter(e => e.product === product).reduce((sum, e) => sum + e.amount, 0);
-                return profit;
-            });
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: products,
-                    datasets: [{
-                        label: 'سود/زیان محصولات',
-                        data: datasets,
-                        backgroundColor: datasets.map(p => p >= 0 ? '#4CAF50' : '#F44336'),
-                        borderColor: datasets.map(p => p >= 0 ? '#388E3C' : '#D32F2F'),
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: { y: { title: { display: true, text: 'سود/زیان (ریال)' } } },
-                    plugins: { title: { display: true, text: 'سودآوری محصولات', font: { size: 18 } } }
-                }
-            });
-        }
-
-        // بارگذاری اولیه
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedData = JSON.parse(localStorage.getItem('financialData'));
-            if (savedData) {
-                financialData.income = savedData.income || [];
-                financialData.expense = savedData.expense || [];
-                financialData.inventory = savedData.inventory || [];
-                financialData.debt = savedData.debt || [];
-                financialData.balanceSheet = savedData.balanceSheet || { assets: 0, liabilities: 0, equity: 0 };
-            }
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') document.body.classList.add('dark-mode');
-            updateDashboard();
-            displayHistory();
-            document.getElementsByClassName('tabcontent')[0].style.display = 'block';
+    function switchTab(tabEl, sectionId) {
+        document.querySelectorAll('.tab').forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
         });
-    </script>
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+        tabEl.classList.add('active');
+        tabEl.setAttribute('aria-selected', 'true');
+        document.getElementById(sectionId).classList.add('active');
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function validateInput(id, min, max, errorMessage) {
+        const input = document.getElementById(id);
+        const errorElement = document.getElementById(`${id}-error`);
+        const value = parseFloat(input.value);
+        if (isNaN(value) || (min && value < min) || (max && value > max)) {
+            errorElement.textContent = errorMessage;
+            errorElement.style.display = 'block';
+            return false;
+        }
+        errorElement.style.display = 'none';
+        return true;
+    }
+
+    function calculate() {
+        const areaValid = validateInput('area', 0, null, 'مساحت زمین باید عدد مثبت باشد');
+        const priceValid = validateInput('pricePerKilo', 0, null, 'قیمت کود باید عدد مثبت باشد');
+        const discountValid = validateInput('discount', 0, 100, 'تخفیف باید بین 0 تا 100 باشد');
+
+        if (!areaValid || !priceValid || !discountValid) return;
+
+        const submitButton = document.querySelector('#calculatorForm button[type="submit"]');
+        submitButton.disabled = true;
+
+        const area = parseFloat(document.getElementById("area").value);
+        const crop = document.getElementById("cropCost").value.split('-')[0].trim();
+        const cropRate = { wheat: 100, corn: 120, barley: 80, potato: 150, tomato: 130 }[crop];
+        const price = parseFloat(document.getElementById("pricePerKilo").value);
+        const discount = parseFloat(document.getElementById("discount").value) || 0;
+
+        const totalKg = area * cropRate;
+        const totalPrice = totalKg * price;
+        const discountedPrice = totalPrice * (1 - discount / 100);
+
+        document.getElementById("costResult").innerHTML = `
+            <h3><i class="fas fa-chart-bar"></i> نتایج محاسبه</h3>
+            <p><i class="fas fa-weight-hanging"></i> مجموع کود: ${totalKg.toFixed(2)} کیلوگرم</p>
+            <p><i class="fas fa-tag"></i> قیمت قبل از تخفیف: ${totalPrice.toLocaleString('fa-IR')} تومان</p>
+            ${discount > 0 ? `<p><i class="fas fa-percentage"></i> تخفیف: ${discount}%</p>` : ''}
+            <p><i class="fas fa-money-bill-wave"></i> قیمت نهایی: ${discountedPrice.toLocaleString('fa-IR')} تومان</p>
+        `;
+
+        if (costChart) costChart.destroy();
+        const ctx = document.getElementById('costChart').getContext('2d');
+        costChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['کود (کیلو)', 'هزینه (تومان)'],
+                datasets: [{
+                    label: 'مقایسه',
+                    data: [totalKg, discountedPrice],
+                    backgroundColor: ['#4caf50', '#2196f3']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        ticks: { callback: v => v.toLocaleString('fa-IR') }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { font: { family: 'Vazirmatn', size: 12 } }
+                    }
+                }
+            }
+        });
+
+        submitButton.disabled = false;
+    }
+
+    function getAdvice() {
+        const phValid = validateInput('soilPh', 4, 9, 'pH خاک باید بین 4 تا 9 باشد');
+        if (!phValid) return;
+
+        const submitButton = document.querySelector('#adviceForm button[type="submit"]');
+        submitButton.disabled = true;
+
+        const plant = document.getElementById("plant").value;
+        const soil = document.getElementById("soilType").value;
+        const ph = parseFloat(document.getElementById("soilPh").value);
+        const climate = document.getElementById("climate").value;
+        const season = document.getElementById("season").value;
+        const needs = plantNeeds[plant];
+        const advice = [];
+
+        if (ph < 6) advice.push("استفاده از کودهای آمونیومی برای بالا بردن pH");
+        if (soil === "sandy") advice.push("خاک شنی، کوددهی چندباره و کم توصیه می‌شود.");
+        if (climate === "dry") advice.push("در مناطق خشک، استفاده از کودهای آلی مناسب‌تر است.");
+        if (plant === "corn" && season === "summer") advice.push("ذرت در تابستان به نیتروژن زیادی نیاز دارد.");
+
+        document.getElementById("adviceResult").innerHTML = `
+            <h3><i class="fas fa-info-circle"></i> مشاوره کود مناسب</h3>
+            <p>${needs.description}</p>
+            <ul>${advice.map(a => `<li>${a}</li>`).join('')}</ul>
+        `;
+
+        if (adviceChart) adviceChart.destroy();
+        const ctx = document.getElementById('adviceChart').getContext('2d');
+        adviceChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['نیتروژن', 'فسفر', 'پتاسیم'],
+                datasets: [{
+                    label: 'نیاز گیاه',
+                    data: [needs.N, needs.P, needs.K],
+                    backgroundColor: 'rgba(46, 125, 50, 0.3)',
+                    borderColor: '#2e7d32'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { font: { family: 'Vazirmatn', size: 12 } }
+                    }
+                }
+            }
+        });
+
+        submitButton.disabled = false;
+    }
+
+    function saveCalculation() {
+        const resultDiv = document.getElementById("costResult");
+        if (!resultDiv.innerHTML.includes("نتایج محاسبه")) {
+            showNotification("ابتدا محاسبه را انجام دهید.", "error");
+            return;
+        }
+        const calculation = {
+            id: Date.now(),
+            resultHTML: resultDiv.innerHTML,
+            date: new Date().toLocaleString('fa-IR')
+        };
+        savedCalculations.push(calculation);
+        localStorage.setItem('savedCalculations', JSON.stringify(savedCalculations));
+        showNotification("محاسبه ذخیره شد", "success");
+    }
+
+    function printAdvice() {
+        const content = document.getElementById("adviceResult").innerHTML;
+        const win = window.open('', '', 'height=600,width=800');
+        win.document.write(`
+            <html>
+                <head>
+                    <title>چاپ مشاوره</title>
+                    <style>
+                        body { font-family: Vazirmatn, sans-serif; direction: rtl; padding: 20px; }
+                        h3 { color: #2e7d32; }
+                        ul { padding-right: 20px; }
+                        li { margin-bottom: 10px; }
+                    </style>
+                </head>
+                <body>${content}</body>
+            </html>
+        `);
+        win.document.close();
+        win.print();
+    }
+
+    function searchProducts() {
+        const query = document.getElementById("productSearch").value.toLowerCase();
+        const results = Object.keys(plantNeeds).filter(k => k.includes(query));
+        const container = document.getElementById("searchResults");
+        container.innerHTML = results.length
+            ? results.map(r => `<li role="option" onclick="showProductDetail('${r}')">${r}</li>`).join('')
+            : '<li>نتیجه‌ای یافت نشد</li>';
+    }
+
+    function showProductDetail(product) {
+        const info = plantNeeds[product];
+        Toastify({
+            text: `نیازهای کودی ${product}: نیتروژن=${info.N}، فسفر=${info.P}، پتاسیم=${info.K}`,
+            duration: 5000,
+            gravity: "bottom",
+            position: "center",
+            backgroundColor: "#4caf50"
+        }).showToast();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('darkMode') === 'enabled') toggleDarkMode();
+    });
+</script>
 </body>
 </html>
