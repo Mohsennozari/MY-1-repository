@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنج‌یار: راهنمای پیشرفته ارقام برنج ایران</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #e6f0fa;
+            text-align: right;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #1e88e5;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .filter-section, .consultation-section, .education-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .filter-section select, .consultation-section input, .consultation-section select {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 180px;
+            font-size: 14px;
+        }
+        .filter-section button, .consultation-section button, .education-section button, .chart-buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1e88e5;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .filter-section button:hover, .consultation-section button:hover, .education-section button:hover, .chart-buttons button:hover {
+            background-color: #1565c0;
+        }
+        .filter-section button i, .consultation-section button i, .education-section button i, .chart-buttons button i {
+            margin-left: 5px;
+        }
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card i {
+            font-size: 24px;
+            color: #1e88e5;
+            margin-left: 10px;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .chart-buttons {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        canvas {
+            max-width: 100%;
+            margin: 10px 0;
+            display: none;
+        }
+        #consultationResult, #educationContent {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 5px;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            right: 50%;
+            margin-right: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-content h3 {
+            color: #1e88e5;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .filter-section select, .consultation-section input, .consultation-section select {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .filter-section button, .consultation-section button, .education-section button, .chart-buttons button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>برنج‌یار: راهنمای پیشرفته ارقام برنج ایران</h1>
+
+        <!-- بخش فیلترها -->
+        <div class="filter-section">
+            <h2>فیلتر ارقام برنج</h2>
+            <div class="tooltip">
+                <select id="waterNeed">
+                    <option value="">نیاز آبی</option>
+                    <option value="low">کم (زیر 8000 مترمکعب)</option>
+                    <option value="medium">متوسط (8000-12000 مترمکعب)</option>
+                    <option value="high">زیاد (بیش از 12000 مترمکعب)</option>
+                </select>
+                <span class="tooltiptext">نیاز آبی در مترمکعب/هکتار</span>
+            </div>
+            <div class="tooltip">
+                <select id="yield">
+                    <option value="">محصول در هکتار</option>
+                    <option value="low">کم (زیر 4 تن)</option>
+                    <option value="medium">متوسط (4-6 تن)</option>
+                    <option value="high">زیاد (بیش از 6 تن)</option>
+                </select>
+                <span class="tooltiptext">محصول در تن/هکتار</span>
+            </div>
+            <div class="tooltip">
+                <select id="type">
+                    <option value="">نوع رقم</option>
+                    <option value="local">بومی</option>
+                    <option value="improved">اصلاح‌شده</option>
+                    <option value="international">بین‌المللی</option>
+                </select>
+                <span class="tooltiptext">نوع رقم برنج</span>
+            </div>
+            <div class="tooltip">
+                <select id="pestResistance">
+                    <option value="">مقاومت به آفات</option>
+                    <option value="low">کم (زیر 50%)</option>
+                    <option value="medium">متوسط (50-75%)</option>
+                    <option value="high">بالا (بیش از 75%)</option>
+                </select>
+                <span class="tooltiptext">درصد مقاومت به آفات</span>
+            </div>
+            <div class="tooltip">
+                <select id="growthPeriod">
+                    <option value="">دوره رشد</option>
+                    <option value="early">زودرس (90-120 روز)</option>
+                    <option value="late">دیررس (بیش از 120 روز)</option>
+                </select>
+                <span class="tooltiptext">مدت زمان رشد</span>
+            </div>
+            <div class="tooltip">
+                <select id="climate">
+                    <option value="">اقلیم</option>
+                    <option value="temperate">معتدل</option>
+                    <option value="warm">گرمسیر</option>
+                </select>
+                <span class="tooltiptext">اقلیم منطقه</span>
+            </div>
+            <div class="tooltip">
+                <select id="soilPh">
+                    <option value="">pH خاک</option>
+                    <option value="acidic">اسیدی (زیر 6.5)</option>
+                    <option value="neutral">خنثی (6.5-7.5)</option>
+                    <option value="alkaline">قلیایی (بیش از 7.5)</option>
+                </select>
+                <span class="tooltiptext">pH مناسب خاک</span>
+            </div>
+            <div class="tooltip">
+                <select id="altitude">
+                    <option value="">ارتفاع</option>
+                    <option value="low">کم (زیر 1000 متر)</option>
+                    <option value="medium">متوسط (1000-2000 متر)</option>
+                </select>
+                <span class="tooltiptext">ارتفاع از سطح دریا</span>
+            </div>
+            <div class="tooltip">
+                <select id="temperature">
+                    <option value="">دمای مطلوب</option>
+                    <option value="medium">متوسط (20-25 درجه)</option>
+                    <option value="high">زیاد (25-30 درجه)</option>
+                </select>
+                <span class="tooltiptext">دمای میانگین رشد</span>
+            </div>
+            <button onclick="filterRice()"><i class="fas fa-filter"></i> فیلتر</button>
+            <button onclick="resetFilters()"><i class="fas fa-undo"></i> ریست</button>
+            <button onclick="downloadReport()"><i class="fas fa-download"></i> دانلود گزارش</button>
+        </div>
+
+        <!-- بخش نتایج -->
+        <div id="results" class="results"></div>
+
+        <!-- بخش نمودارها -->
+        <div class="chart-container">
+            <h2>مقایسه ارقام</h2>
+            <div class="chart-buttons">
+                <button onclick="toggleChart('yieldChart')"><i class="fas fa-chart-bar"></i> نمایش نمودار محصول</button>
+                <button onclick="toggleChart('typeChart')"><i class="fas fa-chart-pie"></i> نمایش نمودار انواع</button>
+                <button onclick="toggleChart('radarChart')"><i class="fas fa-chart-line"></i> نمایش نمودار راداری</button>
+                <button onclick="showAllCharts()"><i class="fas fa-chalkboard"></i> نمایش همه نمودارها</button>
+            </div>
+            <canvas id="yieldChart"></canvas>
+            <canvas id="typeChart"></canvas>
+            <canvas id="radarChart"></canvas>
+        </div>
+
+        <!-- بخش مشاوره -->
+        <div class="consultation-section">
+            <h2>مشاوره کشت</h2>
+            <form id="consultationForm">
+                <label>نوع خاک:</label>
+                <select id="soilType">
+                    <option value="clay">رسی</option>
+                    <option value="loam">لومی</option>
+                </select><br>
+                <label>pH خاک:</label>
+                <input type="number" id="soilPhInput" step="0.1" placeholder="مثلاً 6.5"><br>
+                <label>میزان آب در دسترس:</label>
+                <select id="waterAvailability">
+                    <option value="irrigated">آبیاری</option>
+                </select><br>
+                <label>منطقه جغرافیایی:</label>
+                <input type="text" id="region" placeholder="مثلاً مازندران"><br>
+                <label>بودجه (تومان):</label>
+                <input type="number" id="budget" placeholder="مثلاً 8000000"><br>
+                <label>اقلیم:</label>
+                <select id="consultationClimate">
+                    <option value="temperate">معتدل</option>
+                    <option value="warm">گرمسیر</option>
+                </select><br>
+                <label>ارتفاع (متر):</label>
+                <input type="number" id="altitudeInput" placeholder="مثلاً 500"><br>
+                <label>دمای میانگین (درجه):</label>
+                <input type="number" id="temperatureInput" placeholder="مثلاً 25"><br>
+                <button type="submit"><i class="fas fa-seedling"></i> دریافت مشاوره</button>
+            </form>
+            <div id="consultationResult"></div>
+        </div>
+
+        <!-- بخش آموزشی -->
+        <div class="education-section">
+            <h2>نکات آموزشی</h2>
+            <select id="educationVariety">
+                <option value="">انتخاب رقم</option>
+            </select>
+            <button onclick="showEducation()"><i class="fas fa-book"></i> نمایش نکات کشت</button>
+            <div id="educationContent"></div>
+        </div>
+
+        <!-- مودال جزئیات -->
+        <div id="varietyModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">×</span>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- کتابخانه‌های موردنیاز -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script>
+        // داده‌های 30 رقم برنج با اطلاعات جامع
+        const riceVarieties = [
+            { name: "هاشمی", waterNeed: "medium", waterAmount: 10000, yield: "medium", yieldAmount: 5.5, type: "local", pestResistance: "medium", pestResistancePercent: 60, growthPeriod: "late", growthDays: 130, fertilizerNeed: "medium", fertilizerAmount: 200, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 50, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 90, costPerHectare: 8000000, revenuePerTon: 1200000 },
+            { name: "طارم", waterNeed: "medium", waterAmount: 9500, yield: "medium", yieldAmount: 5, type: "local", pestResistance: "medium", pestResistancePercent: 55, growthPeriod: "late", growthDays: 135, fertilizerNeed: "medium", fertilizerAmount: 180, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 88, costPerHectare: 7500000, revenuePerTon: 1150000 },
+            { name: "شیرودی", waterNeed: "high", waterAmount: 13000, yield: "high", yieldAmount: 6.5, type: "improved", pestResistance: "high", pestResistancePercent: 80, growthPeriod: "early", growthDays: 110, fertilizerNeed: "high", fertilizerAmount: 250, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 200, temperature: "high", tempRange: 27, climate: "temperate", plantingTime: "بهار", successRate: 92, costPerHectare: 9000000, revenuePerTon: 1250000 },
+            { name: "فجر", waterNeed: "medium", waterAmount: 11000, yield: "high", yieldAmount: 6, type: "improved", pestResistance: "high", pestResistancePercent: 75, growthPeriod: "early", growthDays: 105, fertilizerNeed: "medium", fertilizerAmount: 220, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 89, costPerHectare: 8500000, revenuePerTon: 1200000 },
+            { name: "خزر", waterNeed: "high", waterAmount: 14000, yield: "high", yieldAmount: 7, type: "improved", pestResistance: "medium", pestResistancePercent: 65, growthPeriod: "late", growthDays: 140, fertilizerNeed: "high", fertilizerAmount: 260, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 28, climate: "temperate", plantingTime: "بهار", successRate: 91, costPerHectare: 9500000, revenuePerTon: 1300000 },
+            { name: "دانیال", waterNeed: "medium", waterAmount: 10500, yield: "medium", yieldAmount: 5.8, type: "improved", pestResistance: "high", pestResistancePercent: 78, growthPeriod: "early", growthDays: 100, fertilizerNeed: "medium", fertilizerAmount: 200, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 200, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 90, costPerHectare: 8200000, revenuePerTon: 1220000 },
+            { name: "نعمت", waterNeed: "high", waterAmount: 12500, yield: "high", yieldAmount: 6.2, type: "improved", pestResistance: "medium", pestResistancePercent: 60, growthPeriod: "late", growthDays: 130, fertilizerNeed: "high", fertilizerAmount: 240, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 27, climate: "temperate", plantingTime: "بهار", successRate: 88, costPerHectare: 8800000, revenuePerTon: 1230000 },
+            { name: "طارم هاشمی", waterNeed: "medium", waterAmount: 10000, yield: "medium", yieldAmount: 5.3, type: "local", pestResistance: "medium", pestResistancePercent: 58, growthPeriod: "late", growthDays: 135, fertilizerNeed: "medium", fertilizerAmount: 190, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 89, costPerHectare: 7700000, revenuePerTon: 1180000 },
+            { name: "صدری", waterNeed: "high", waterAmount: 13500, yield: "medium", yieldAmount: 5, type: "local", pestResistance: "low", pestResistancePercent: 45, growthPeriod: "late", growthDays: 140, fertilizerNeed: "high", fertilizerAmount: 250, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 50, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 85, costPerHectare: 8500000, revenuePerTon: 1150000 },
+            { name: "چمپا", waterNeed: "medium", waterAmount: 9500, yield: "medium", yieldAmount: 4.8, type: "local", pestResistance: "medium", pestResistancePercent: 55, growthPeriod: "early", growthDays: 110, fertilizerNeed: "medium", fertilizerAmount: 180, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 200, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 87, costPerHectare: 7400000, revenuePerTon: 1100000 },
+            { name: "امامزاده", waterNeed: "high", waterAmount: 13000, yield: "medium", yieldAmount: 5.2, type: "local", pestResistance: "low", pestResistancePercent: 40, growthPeriod: "late", growthDays: 135, fertilizerNeed: "high", fertilizerAmount: 230, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 84, costPerHectare: 8200000, revenuePerTon: 1120000 },
+            { name: "خورشیدی", waterNeed: "medium", waterAmount: 11000, yield: "high", yieldAmount: 6.3, type: "improved", pestResistance: "high", pestResistancePercent: 80, growthPeriod: "early", growthDays: 105, fertilizerNeed: "medium", fertilizerAmount: 210, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 27, climate: "temperate", plantingTime: "بهار", successRate: 91, costPerHectare: 8700000, revenuePerTon: 1240000 },
+            { name: "سپیدرود", waterNeed: "high", waterAmount: 14000, yield: "high", yieldAmount: 6.8, type: "improved", pestResistance: "high", pestResistancePercent: 82, growthPeriod: "early", growthDays: 100, fertilizerNeed: "high", fertilizerAmount: 260, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 200, temperature: "high", tempRange: 28, climate: "temperate", plantingTime: "بهار", successRate: 92, costPerHectare: 9200000, revenuePerTon: 1280000 },
+            { name: "نسیم", waterNeed: "medium", waterAmount: 10500, yield: "medium", yieldAmount: 5.7, type: "improved", pestResistance: "medium", pestResistancePercent: 65, growthPeriod: "early", growthDays: 110, fertilizerNeed: "medium", fertilizerAmount: 200, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 89, costPerHectare: 8300000, revenuePerTon: 1200000 },
+            { name: "طارم دم‌سیاه", waterNeed: "high", waterAmount: 13500, yield: "medium", yieldAmount: 5.4, type: "local", pestResistance: "medium", pestResistancePercent: 60, growthPeriod: "late", growthDays: 140, fertilizerNeed: "high", fertilizerAmount: 240, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 88, costPerHectare: 8600000, revenuePerTon: 1180000 },
+            { name: "طارم محلی", waterNeed: "medium", waterAmount: 10000, yield: "medium", yieldAmount: 5.2, type: "local", pestResistance: "medium", pestResistancePercent: 58, growthPeriod: "late", growthDays: 135, fertilizerNeed: "medium", fertilizerAmount: 190, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 89, costPerHectare: 7800000, revenuePerTon: 1170000 },
+            { name: "گیلانه", waterNeed: "high", waterAmount: 13000, yield: "high", yieldAmount: 6.4, type: "improved", pestResistance: "high", pestResistancePercent: 80, growthPeriod: "early", growthDays: 105, fertilizerNeed: "high", fertilizerAmount: 250, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 27, climate: "temperate", plantingTime: "بهار", successRate: 91, costPerHectare: 8900000, revenuePerTon: 1250000 },
+            { name: "دماوند", waterNeed: "medium", waterAmount: 11000, yield: "medium", yieldAmount: 5.6, type: "improved", pestResistance: "medium", pestResistancePercent: 65, growthPeriod: "early", growthDays: 110, fertilizerNeed: "medium", fertilizerAmount: 200, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 200, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 88, costPerHectare: 8200000, revenuePerTon: 1200000 },
+            { name: "رشتی", waterNeed: "high", waterAmount: 13500, yield: "medium", yieldAmount: 5.3, type: "local", pestResistance: "low", pestResistancePercent: 45, growthPeriod: "late", growthDays: 140, fertilizerNeed: "high", fertilizerAmount: 240, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 85, costPerHectare: 8500000, revenuePerTon: 1150000 },
+            { name: "حسن‌سرایی", waterNeed: "medium", waterAmount: 10000, yield: "medium", yieldAmount: 5.1, type: "local", pestResistance: "medium", pestResistancePercent: 55, growthPeriod: "late", growthDays: 135, fertilizerNeed: "medium", fertilizerAmount: 190, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 87, costPerHectare: 7700000, revenuePerTon: 1160000 },
+            { name: "علی‌کاظمی", waterNeed: "medium", waterAmount: 10500, yield: "medium", yieldAmount: 5.4, type: "local", pestResistance: "medium", pestResistancePercent: 60, growthPeriod: "early", growthDays: 110, fertilizerNeed: "medium", fertilizerAmount: 200, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 89, costPerHectare: 7900000, revenuePerTon: 1180000 },
+            { name: "نور", waterNeed: "high", waterAmount: 14000, yield: "high", yieldAmount: 6.6, type: "improved", pestResistance: "high", pestResistancePercent: 82, growthPeriod: "early", growthDays: 105, fertilizerNeed: "high", fertilizerAmount: 260, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 200, temperature: "high", tempRange: 27, climate: "temperate", plantingTime: "بهار", successRate: 92, costPerHectare: 9100000, revenuePerTon: 1270000 },
+            { name: "مازند", waterNeed: "medium", waterAmount: 11000, yield: "medium", yieldAmount: 5.5, type: "improved", pestResistance: "medium", pestResistancePercent: 65, growthPeriod: "early", growthDays: 110, fertilizerNeed: "medium", fertilizerAmount: 210, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 88, costPerHectare: 8300000, revenuePerTon: 1200000 },
+            { name: "طارم رشتی", waterNeed: "high", waterAmount: 13500, yield: "medium", yieldAmount: 5.2, type: "local", pestResistance: "medium", pestResistancePercent: 60, growthPeriod: "late", growthDays: 140, fertilizerNeed: "high", fertilizerAmount: 240, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 87, costPerHectare: 8600000, revenuePerTon: 1170000 },
+            { name: "صفوی", waterNeed: "medium", waterAmount: 10000, yield: "medium", yieldAmount: 5.3, type: "local", pestResistance: "medium", pestResistancePercent: 58, growthPeriod: "late", growthDays: 135, fertilizerNeed: "medium", fertilizerAmount: 190, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 88, costPerHectare: 7800000, revenuePerTon: 1160000 },
+            { name: "جهانگیری", waterNeed: "high", waterAmount: 13000, yield: "high", yieldAmount: 6.5, type: "improved", pestResistance: "high", pestResistancePercent: 80, growthPeriod: "early", growthDays: 105, fertilizerNeed: "high", fertilizerAmount: 250, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 27, climate: "temperate", plantingTime: "بهار", successRate: 91, costPerHectare: 8900000, revenuePerTon: 1250000 },
+            { name: "شفق", waterNeed: "medium", waterAmount: 11000, yield: "medium", yieldAmount: 5.6, type: "improved", pestResistance: "medium", pestResistancePercent: 65, growthPeriod: "early", growthDays: 110, fertilizerNeed: "medium", fertilizerAmount: 200, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 200, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 88, costPerHectare: 8200000, revenuePerTon: 1200000 },
+            { name: "طارم دیلمانی", waterNeed: "high", waterAmount: 13500, yield: "medium", yieldAmount: 5.4, type: "local", pestResistance: "medium", pestResistancePercent: 60, growthPeriod: "late", growthDays: 140, fertilizerNeed: "high", fertilizerAmount: 240, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 87, costPerHectare: 8600000, revenuePerTon: 1170000 },
+            { name: "گهر", waterNeed: "medium", waterAmount: 10500, yield: "high", yieldAmount: 6.2, type: "improved", pestResistance: "high", pestResistancePercent: 78, growthPeriod: "early", growthDays: 105, fertilizerNeed: "medium", fertilizerAmount: 210, soilType: "loam", soilPh: "neutral", altitude: "low", altitudeRange: 150, temperature: "high", tempRange: 26, climate: "temperate", plantingTime: "بهار", successRate: 90, costPerHectare: 8500000, revenuePerTon: 1230000 },
+            { name: "طارم سنگی", waterNeed: "high", waterAmount: 14000, yield: "medium", yieldAmount: 5.5, type: "local", pestResistance: "medium", pestResistancePercent: 60, growthPeriod: "late", growthDays: 135, fertilizerNeed: "high", fertilizerAmount: 250, soilType: "clay", soilPh: "neutral", altitude: "low", altitudeRange: 100, temperature: "high", tempRange: 25, climate: "temperate", plantingTime: "بهار", successRate: 88, costPerHectare: 8700000, revenuePerTon: 1180000 },
+        ];
+
+        let filteredVarieties = [...riceVarieties];
+        let yieldChartInstance, typeChartInstance, radarChartInstance;
+        let db;
+
+        // مقداردهی اولیه منوی آموزشی
+        function initEducationVariety() {
+            const select = document.getElementById('educationVariety');
+            riceVarieties.forEach(v => {
+                const option = document.createElement('option');
+                option.value = v.name;
+                option.textContent = v.name;
+                select.appendChild(option);
+            });
+        }
+
+        // نمایش اولیه ارقام
+        displayResults(filteredVarieties);
+        initEducationVariety();
+
+        // تابع نمایش نتایج
+        function displayResults(varieties) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            varieties.forEach(variety => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => showVarietyDetails(variety);
+                card.innerHTML = `
+                    <i class="fas fa-seedling"></i>
+                    <div>
+                        <strong>${variety.name}</strong><br>
+                        نیاز آبی: ${variety.waterNeed === 'low' ? 'کم' : variety.waterNeed === 'medium' ? 'متوسط' : 'زیاد'} (${variety.waterAmount} مترمکعب/هکتار)<br>
+                        محصول: ${variety.yield === 'low' ? 'کم' : variety.yield === 'medium' ? 'متوسط' : 'زیاد'} (${variety.yieldAmount} تن/هکتار)<br>
+                        نوع: ${variety.type === 'local' ? 'بومی' : variety.type === 'improved' ? 'اصلاح‌شده' : 'بین‌المللی'}<br>
+                        مقاومت به آفات: ${variety.pestResistance === 'low' ? 'کم' : variety.pestResistance === 'medium' ? 'متوسط' : 'بالا'} (${variety.pestResistancePercent}%)
+                    </div>
+                `;
+                resultsDiv.appendChild(card);
+            });
+        }
+
+        // نمایش جزئیات رقم در مودال
+        function showVarietyDetails(variety) {
+            const modal = document.getElementById('varietyModal');
+            const modalContent = document.getElementById('modalContent');
+            const profit = (variety.yieldAmount * variety.revenuePerTon - variety.costPerHectare) / 1000000;
+            const risk = 100 - variety.successRate;
+            modalContent.innerHTML = `
+                <h3>${variety.name}</h3>
+                <p><strong>نیاز آبی:</strong> ${variety.waterNeed === 'low' ? 'کم' : variety.waterNeed === 'medium' ? 'متوسط' : 'زیاد'} (${variety.waterAmount} مترمکعب/هکتار)</p>
+                <p><strong>محصول در هکتار:</strong> ${variety.yield === 'low' ? 'کم' : variety.yield === 'medium' ? 'متوسط' : 'زیاد'} (${variety.yieldAmount} تن)</p>
+                <p><strong>نوع رقم:</strong> ${variety.type === 'local' ? 'بومی' : variety.type === 'improved' ? 'اصلاح‌شده' : 'بین‌المللی'}</p>
+                <p><strong>مقاومت به آفات:</strong> ${variety.pestResistance === 'low' ? 'کم' : variety.pestResistance === 'medium' ? 'متوسط' : 'بالا'} (${variety.pestResistancePercent}%)</p>
+                <p><strong>دوره رشد:</strong> ${variety.growthPeriod === 'early' ? 'زودرس' : 'دیررس'} (${variety.growthDays} روز)</p>
+                <p><strong>نیاز کودی:</strong> ${variety.fertilizerNeed === 'low' ? 'کم' : variety.fertilizerNeed === 'medium' ? 'متوسط' : 'زیاد'} (${variety.fertilizerAmount} کیلوگرم/هکتار)</p>
+                <p><strong>نوع خاک:</strong> ${variety.soilType === 'clay' ? 'رسی' : 'لومی'}</p>
+                <p><strong>pH خاک:</strong> ${variety.soilPh === 'acidic' ? 'اسیدی' : variety.soilPh === 'neutral' ? 'خنثی' : 'قلیایی'}</p>
+                <p><strong>ارتفاع مناسب:</strong> ${variety.altitude === 'low' ? 'کم' : 'متوسط'} (${variety.altitudeRange} متر)</p>
+                <p><strong>دمای مطلوب:</strong> ${variety.temperature === 'medium' ? 'متوسط' : 'زیاد'} (${variety.tempRange} درجه سانتی‌گراد)</p>
+                <p><strong>اقلیم:</strong> ${variety.climate === 'temperate' ? 'معتدل' : 'گرمسیر'}</p>
+                <p><strong>زمان کاشت:</strong> ${variety.plantingTime}</p>
+                <p><strong>درصد موفقیت:</strong> ${variety.successRate}%</p>
+                <p><strong>هزینه کشت:</strong> ${variety.costPerHectare.toLocaleString()} تومان/هکتار</p>
+                <p><strong>درآمد هر تن:</strong> ${variety.revenuePerTon.toLocaleString()} تومان</p>
+                <p><strong>سود تخمینی:</strong> ${profit.toFixed(2)} میلیون تومان/هکتار</p>
+                <p><strong>ریسک شکست:</strong> ${risk}% (عمدتاً به دلیل ${risk > 20 ? 'کمبود آب یا آفات' : 'شرایط محیطی'})</p>
+                <p><strong>تحلیل:</strong> این رقم برای ${variety.climate === 'temperate' ? 'مناطق معتدل' : 'مناطق گرمسیر'} با خاک ${variety.soilType === 'clay' ? 'رسی' : 'لومی'} مناسب است. بازده مالی آن ${profit > 3 ? 'بالا' : profit > 1.5 ? 'متوسط' : 'پایین'} است.</p>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        // بستن مودال
+        function closeModal() {
+            document.getElementById('varietyModal').style.display = 'none';
+        }
+
+        // تابع فیلتر کردن
+        function filterRice() {
+            const waterNeed = document.getElementById('waterNeed').value;
+            const yield = document.getElementById('yield').value;
+            const type = document.getElementById('type').value;
+            const pestResistance = document.getElementById('pestResistance').value;
+            const growthPeriod = document.getElementById('growthPeriod').value;
+            const climate = document.getElementById('climate').value;
+            const soilPh = document.getElementById('soilPh').value;
+            const altitude = document.getElementById('altitude').value;
+            const temperature = document.getElementById('temperature').value;
+
+            filteredVarieties = riceVarieties.filter(variety => {
+                return (!waterNeed || variety.waterNeed === waterNeed) &&
+                       (!yield || variety.yield === yield) &&
+                       (!type || variety.type === type) &&
+                       (!pestResistance || variety.pestResistance === pestResistance) &&
+                       (!growthPeriod || variety.growthPeriod === growthPeriod) &&
+                       (!climate || variety.climate === climate) &&
+                       (!soilPh || variety.soilPh === soilPh) &&
+                       (!altitude || variety.altitude === altitude) &&
+                       (!temperature || variety.temperature === temperature);
+            });
+
+            displayResults(filteredVarieties);
+            updateCharts();
+            saveFilters();
+        }
+
+        // ذخیره فیلترها در IndexedDB
+        function initIndexedDB() {
+            const request = indexedDB.open('RiceYarDB', 1);
+            request.onupgradeneeded = event => {
+                db = event.target.result;
+                db.createObjectStore('filters', { keyPath: 'id' });
+            };
+            request.onsuccess = event => {
+                db = event.target.result;
+                loadFilters();
+            };
+        }
+
+        function saveFilters() {
+            const filters = {
+                id: 'current',
+                waterNeed: document.getElementById('waterNeed').value,
+                yield: document.getElementById('yield').value,
+                type: document.getElementById('type').value,
+                pestResistance: document.getElementById('pestResistance').value,
+                growthPeriod: document.getElementById('growthPeriod').value,
+                climate: document.getElementById('climate').value,
+                soilPh: document.getElementById('soilPh').value,
+                altitude: document.getElementById('altitude').value,
+                temperature: document.getElementById('temperature').value
+            };
+            const tx = db.transaction(['filters'], 'readwrite');
+            tx.objectStore('filters').put(filters);
+        }
+
+        function loadFilters() {
+            const tx = db.transaction(['filters'], 'readonly');
+            const request = tx.objectStore('filters').get('current');
+            request.onsuccess = event => {
+                const filters = event.target.result;
+                if (filters) {
+                    document.getElementById('waterNeed').value = filters.waterNeed || '';
+                    document.getElementById('yield').value = filters.yield || '';
+                    document.getElementById('type').value = filters.type || '';
+                    document.getElementById('pestResistance').value = filters.pestResistance || '';
+                    document.getElementById('growthPeriod').value = filters.growthPeriod || '';
+                    document.getElementById('climate').value = filters.climate || '';
+                    document.getElementById('soilPh').value = filters.soilPh || '';
+                    document.getElementById('altitude').value = filters.altitude || '';
+                    document.getElementById('temperature').value = filters.temperature || '';
+                    filterRice();
+                }
+            };
+        }
+
+        // ریست فیلترها
+        function resetFilters() {
+            document.getElementById('waterNeed').value = '';
+            document.getElementById('yield').value = '';
+            document.getElementById('type').value = '';
+            document.getElementById('pestResistance').value = '';
+            document.getElementById('growthPeriod').value = '';
+            document.getElementById('climate').value = '';
+            document.getElementById('soilPh').value = '';
+            document.getElementById('altitude').value = '';
+            document.getElementById('temperature').value = '';
+            filteredVarieties = [...riceVarieties];
+            displayResults(filteredVarieties);
+            updateCharts();
+            const tx = db.transaction(['filters'], 'readwrite');
+            tx.objectStore('filters').delete('current');
+        }
+
+        // به‌روزرسانی نمودارها
+        function updateCharts() {
+            updateYieldChart();
+            updateTypeChart();
+            updateRadarChart();
+        }
+
+        // نمودار میله‌ای (محصول در هکتار)
+        function updateYieldChart() {
+            const ctx = document.getElementById('yieldChart').getContext('2d');
+            if (yieldChartInstance) yieldChartInstance.destroy();
+
+            const labels = filteredVarieties.map(v => v.name);
+            const data = filteredVarieties.map(v => v.yieldAmount);
+
+            yieldChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'محصول در هکتار (تن)',
+                        data: data,
+                        backgroundColor: '#1e88e5',
+                        borderColor: '#1565c0',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        zoom: {
+                            zoom: {
+                                wheel: { enabled: true },
+                                pinch: { enabled: true },
+                                mode: 'xy'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'محصول (تن در هکتار)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // نمودار دایره‌ای (توزیع انواع)
+        function updateTypeChart() {
+            const ctx = document.getElementById('typeChart').getContext('2d');
+            if (typeChartInstance) typeChartInstance.destroy();
+
+            const typeCounts = filteredVarieties.reduce((acc, v) => {
+                acc[v.type] = (acc[v.type] || 0) + 1;
+                return acc;
+            }, {});
+            const labels = Object.keys(typeCounts).map(t => t === 'local' ? 'بومی' : t === 'improved' ? 'اصلاح‌شده' : 'بین‌المللی');
+            const data = Object.values(typeCounts);
+
+            typeChartInstance = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: ['#1e88e5', '#64b5f6', '#90caf9']
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+        }
+
+        // نمودار راداری
+        function updateRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (radarChartInstance) radarChartInstance.destroy();
+
+            const datasets = filteredVarieties.slice(0, 5).map(v => ({
+                label: v.name,
+                data: [
+                    v.waterAmount / 1000,
+                    v.yieldAmount,
+                    v.pestResistancePercent / 20
+                ],
+                backgroundColor: `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.2)`,
+                borderColor: `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 1)`,
+                borderWidth: 1
+            }));
+
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['نیاز آبی (هزار مترمکعب)', 'محصول (تن)', 'مقاومت به آفات (%)'],
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        r: { beginAtZero: true, max: 15 }
+                    }
+                }
+            });
+        }
+
+        // نمایش/مخفی کردن نمودار
+        function toggleChart(chartId) {
+            const chart = document.getElementById(chartId);
+            chart.style.display = chart.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // نمایش همه نمودارها
+        function showAllCharts() {
+            document.getElementById('yieldChart').style.display = 'block';
+            document.getElementById('typeChart').style.display = 'block';
+            document.getElementById('radarChart').style.display = 'block';
+        }
+
+        // مشاوره هوشمند
+        document.getElementById('consultationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const soilType = document.getElementById('soilType').value;
+            const soilPh = parseFloat(document.getElementById('soilPhInput').value) || 7;
+            const waterAvailability = document.getElementById('waterAvailability').value;
+            const region = document.getElementById('region').value;
+            const budget = parseInt(document.getElementById('budget').value) || 0;
+            const climate = document.getElementById('consultationClimate').value;
+            const altitude = parseInt(document.getElementById('altitudeInput').value) || 100;
+            const temperature = parseInt(document.getElementById('temperatureInput').value) || 25;
+
+            const recommendations = riceVarieties
+                .map(v => {
+                    let score = 0;
+                    // وزن‌دهی معیارها
+                    if (v.soilType === soilType) score += 30;
+                    if (Math.abs(v.soilPh === 'acidic' ? 6 : v.soilPh === 'neutral' ? 7 : 8 - soilPh) < 0.5) score += 20;
+                    if (waterAvailability === 'irrigated' && v.waterNeed !== 'low') score += 25;
+                    if (v.climate === climate) score += 25;
+                    if (Math.abs(v.altitudeRange - altitude) < 500) score += 15;
+                    if (Math.abs(v.tempRange - temperature) < 3) score += 15;
+                    if (v.fertilizerNeed === 'medium' && budget >= 7000000 && budget < 9000000) score += 10;
+                    if (v.fertilizerNeed === 'high' && budget >= 9000000) score += 10;
+
+                    // تحلیل ریسک
+                    let risk = 100 - v.successRate;
+                    if (waterAvailability === 'irrigated' && v.waterNeed === 'low') risk += 10;
+                    if (Math.abs(v.tempRange - temperature) > 5) risk += 5;
+                    if (Math.abs(v.altitudeRange - altitude) > 500) risk += 5;
+
+                    return { ...v, score, risk };
+                })
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 3);
+
+            const resultDiv = document.getElementById('consultationResult');
+            resultDiv.innerHTML = '<h3>ارقام پیشنهادی:</h3>' + recommendations.map(v => `
+                <p><strong>${v.name}</strong>: امتیاز ${v.score}/150<br>
+                مناسب برای خاک ${v.soilType === 'clay' ? 'رسی' : 'لومی'}، 
+                نیاز آبی ${v.waterNeed === 'low' ? 'کم' : v.waterNeed === 'medium' ? 'متوسط' : 'زیاد'} (${v.waterAmount} مترمکعب)، 
+                اقلیم ${v.climate === 'temperate' ? 'معتدل' : 'گرمسیر'}، 
+                ریسک شکست: ${v.risk}% (عمدتاً به دلیل ${v.risk > 20 ? 'کمبود آب یا دمای نامناسب' : 'شرایط محیطی'})</p>
+            `).join('');
+        });
+
+        // دانلود گزارش PDF
+        function downloadReport() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFont('Amiri', 'normal');
+            doc.setFontSize(12);
+            doc.text('گزارش ارقام برنج - برنج‌یار', 100, 10, { align: 'center' });
+            let y = 20;
+            filteredVarieties.forEach(v => {
+                doc.text(`${v.name}: محصول: ${v.yieldAmount} تن/هکتار، هزینه: ${v.costPerHectare.toLocaleString()} تومان، ریسک: ${100 - v.successRate}%`, 10, y);
+                y += 10;
+                if (y > 280) {
+                    doc.addPage();
+                    y = 10;
+                }
+            });
+            doc.save('rice_report.pdf');
+        }
+
+        // نمایش نکات آموزشی
+        function showEducation() {
+            const varietyName = document.getElementById('educationVariety').value;
+            const variety = riceVarieties.find(v => v.name === varietyName) || {};
+            const content = variety.name ? `
+                <h3>نکات کشت برای ${variety.name}</h3>
+                <ul>
+                    <li>خاک مناسب: ${variety.soilType === 'clay' ? 'رسی' : 'لومی'} با pH ${variety.soilPh === 'acidic' ? 'اسیدی' : variety.soilPh === 'neutral' ? 'خنثی' : 'قلیایی'}</li>
+                    <li>نیاز آبی: ${variety.waterAmount} مترمکعب/هکتار - نیاز به آبیاری منظم</li>
+                    <li>کوددهی: ${variety.fertilizerAmount} کیلوگرم/هکتار، ترجیحاً نیتروژن و پتاسیم</li>
+                    <li>اقلیم: ${variety.climate === 'temperate' ? 'معتدل' : 'گرمسیر'}، دمای ${variety.tempRange} درجه</li>
+                    <li>مدیریت آفات: مقاومت ${variety.pestResistancePercent}%، بررسی منظم برای کرم ساقه‌خوار</li>
+                    <li>زمان کاشت: ${variety.plantingTime}، دوره رشد ${variety.growthDays} روز</li>
+                </ul>
+            ` : `
+                <h3>نکات کلی کشت برنج</h3>
+                <ul>
+                    <li>انتخاب رقم مناسب با اقلیم و خاک منطقه حیاتی است.</li>
+                    <li>کاشت در بهار برای اکثر ارقام ایران مناسب است.</li>
+                    <li>مدیریت آبیاری منظم برای برنج ضروری است.</li>
+                    <li>کودهای نیتروژنه و پتاسیمی عملکرد را افزایش می‌دهند.</li>
+                    <li>کنترل آفات مانند کرم ساقه‌خوار با ارقام مقاوم آسان‌تر است.</li>
+                </ul>
+            `;
+            document.getElementById('educationContent').innerHTML = content;
+        }
+
+        // بارگذاری اولیه
+        window.onload = function() {
+            initIndexedDB();
+            updateCharts();
+        };
+    </script>
+</body>
+</html>
