@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گندم‌یار</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            text-align: right;
+            color: #333;
+        }
+        h1 {
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .filter-section, .consultation-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .filter-section select, .consultation-section input, .consultation-section select {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+        .filter-section button, .consultation-section button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .filter-section button:hover, .consultation-section button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        #consultationResult {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+            .filter-section select, .consultation-section input, .consultation-section select {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .filter-section button, .consultation-section button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>گندم‌یار: راهنمای کشت گندم</h1>
+
+        <!-- بخش فیلترها -->
+        <div class="filter-section">
+            <h2>فیلتر ارقام گندم</h2>
+            <select id="waterNeed">
+                <option value="">نیاز آبی</option>
+                <option value="low">کم</option>
+                <option value="medium">متوسط</option>
+                <option value="high">زیاد</option>
+            </select>
+            <select id="yield">
+                <option value="">بهره‌وری (تن در هکتار)</option>
+                <option value="low">کم (زیر 4 تن)</option>
+                <option value="medium">متوسط (4-6 تن)</option>
+                <option value="high">زیاد (بیش از 6 تن)</option>
+            </select>
+            <select id="type">
+                <option value="">نوع رقم</option>
+                <option value="local">بومی</option>
+                <option value="improved">اصلاح‌شده</option>
+                <option value="international">بین‌المللی</option>
+            </select>
+            <select id="pestResistance">
+                <option value="">مقاومت به آفات</option>
+                <option value="low">کم</option>
+                <option value="medium">متوسط</option>
+                <option value="high">بالا</option>
+            </select>
+            <select id="growthPeriod">
+                <option value="">دوره رشد</option>
+                <option value="early">زودرس</option>
+                <option value="late">دیررس</option>
+            </select>
+            <button onclick="filterWheat()">فیلتر</button>
+            <button onclick="resetFilters()">ریست</button>
+        </div>
+
+        <!-- بخش نتایج -->
+        <div id="results" class="results"></div>
+
+        <!-- بخش نمودارها -->
+        <div class="chart-container">
+            <h2>مقایسه ارقام</h2>
+            <canvas id="yieldChart"></canvas>
+            <canvas id="typeChart"></canvas>
+        </div>
+
+        <!-- بخش مشاوره -->
+        <div class="consultation-section">
+            <h2>مشاوره کشت</h2>
+            <form id="consultationForm">
+                <label>نوع خاک:</label>
+                <select id="soilType">
+                    <option value="sandy">شنی</option>
+                    <option value="clay">رسی</option>
+                    <option value="loam">لومی</option>
+                </select><br>
+                <label>میزان آب در دسترس:</label>
+                <select id="waterAvailability">
+                    <option value="dry">دیم</option>
+                    <option value="irrigated">آبیاری</option>
+                </select><br>
+                <label>منطقه جغرافیایی:</label>
+                <input type="text" id="region" placeholder="مثلاً خوزستان"><br>
+                <label>بودجه (تومان):</label>
+                <input type="number" id="budget" placeholder="مثلاً 5000000"><br>
+                <button type="submit">دریافت مشاوره</button>
+            </form>
+            <div id="consultationResult"></div>
+        </div>
+    </div>
+
+    <!-- کتابخانه Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // داده‌های نمونه ارقام گندم
+        const wheatVarieties = [
+            { name: "سرداری", waterNeed: "low", yield: "medium", type: "local", pestResistance: "medium", growthPeriod: "early", yieldValue: 5, suitableRegion: "سردسیر" },
+            { name: "روشن", waterNeed: "medium", yield: "high", type: "improved", pestResistance: "high", growthPeriod: "late", yieldValue: 7, suitableRegion: "معتدل" },
+            { name: "یوما", waterNeed: "high", yield: "high", type: "international", pestResistance: "high", growthPeriod: "late", yieldValue: 8, suitableRegion: "گرمسیر" },
+            { name: "مروارید", waterNeed: "low", yield: "low", type: "local", pestResistance: "low", growthPeriod: "early", yieldValue: 3, suitableRegion: "سردسیر" },
+            { name: "ارگ", waterNeed: "medium", yield: "medium", type: "improved", pestResistance: "medium", growthPeriod: "early", yieldValue: 5.5, suitableRegion: "معتدل" }
+        ];
+
+        // نمایش اولیه ارقام و نمودارها
+        displayResults(wheatVarieties);
+        updateCharts(wheatVarieties);
+
+        // تابع فیلتر کردن ارقام
+        function filterWheat() {
+            const waterNeed = document.getElementById('waterNeed').value;
+            const yield = document.getElementById('yield').value;
+            const type = document.getElementById('type').value;
+            const pestResistance = document.getElementById('pestResistance').value;
+            const growthPeriod = document.getElementById('growthPeriod').value;
+
+            const filtered = wheatVarieties.filter(variety => {
+                return (!waterNeed || variety.waterNeed === waterNeed) &&
+                       (!yield || variety.yield === yield) &&
+                       (!type || variety.type === type) &&
+                       (!pestResistance || variety.pestResistance === pestResistance) &&
+                       (!growthPeriod || variety.growthPeriod === growthPeriod);
+            });
+
+            displayResults(filtered);
+            updateCharts(filtered);
+        }
+
+        // تابع نمایش نتایج
+        function displayResults(varieties) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            if (varieties.length === 0) {
+                resultsDiv.innerHTML = '<p>هیچ رقمی یافت نشد.</p>';
+                return;
+            }
+            varieties.forEach(variety => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${variety.name}</h3>
+                    <p>نیاز آبی: ${variety.waterNeed === 'low' ? 'کم' : variety.waterNeed === 'medium' ? 'متوسط' : 'زیاد'}</p>
+                    <p>بهره‌وری: ${variety.yield === 'low' ? 'کم (زیر 4 تن)' : variety.yield === 'medium' ? 'متوسط (4-6 تن)' : 'زیاد (بیش از 6 تن)'}</p>
+                    <p>نوع: ${variety.type === 'local' ? 'بومی' : variety.type === 'improved' ? 'اصلاح‌شده' : 'بین‌المللی'}</p>
+                    <p>مقاومت به آفات: ${variety.pestResistance === 'low' ? 'کم' : variety.pestResistance === 'medium' ? 'متوسط' : 'بالا'}</p>
+                    <p>دوره رشد: ${variety.growthPeriod === 'early' ? 'زودرس' : 'دیررس'}</p>
+                    <p>منطقه مناسب: ${variety.suitableRegion}</p>
+                `;
+                resultsDiv.appendChild(card);
+            });
+        }
+
+        // تابع ریست فیلترها
+        function resetFilters() {
+            document.getElementById('waterNeed').value = '';
+            document.getElementById('yield').value = '';
+            document.getElementById('type').value = '';
+            document.getElementById('pestResistance').value = '';
+            document.getElementById('growthPeriod').value = '';
+            displayResults(wheatVarieties);
+            updateCharts(wheatVarieties);
+        }
+
+        // تابع به‌روزرسانی نمودارها
+        let yieldChart, typeChart;
+        function updateCharts(varieties) {
+            // نمودار میله‌ای بهره‌وری
+            const yieldCtx = document.getElementById('yieldChart').getContext('2d');
+            const labels = varieties.map(v => v.name);
+            const yields = varieties.map(v => v.yieldValue);
+
+            if (yieldChart) yieldChart.destroy();
+            yieldChart = new Chart(yieldCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'بهره‌وری (تن در هکتار)',
+                        data: yields,
+                        backgroundColor: '#4caf50',
+                        borderColor: '#388e3c',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'تن در هکتار' } },
+                        x: { title: { display: true, text: 'رقم گندم' } }
+                    },
+                    plugins: { legend: { display: true } }
+                }
+            });
+
+            // نمودار دایره‌ای توزیع انواع
+            const typeCounts = varieties.reduce((acc, v) => {
+                acc[v.type] = (acc[v.type] || 0) + 1;
+                return acc;
+            }, {});
+            const typeCtx = document.getElementById('typeChart').getContext('2d');
+            if (typeChart) typeChart.destroy();
+            typeChart = new Chart(typeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(typeCounts).map(t => t === 'local' ? 'بومی' : t === 'improved' ? 'اصلاح‌شده' : 'بین‌المللی'),
+                    datasets: [{
+                        data: Object.values(typeCounts),
+                        backgroundColor: ['#4caf50', '#81c784', '#a5d6a7']
+                    }]
+                },
+                options: {
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        // تابع مشاوره
+        document.getElementById('consultationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const soilType = document.getElementById('soilType').value;
+            const waterAvailability = document.getElementById('waterAvailability').value;
+            const region = document.getElementById('region').value;
+            const budget = parseInt(document.getElementById('budget').value) || 0;
+
+            let recommendation = '<h3>توصیه‌های کشت</h3>';
+            // توصیه بر اساس آب
+            if (waterAvailability === 'dry') {
+                recommendation += '<p>برای کشت دیم، ارقام مقاوم به کم‌آبی مثل سرداری یا مروارید توصیه می‌شوند.</p>';
+            } else {
+                recommendation += '<p>با آبیاری، ارقام پربازده مثل روشن یا یوما مناسب هستند.</p>';
+            }
+            // توصیه بر اساس خاک
+            if (soilType === 'loam') {
+                recommendation += '<p>خاک لومی برای اکثر ارقام گندم ایده‌آل است.</p>';
+            } else if (soilType === 'sandy') {
+                recommendation += '<p>در خاک شنی، آبیاری منظم و کوددهی مناسب ضروری است.</p>';
+            } else {
+                recommendation += '<p>خاک رسی نیاز به زهکشی مناسب دارد تا از غرقابی شدن جلوگیری شود.</p>';
+            }
+            // توصیه بر اساس بودجه
+            if (budget > 5000000) {
+                recommendation += '<p>با بودجه کافی، می‌توانید از کودهای نیتروژنی و فسفره باکیفیت و بذرهای اصلاح‌شده استفاده کنید.</p>';
+            } else {
+                recommendation += '<p>با بودجه محدود، ارقام بومی و کوددهی اقتصادی را در نظر بگیرید.</p>';
+            }
+            // توصیه بر اساس منطقه
+            if (region) {
+                recommendation += `<p>برای منطقه ${region}، با مرکز تحقیقات کشاورزی محلی مشورت کنید تا ارقام مناسب منطقه را انتخاب کنید.</p>`;
+            }
+
+            document.getElementById('consultationResult').innerHTML = recommendation;
+        });
+    </script>
+</body>
+</html>

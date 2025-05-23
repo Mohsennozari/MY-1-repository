@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>AgriAdvisor Pro | مشاوره و مدیریت کود کشاورزی</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="سیستم هوشمند مشاوره کود و مدیریت هزینه‌های کشاورزی">
+    <meta name="keywords" content="کشاورزی, کود, محاسبه هزینه, مشاوره کشاورزی, AgriAdvisor">
+    <meta name="author" content="AgriAdvisor Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AgriAdvisor Pro | مشاوره هوشمند کشاورزی">
+    <meta property="og:description" content="سیستم تخصصی محاسبه هزینه کود و مشاوره کشاورزی">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous">
+
+    <!-- Toastify JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css">
+
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --secondary: #1976d2;
+            --secondary-light: #2196f3;
+            --bg: #f5fff8;
+            --text-dark: #222;
+            --text-medium: #444;
+            --white: #fff;
+            --gray-light: #eee;
+            --warning: #ff9800;
+            --error: #f44336;
+            --success: #4caf50;
+        }
+
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            transition: background-color 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        svg.logo {
+            width: 5rem;
+            height: 5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: var(--primary);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        p.subtitle {
+            font-size: 1rem;
+            color: var(--text-medium);
+            margin-top: 0.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 12rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            background: var(--gray-light);
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary-light);
+        }
+
+        .form-section {
+            display: none;
+            background: var(--white);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: slideDown 0.5s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        select,
+        input[type="number"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+            background-color: var(--white);
+        }
+
+        button {
+            padding: 0.75rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #1b5e20;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            background: var(--white);
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .dark-mode-toggle {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        body.dark-mode {
+            --bg: #121212;
+            --text-dark: #f5f5f5;
+            --text-medium: #e0e0e0;
+            --white: #1e1e1e;
+            --gray-light: #333;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem 0.75rem;
+            }
+            .tabs {
+                flex-direction: column;
+            }
+            .form-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <button class="dark-mode-toggle" aria-label="تغییر حالت تاریک/روشن">
+            <i class="fas fa-moon"></i>
+        </button>
+        <div class="logo-container">
+            <svg class="logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="لوگوی AgriAdvisor">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#4CAF50"/>
+                <path d="M2 17L12 22L22 17" stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+                <h1>AgriAdvisor Pro</h1>
+                <p class="subtitle">سیستم هوشمند مشاوره کود و مدیریت هزینه‌های کشاورزی</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="tabs" role="tablist">
+        <div class="tab active" role="tab" aria-selected="true" onclick="switchTab(this, 'calculator')">محاسبه هزینه کود</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab(this, 'advice')">مشاوره کود مناسب</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab(this, 'products')">راهنمای محصولات</div>
+        <div class="tab" role="tab" aria-selected="false" onclick="switchTab(this, 'fertilizers')">انواع کودها</div>
+    </div>
+
+    <section id="calculator" class="form-section active" role="tabpanel">
+        <form id="calculatorForm" onsubmit="event.preventDefault(); calculate();">
+            <div class="form-group">
+                <label for="area">مساحت زمین (هکتار)</label>
+                <div class="input-icon">
+                    <i class="fas fa-ruler-combined"></i>
+                    <input type="number" id="area" step="0.1" min="0" placeholder="مثال: 2.5" required aria-describedby="area-error">
+                </div>
+                <span id="area-error" class="error-message" style="color: var(--error); display: none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="cropCost">نوع محصول</label>
+                <select id="cropCost" required>
+                    <option value="wheat">گندم - 100 کیلو/هکتار</option>
+                    <option value="corn">ذرت - 120 کیلو/هکتار</option>
+                    <option value="barley">جو - 80 کیلو/هکتار</option>
+                    <option value="potato">سیب‌زمینی - 150 کیلو/هکتار</option>
+                    <option value="tomato">گوجه فرنگی - 130 کیلو/هکتار</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pricePerKilo">قیمت هر کیلو کود (تومان)</label>
+                <div class="input-icon">
+                    <i class="fas fa-tag"></i>
+                    <input type="number" id="pricePerKilo" step="0.1" min="0" value="3000" required aria-describedby="price-error">
+                </div>
+                <span id="price-error" class="error-message" style="color: var(--error); display: none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="discount">تخفیف (درصد)</label>
+                <div class="input-icon">
+                    <i class="fas fa-percentage"></i>
+                    <input type="number" id="discount" min="0" max="100" value="0" aria-describedby="discount-error">
+                </div>
+                <span id="discount-error" class="error-message" style="color: var(--error); display: none;"></span>
+            </div>
+            <div class="btn-group">
+                <button type="submit"><i class="fas fa-calculator"></i> محاسبه</button>
+                <button type="button" class="secondary" onclick="saveCalculation()"><i class="fas fa-save"></i> ذخیره</button>
+            </div>
+        </form>
+        <canvas id="costChart" aria-label="نمودار هزینه کود"></canvas>
+        <div class="result" id="costResult">
+            <h3>نتایج محاسبه</h3>
+            <p>لطفاً مقادیر را وارد کنید و روی دکمه «محاسبه» کلیک کنید.</p>
+        </div>
+    </section>
+
+    <section id="advice" class="form-section" role="tabpanel">
+        <form id="adviceForm" onsubmit="event.preventDefault(); getAdvice();">
+            <div class="form-group">
+                <label for="plant">نوع گیاه</label>
+                <select id="plant" required>
+                    <option value="wheat">گندم</option>
+                    <option value="corn">ذرت</option>
+                    <option value="potato">سیب‌زمینی</option>
+                    <option value="tomato">گوجه فرنگی</option>
+                    <option value="rice">برنج</option>
+                    <option value="cotton">پنبه</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="soilType">نوع خاک</label>
+                <select id="soilType" required>
+                    <option value="sandy">شنی</option>
+                    <option value="clay">رسی</option>
+                    <option value="loamy">لومی</option>
+                    <option value="silty">سیلت</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="soilPh">میزان pH خاک</label>
+                <div class="input-icon">
+                    <i class="fas fa-flask"></i>
+                    <input type="number" id="soilPh" step="0.1" min="4" max="9" placeholder="مثال: 6.5" required aria-describedby="soilPh-error">
+                </div>
+                <span id="soilPh-error" class="error-message" style="color: var(--error); display: none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="climate">شرایط آب و هوایی</label>
+                <select id="climate" required>
+                    <option value="dry">خشک</option>
+                    <option value="moderate">معتدل</option>
+                    <option value="humid">مرطوب</option>
+                    <option value="semi-arid">نیمه خشک</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="season">فصل کاشت</label>
+                <select id="season" required>
+                    <option value="spring">بهار</option>
+                    <option value="summer">تابستان</option>
+                    <option value="fall">پاییز</option>
+                    <option value="winter">زمستان</option>
+                </select>
+            </div>
+            <div class="btn-group">
+                <button type="submit"><i class="fas fa-lightbulb"></i> دریافت مشاوره</button>
+                <button type="button" class="secondary" onclick="printAdvice()"><i class="fas fa-print"></i> چاپ مشاوره</button>
+            </div>
+        </form>
+        <canvas id="adviceChart" aria-label="نمودار نیازهای کودی"></canvas>
+        <div class="result" id="adviceResult">
+            <h3>راهنمای مشاوره</h3>
+            <p>لطفاً اطلاعات را وارد کنید و مشاوره بگیرید.</p>
+        </div>
+    </section>
+
+    <section id="products" class="form-section" role="tabpanel">
+        <div class="search-container">
+            <label for="productSearch">جستجوی محصولات</label>
+            <div class="input-icon">
+                <i class="fas fa-search"></i>
+                <input type="text" id="productSearch" oninput="searchProducts()" placeholder="نام محصول را وارد کنید..." aria-describedby="search-results">
+            </div>
+            <ul id="searchResults" aria-live="polite"></ul>
+        </div>
+        <div class="feature-list">
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>راهنمای کامل گندم</h3>
+                <p>نیازهای کودی، زمان مناسب کاشت و برداشت، آفات و بیماری‌های رایج گندم</p>
+                <button class="secondary" onclick="showProductDetail('wheat')">مشاهده جزئیات</button>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>راهنمای کامل ذرت</h3>
+                <p>نیازهای آبیاری، کودهای مناسب، روش‌های افزایش عملکرد ذرت</p>
+                <button class="secondary" onclick="showProductDetail('corn')">مشاهده جزئیات</button>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>راهنمای کامل سیب‌زمینی</h3>
+                <p>مدیریت کوددهی، کنترل آفات، روش‌های نگهداری سیب‌زمینی</p>
+                <button class="secondary" onclick="showProductDetail('potato')">مشاهده جزئیات</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="fertilizers" class="form-section" role="tabpanel">
+        <h3>انواع کودهای شیمیایی</h3>
+        <div class="product-card">
+            <h4>کودهای نیتروژنی</h4>
+            <p>کودهای حاوی نیتروژن که برای رشد سبزینه گیاهان ضروری هستند.</p>
+            <ul>
+                <li>اوره (46% نیتروژن)</li>
+                <li>نیترات آمونیوم (34% نیتروژن)</li>
+                <li>سولفات آمونیوم (21% نیتروژن)</li>
+            </ul>
+        </div>
+        <div class="product-card">
+            <h4>کودهای فسفاتی</h4>
+            <p>کودهای حاوی فسفر که برای رشد ریشه و تشکیل گل و میوه مهم هستند.</p>
+            <ul>
+                <li>سوپرفسفات تریپل (46% P₂O₅)</li>
+                <li>سوپرفسفات ساده (20% P₂O₅)</li>
+                <li>دی آمونیوم فسفات (46% P₂O₅)</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p><i class="fas fa-phone"></i> پشتیبانی: 021-12345678</p>
+            <p><i class="fas fa-envelope"></i> ایمیل: info@agriadvisor.ir</p>
+            <p><i class="fas fa-map-marker-alt"></i> آدرس: تهران، خیابان آزادی</p>
+            <div class="social-icons">
+                <a href="#" aria-label="تلگرام"><i class="fab fa-telegram"></i></a>
+                <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="واتساپ"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="یوتوب"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>© 2025 AgriAdvisor Pro - تمام حقوق محفوظ است</p>
+        </div>
+    </footer>
+
+    <div class="notification" id="notification" aria-live="assertive"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+
+<script>
+    let costChart, adviceChart;
+    const plantNeeds = {
+        wheat: { N: 100, P: 60, K: 50, description: "گندم به نیتروژن برای رشد ساقه و برگ نیاز دارد." },
+        corn: { N: 150, P: 80, K: 70, description: "ذرت به نیتروژن زیادی نیاز دارد. کمبود باعث زردی برگ می‌شود." },
+        potato: { N: 120, P: 90, K: 150, description: "سیب‌زمینی به پتاسیم زیادی نیاز دارد." },
+        tomato: { N: 130, P: 70, K: 140, description: "گوجه فرنگی در مراحل مختلف نیازهای غذایی متفاوتی دارد." },
+        rice: { N: 110, P: 50, K: 80, description: "برنج در خاک غرقاب نیاز به مدیریت خاص کود دارد." },
+        cotton: { N: 140, P: 60, K: 90, description: "پنبه به نیتروژن برای تشکیل غوزه نیاز دارد." }
+    };
+
+    const savedCalculations = JSON.parse(localStorage.getItem('savedCalculations')) || [];
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        document.querySelector('.dark-mode-toggle i').classList.toggle('fa-moon', !isDarkMode);
+        document.querySelector('.dark-mode-toggle i').classList.toggle('fa-sun', isDarkMode);
+        showNotification(isDarkMode ? 'حالت تاریک فعال شد' : 'حالت روشن فعال شد');
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = `notification show ${type}`;
+        setTimeout(() => notification.classList.remove('show'), 3000);
+    }
+
+    function switchTab(tabEl, sectionId) {
+        document.querySelectorAll('.tab').forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+        tabEl.classList.add('active');
+        tabEl.setAttribute('aria-selected', 'true');
+        document.getElementById(sectionId).classList.add('active');
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function validateInput(id, min, max, errorMessage) {
+        const input = document.getElementById(id);
+        const errorElement = document.getElementById(`${id}-error`);
+        const value = parseFloat(input.value);
+        if (isNaN(value) || (min && value < min) || (max && value > max)) {
+            errorElement.textContent = errorMessage;
+            errorElement.style.display = 'block';
+            return false;
+        }
+        errorElement.style.display = 'none';
+        return true;
+    }
+
+    function calculate() {
+        const areaValid = validateInput('area', 0, null, 'مساحت زمین باید عدد مثبت باشد');
+        const priceValid = validateInput('pricePerKilo', 0, null, 'قیمت کود باید عدد مثبت باشد');
+        const discountValid = validateInput('discount', 0, 100, 'تخفیف باید بین 0 تا 100 باشد');
+
+        if (!areaValid || !priceValid || !discountValid) return;
+
+        const submitButton = document.querySelector('#calculatorForm button[type="submit"]');
+        submitButton.disabled = true;
+
+        const area = parseFloat(document.getElementById("area").value);
+        const crop = document.getElementById("cropCost").value.split('-')[0].trim();
+        const cropRate = { wheat: 100, corn: 120, barley: 80, potato: 150, tomato: 130 }[crop];
+        const price = parseFloat(document.getElementById("pricePerKilo").value);
+        const discount = parseFloat(document.getElementById("discount").value) || 0;
+
+        const totalKg = area * cropRate;
+        const totalPrice = totalKg * price;
+        const discountedPrice = totalPrice * (1 - discount / 100);
+
+        document.getElementById("costResult").innerHTML = `
+            <h3><i class="fas fa-chart-bar"></i> نتایج محاسبه</h3>
+            <p><i class="fas fa-weight-hanging"></i> مجموع کود: ${totalKg.toFixed(2)} کیلوگرم</p>
+            <p><i class="fas fa-tag"></i> قیمت قبل از تخفیف: ${totalPrice.toLocaleString('fa-IR')} تومان</p>
+            ${discount > 0 ? `<p><i class="fas fa-percentage"></i> تخفیف: ${discount}%</p>` : ''}
+            <p><i class="fas fa-money-bill-wave"></i> قیمت نهایی: ${discountedPrice.toLocaleString('fa-IR')} تومان</p>
+        `;
+
+        if (costChart) costChart.destroy();
+        const ctx = document.getElementById('costChart').getContext('2d');
+        costChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['کود (کیلو)', 'هزینه (تومان)'],
+                datasets: [{
+                    label: 'مقایسه',
+                    data: [totalKg, discountedPrice],
+                    backgroundColor: ['#4caf50', '#2196f3']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        ticks: { callback: v => v.toLocaleString('fa-IR') }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { font: { family: 'Vazirmatn', size: 12 } }
+                    }
+                }
+            }
+        });
+
+        submitButton.disabled = false;
+    }
+
+    function getAdvice() {
+        const phValid = validateInput('soilPh', 4, 9, 'pH خاک باید بین 4 تا 9 باشد');
+        if (!phValid) return;
+
+        const submitButton = document.querySelector('#adviceForm button[type="submit"]');
+        submitButton.disabled = true;
+
+        const plant = document.getElementById("plant").value;
+        const soil = document.getElementById("soilType").value;
+        const ph = parseFloat(document.getElementById("soilPh").value);
+        const climate = document.getElementById("climate").value;
+        const season = document.getElementById("season").value;
+        const needs = plantNeeds[plant];
+        const advice = [];
+
+        if (ph < 6) advice.push("استفاده از کودهای آمونیومی برای بالا بردن pH");
+        if (soil === "sandy") advice.push("خاک شنی، کوددهی چندباره و کم توصیه می‌شود.");
+        if (climate === "dry") advice.push("در مناطق خشک، استفاده از کودهای آلی مناسب‌تر است.");
+        if (plant === "corn" && season === "summer") advice.push("ذرت در تابستان به نیتروژن زیادی نیاز دارد.");
+
+        document.getElementById("adviceResult").innerHTML = `
+            <h3><i class="fas fa-info-circle"></i> مشاوره کود مناسب</h3>
+            <p>${needs.description}</p>
+            <ul>${advice.map(a => `<li>${a}</li>`).join('')}</ul>
+        `;
+
+        if (adviceChart) adviceChart.destroy();
+        const ctx = document.getElementById('adviceChart').getContext('2d');
+        adviceChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['نیتروژن', 'فسفر', 'پتاسیم'],
+                datasets: [{
+                    label: 'نیاز گیاه',
+                    data: [needs.N, needs.P, needs.K],
+                    backgroundColor: 'rgba(46, 125, 50, 0.3)',
+                    borderColor: '#2e7d32'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: { font: { family: 'Vazirmatn', size: 12 } }
+                    }
+                }
+            }
+        });
+
+        submitButton.disabled = false;
+    }
+
+    function saveCalculation() {
+        const resultDiv = document.getElementById("costResult");
+        if (!resultDiv.innerHTML.includes("نتایج محاسبه")) {
+            showNotification("ابتدا محاسبه را انجام دهید.", "error");
+            return;
+        }
+        const calculation = {
+            id: Date.now(),
+            resultHTML: resultDiv.innerHTML,
+            date: new Date().toLocaleString('fa-IR')
+        };
+        savedCalculations.push(calculation);
+        localStorage.setItem('savedCalculations', JSON.stringify(savedCalculations));
+        showNotification("محاسبه ذخیره شد", "success");
+    }
+
+    function printAdvice() {
+        const content = document.getElementById("adviceResult").innerHTML;
+        const win = window.open('', '', 'height=600,width=800');
+        win.document.write(`
+            <html>
+                <head>
+                    <title>چاپ مشاوره</title>
+                    <style>
+                        body { font-family: Vazirmatn, sans-serif; direction: rtl; padding: 20px; }
+                        h3 { color: #2e7d32; }
+                        ul { padding-right: 20px; }
+                        li { margin-bottom: 10px; }
+                    </style>
+                </head>
+                <body>${content}</body>
+            </html>
+        `);
+        win.document.close();
+        win.print();
+    }
+
+    function searchProducts() {
+        const query = document.getElementById("productSearch").value.toLowerCase();
+        const results = Object.keys(plantNeeds).filter(k => k.includes(query));
+        const container = document.getElementById("searchResults");
+        container.innerHTML = results.length
+            ? results.map(r => `<li role="option" onclick="showProductDetail('${r}')">${r}</li>`).join('')
+            : '<li>نتیجه‌ای یافت نشد</li>';
+    }
+
+    function showProductDetail(product) {
+        const info = plantNeeds[product];
+        Toastify({
+            text: `نیازهای کودی ${product}: نیتروژن=${info.N}، فسفر=${info.P}، پتاسیم=${info.K}`,
+            duration: 5000,
+            gravity: "bottom",
+            position: "center",
+            backgroundColor: "#4caf50"
+        }).showToast();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('darkMode') === 'enabled') toggleDarkMode();
+    });
+</script>
+</body>
+</html>
