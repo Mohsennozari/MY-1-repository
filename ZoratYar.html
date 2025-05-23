@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ذرت‌یار: راهنمای پیشرفته ارقام ذرت ایران</title>
+     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+  
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
+            font-family: 'Vazirmatn',Tahoma, sans-serif;
         }
         body {
             font-family: Arial, sans-serif;
@@ -141,15 +144,60 @@
             align-items: center;
         }
         .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
+    background: rgba(255, 255, 255, 0.1); /* پس‌زمینه شفاف با رنگ روشن */
+    backdrop-filter: blur(12px) brightness(1.1); /* افکت شیشه‌ای */
+    -webkit-backdrop-filter: blur(12px) brightness(1.1); /* برای Safari */
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(255, 255, 255, 0.15) inset;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    transform: translateZ(30px) rotateX(10deg);
+    animation: modalPop 0.6s ease-out forwards;
+}
+    @keyframes modalPop {
+    from {
+        transform: translateZ(0) rotateX(20deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateZ(30px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+/* == Custom Scrollbar Styles == */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, rgba(0, 240, 255, 0.6), rgba(1, 156, 123, 0.6));
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px rgba(0, 240, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, rgba(0, 240, 255, 0.9), rgba(212, 0, 255, 0.9));
+    transform: scaleX(1.05);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(45deg, rgba(0, 240, 255, 1), rgba(212, 0, 255, 1));
+}
         .modal-content h3 {
             color: #f57c00;
         }
