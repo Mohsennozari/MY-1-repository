@@ -13,9 +13,8 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Tahoma:wght@400;700&display=swap" rel="stylesheet">
-    
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary-color: #2e7d32;
@@ -39,7 +38,6 @@
         }
 
         body {
-            font-family: 'Vazirmatn', sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -74,188 +72,6 @@
             opacity: 0.9;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .logo i {
-            font-size: 32px;
-            color: var(--secondary-color);
-        }
-
-        .card {
-            background-color: var(--card-color);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: var(--box-shadow);
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-        }
-
-        .card-title {
-            color: var(--primary-color);
-            font-size: 22px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--primary-light);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-title i {
-            color: var(--secondary-color);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 15px;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 500;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f5f5f5;
-        }
-
-        tr:hover {
-            background-color: #e8f5e9;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 15px;
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        input[type="number"]:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
-            outline: none;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--primary-dark);
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            font-size: 16px;
-            font-weight: 500;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            width: 100%;
-            max-width: 250px;
-            margin: 20px auto;
-        }
-
-        .btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn i {
-            margin-left: 8px;
-        }
-
-        .result-container {
-            background-color: #e8f5e9;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .result-title {
-            color: var(--primary-dark);
-            font-size: 18px;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .result-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 10px 0;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 400px;
-            margin: 40px 0;
-        }
-
-        .report-section {
-            margin-top: 40px;
-        }
-
-        .report-section h3 {
-            color: var(--primary-dark);
-            font-size: 20px;
-            margin: 25px 0 15px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .report-section h4 {
-            color: var(--primary-color);
-            font-size: 18px;
-            margin: 20px 0 10px;
-        }
-
-        .report-section p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-
-        .report-section ul, .report-section ol {
-            margin: 15px 0;
-            padding-right: 20px;
-        }
-
-        .report-section li {
-            margin-bottom: 8px;
-        }
-
         .tabs {
             display: flex;
             margin-bottom: 20px;
@@ -288,6 +104,34 @@
             display: block;
         }
 
+        .card {
+            background-color: var(--card-color);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-container {
+            background-color: #e8f5e9;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            text-align: center;
+        }
+
         .export-buttons {
             display: flex;
             gap: 15px;
@@ -313,73 +157,46 @@
             transform: translateY(-2px);
         }
 
-        .sensor-status {
-            display: flex;
-            justify-content: space-around;
+        /* Additional styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin: 20px 0;
-            flex-wrap: wrap;
+            font-size: 15px;
         }
 
-        .sensor-card {
-            background: white;
+        th, td {
             padding: 15px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            width: 22%;
-            min-width: 200px;
             text-align: center;
-            margin: 10px;
+            border: 1px solid #e0e0e0;
         }
 
-        .sensor-icon {
-            font-size: 28px;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
         }
 
-        .sensor-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-dark);
+        tr:nth-child(even) {
+            background-color: #f5f5f5;
         }
 
-        .sensor-label {
-            font-size: 14px;
-            color: var(--text-light);
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: var(--transition);
+            text-align: center;
         }
 
-        @media (max-width: 768px) {
-            .sensor-card {
-                width: 45%;
-            }
-            
-            .card {
-                padding: 15px;
-            }
-            
-            th, td {
-                padding: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .sensor-card {
-                width: 100%;
-            }
-            
-            .tabs {
-                flex-direction: column;
-            }
-            
-            .tab {
-                border-bottom: none;
-                border-right: 3px solid transparent;
-            }
-            
-            .tab.active {
-                border-bottom: none;
-                border-right: 3px solid var(--primary-color);
-            }
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+            outline: none;
         }
     </style>
 </head>
@@ -560,90 +377,57 @@
                     <div><strong>شناسه نمونه:</strong> <span id="report-sample-id">---</span></div>
                 </div>
                 
-                <h3>۱. نام آزمایش</h3>
-                <p>
-                    اندازه‌گیری غلظت سدیم (Na) و پتاسیم (K) در نمونه خاک با استفاده از روش طیف‌سنجی نشر شعله
+                <h3>۱. خلاصه اجرایی</h3>
+                <p id="executive-summary">
+                    این گزارش نتایج آزمایش اندازه‌گیری غلظت سدیم و پتاسیم در نمونه خاک را ارائه می‌دهد. آزمایش با استفاده از روش طیف‌سنجی نشر شعله انجام شده و نتایج بر اساس منحنی کالیبراسیون استاندارد محاسبه شده‌اند.
                 </p>
                 
-                <h3>۲. مقدمه</h3>
-                <p>
-                    سدیم و پتاسیم از عناصر کلیدی در خاک‌های کشاورزی هستند که نقش مهمی در تغذیه گیاهان و سلامت خاک ایفا می‌کنند. سدیم در مقادیر بالا می‌تواند باعث شوری خاک و کاهش جذب آب توسط گیاهان شود، در حالی که پتاسیم برای فرآیندهای فیزیولوژیکی گیاه مانند فتوسنتز و تنظیم آب ضروری است. این آزمایش با هدف تعیین دقیق غلظت این دو عنصر در یک نمونه خاک خاص انجام شده است تا اطلاعات لازم برای مدیریت بهینه خاک و برنامه‌ریزی کشاورزی فراهم شود. روش مورد استفاده، طیف‌سنجی نشر شعله، به دلیل دقت بالا و توانایی اندازه‌گیری غلظت‌های کم عناصر، انتخاب شده است.
-                </p>
-                
-                <h3>۳. مواد و وسایل مورد نیاز</h3>
-                <ul>
-                    <li>دستگاه طیف‌سنج نشر شعله (Flame Photometer) یا طیف‌سنج ICP-OES</li>
-                    <li>محلول‌های استاندارد سدیم و پتاسیم با غلظت‌های مشخص (۵، ۱۰، ۲۰، ۴۰، ۸۰ ppm)</li>
-                    <li>نمونه خاک مورد آزمایش (خشک و الک‌شده)</li>
-                    <li>دستگاه استخراج خاک (مانند شیکر یا سانتریفیوژ)</li>
-                    <li>آب مقطر با خلوص بالا</li>
-                    <li>مواد شیمیایی درجه آزمایشگاهی (مانند نیترات سدیم و کلرید پتاسیم)</li>
-                    <li>پیپت‌ها و بالن‌های حجمی استاندارد</li>
-                    <li>ظروف آزمایشگاهی مقاوم به حرارت (بشر، ارلن‌مایر)</li>
-                    <li>فیلتر کاغذی و قیف برای جداسازی محلول استخراج‌شده</li>
-                </ul>
-                
-                <h3>۴. نحوه انجام آزمایش</h3>
-                <ol>
-                    <li><strong>آماده‌سازی محلول‌های استاندارد:</strong> محلول‌های استاندارد سدیم و پتاسیم با غلظت‌های ۵، ۱۰، ۲۰، ۴۰ و ۸۰ ppm با استفاده از نیترات سدیم و کلرید پتاسیم در آب مقطر تهیه شدند.</li>
-                    <li><strong>کالیبراسیون دستگاه:</strong> دستگاه طیف‌سنج نشر شعله کالیبره شد. محلول‌های استاندارد به ترتیب در دستگاه قرار گرفتند و پاسخ دستگاه (Response Value) برای هر غلظت ثبت شد.</li>
-                    <li><strong>استخراج نمونه خاک:</strong> نمونه خاک خشک و الک‌شده (با مش ۲ میلی‌متر) وزن شد (۱۰ گرم) و با ۱۰۰ میلی‌لیتر آب مقطر مخلوط گردید. مخلوط به مدت ۳۰ دقیقه در شیکر قرار گرفت و سپس فیلتر شد.</li>
-                    <li><strong>اندازه‌گیری نمونه:</strong> محلول استخراج‌شده از خاک در دستگاه قرار گرفت و پاسخ دستگاه برای سدیم و پتاسیم ثبت شد.</li>
-                    <li><strong>محاسبات:</strong> با استفاده از داده‌های کالیبراسیون، منحنی‌های کالیبراسیون رسم شدند و غلظت‌های واقعی سدیم و پتاسیم با اعمال ضریب رقت محاسبه شدند.</li>
-                </ol>
-                
-                <h3>۵. محاسبات</h3>
-                <p id="calculations">
-                    برای محاسبه غلظت‌های سدیم و پتاسیم، از معادلات رگرسیون خطی حاصل از داده‌های کالیبراسیون استفاده شد:<br>
-                    - معادله کالیبراسیون سدیم: C_Na = a_Na × R + b_Na<br>
-                    - معادله کالیبراسیون پتاسیم: C_K = a_K × R + b_K<br><br>
-                    غلظت واقعی با اعمال ضریب رقت (D) به صورت زیر محاسبه شد:<br>
-                    - غلظت واقعی سدیم: C_Na_real = (a_Na × R_unknown + b_Na) × D_Na<br>
-                    - غلظت واقعی پتاسیم: C_K_real = (a_K × R_unknown + b_K) × D_K<br><br>
-                    نتایج محاسبات:<br>
-                    - سدیم: <span id="calc-na">-- ppm</span><br>
-                    - پتاسیم: <span id="calc-k">-- ppm</span><br>
-                    - ضریب تعیین (R²) سدیم: <span id="calc-r2-na">--</span><br>
-                    - ضریب تعیین (R²) پتاسیم: <span id="calc-r2-k">--</span>
-                </p>
-                
-                <h3>۶. ارزیابی و نتایج</h3>
-                <p id="evaluation-results">
-                    نتایج حاصل از این آزمایش نشان‌دهنده غلظت‌های سدیم و پتاسیم در نمونه خاک است. این مقادیر با استانداردهای خاک‌های کشاورزی مقایسه شدند. در صورت بالا بودن غلظت سدیم (بیش از ۱۰۰ ppm)، خاک ممکن است به شوری حساس باشد که نیاز به اقدامات اصلاحی مانند شستشوی خاک دارد. کمبود پتاسیم (کمتر از ۱۵۰ ppm) می‌تواند نشان‌دهنده نیاز به افزودن کودهای پتاسیمی باشد. نسبت سدیم به پتاسیم (Na/K) نیز ارزیابی شد تا تعادل تغذیه‌ای خاک بررسی شود.
-                </p>
-                
-                <h3>۷. پیشنهادات</h3>
-                <div id="recommendations-report">
-                    <ul>
-                        <li>در صورت بالا بودن غلظت سدیم، استفاده از گچ کشاورزی و شستشوی خاک توصیه می‌شود.</li>
-                        <li>در صورت کمبود پتاسیم، افزودن کودهای پتاسیمی مانند سولفات پتاسیم پیشنهاد می‌شود.</li>
-                        <li>انجام آزمایش‌های دوره‌ای برای پایش تغییرات غلظت عناصر در خاک.</li>
-                        <li>مشاوره با متخصصان خاک‌شناسی برای تدوین برنامه کوددهی بهینه.</li>
-                    </ul>
+                <h3>۲. نتایج کلیدی</h3>
+                <div id="key-results">
+                    <p>لطفاً ابتدا محاسبات را انجام دهید.</p>
                 </div>
                 
-                <h3>۸. منابع خطای آزمایش</h3>
+                <h3>۳. روش‌شناسی</h3>
+                <h4>۳.۱. وسایل و مواد مورد نیاز</h4>
                 <ul>
-                    <li>خطای کالیبراسیون دستگاه ناشی از عدم دقت در تهیه محلول‌های استاندارد.</li>
-                    <li>آلودگی نمونه خاک یا محلول‌های استاندارد با مواد خارجی.</li>
-                    <li>نوسانات دمایی یا فشار در دستگاه طیف‌سنج که می‌تواند بر پاسخ دستگاه اثر بگذارد.</li>
-                    <li>خطای انسانی در وزن کردن نمونه یا خواندن مقادیر دستگاه.</li>
-                    <li>عدم یکنواختی در استخراج خاک که ممکن است به نتایج نادرست منجر شود.</li>
+                    <li>دستگاه اندازه‌گیری سدیم و پتاسیم (Flame Photometer یا ICP-OES)</li>
+                    <li>محلول‌های استاندارد Na و K با غلظت‌های مختلف</li>
+                    <li>نمونه خاک مورد آزمایش</li>
+                    <li>دستگاه استخراج خاک</li>
+                    <li>آب مقطر و مواد شیمیایی درجه آزمایشگاهی</li>
+                    <li>ظروف آزمایشگاهی استاندارد</li>
                 </ul>
                 
-                <h3>۹. منابع محتوایی</h3>
-                <ul>
-                    <li>Brady, N. C., & Weil, R. R. (2016). The Nature and Properties of Soils. Pearson Education.</li>
-                    <li>Standard Methods for the Examination of Soil (2020). American Society of Agronomy.</li>
-                    <li>Manual for Flame Photometry Analysis (2018). Manufacturer Documentation.</li>
-                    <li>Havlin, J. L., et al. (2014). Soil Fertility and Fertilizers: An Introduction to Nutrient Management.</li>
-                </ul>
+                <h4>۳.۲. روش انجام آزمایش</h4>
+                <p>
+                    محلول‌های استاندارد با غلظت‌های مشخص (۵، ۱۰، ۲۰، ۴۰، ۸۰ ppm) برای هر دو عنصر تهیه شدند. این محلول‌ها در دستگاه مربوطه قرار داده شده و عدد دستگاه (Response Value) ثبت شد. با استفاده از داده‌های استاندارد، منحنی کالیبراسیون (غلظت بر حسب عدد دستگاه) رسم شد. نمونه خاک استخراج شده و محلول حاصل در دستگاه قرار داده شد. عدد دستگاه (R_unknown) برای هر عنصر ثبت شد. با استفاده از معادله رگرسیون و ضریب رقت (D)، غلظت واقعی در خاک محاسبه شد.
+                </p>
                 
-                <h3>۱۰. ضمائم</h3>
+                <h3>۴. محاسبات</h3>
+                <p>
+                    معادله منحنی کالیبراسیون:<br>
+                    - سدیم: C_Na = a_Na × R + b_Na<br>
+                    - پتاسیم: C_K = a_K × R + b_K<br><br>
+                    غلظت واقعی محاسبه شده:<br>
+                    - سدیم: — ppm<br>
+                    - پتاسیم: — ppm
+                </p>
+                
+                <h3>۵. بحث و تحلیل</h3>
+                <p id="analysis">
+                    نتایج این آزمایش نشان می‌دهد که غلظت سدیم و پتاسیم در نمونه خاک در محدوده ... قرار دارد. این مقادیر با استانداردهای خاک‌های کشاورزی مقایسه شده و در صورت نیاز توصیه‌های اصلاحی ارائه شده است.
+                </p>
+                
+                <h3>۶. نتیجه‌گیری</h3>
+                <p id="conclusion">
+                    بر اساس نتایج به دست آمده، می‌توان در مورد وضعیت تغذیه‌ای خاک و نیاز به اصلاحات احتمالی تصمیم‌گیری نمود. این اطلاعات برای برنامه‌ریزی دقیق‌تر مدیریت مزرعه و افزایش بهره‌وری محصول ضروری است.
+                </p>
+                
+                <h3>۷. ضمائم</h3>
                 <ol>
-                    <li>منحنی‌های کالیبراسیون سدیم و پتاسیم (موجود در تب نتایج)</li>
-                    <li>داده‌های خام کالیبراسیون و نمونه‌ها</li>
-                    <li>پروتکل استاندارد انجام آزمایش</li>
+                    <li>منحنی‌های کالیبراسیون</li>
+                    <li>داده‌های خام آزمایش</li>
+                    <li>تصاویر دستگاه‌های استفاده شده</li>
                 </ol>
                 
                 <div class="export-buttons">
@@ -707,7 +491,7 @@
         
         document.getElementById('current-date').textContent = persianDate;
         document.getElementById('report-date').textContent = persianDate;
-        
+
         // تعداد نمونه‌های معتبر
         function updateSampleCount() {
             const naStdInputs = document.querySelectorAll('.na-std');
@@ -800,7 +584,7 @@
         // محاسبه غلظت‌ها
         function calculateConcentrations() {
             // دریافت اطلاعات اپراتور و نمونه
-            const operatorName = document.getElementById('operator-name').value || 'نامشخص';
+            const operatorName = document.getElementById('operator-name').value || 'نا مشخص';
             const sampleId = document.getElementById('sample-id').value || 'ندارد';
             
             document.getElementById('operator').textContent = operatorName;
@@ -846,52 +630,6 @@
                     <li>کیفیت کالیبراسیون پتاسیم (R²): <strong>${r2K.toFixed(4)}</strong></li>
                 </ul>
             `;
-            
-            // به‌روزرسانی بخش محاسبات گزارش
-            document.getElementById("calculations").innerHTML = `
-                برای محاسبه غلظت‌های سدیم و پتاسیم، از معادلات رگرسیون خطی حاصل از داده‌های کالیبراسیون استفاده شد:<br>
-                - معادله کالیبراسیون سدیم: C_Na = ${aNa.toFixed(4)} × R + ${bNa.toFixed(4)}<br>
-                - معادله کالیبراسیون پتاسیم: C_K = ${aK.toFixed(4)} × R + ${bK.toFixed(4)}<br><br>
-                غلظت واقعی با اعمال ضریب رقت (D) به صورت زیر محاسبه شد:<br>
-                - غلظت واقعی سدیم: C_Na_real = (${aNa.toFixed(4)} × ${naUnknown.toFixed(2)} + ${bNa.toFixed(4)}) × ${naDilution} = ${naConc.toFixed(2)} ppm<br>
-                - غلظت واقعی پتاسیم: C_K_real = (${aK.toFixed(4)} × ${kUnknown.toFixed(2)} + ${bK.toFixed(4)}) × ${kDilution} = ${kConc.toFixed(2)} ppm<br><br>
-                نتایج محاسبات:<br>
-                - سدیم: <span id="calc-na">${naConc.toFixed(2)} ppm</span><br>
-                - پتاسیم: <span id="calc-k">${kConc.toFixed(2)} ppm</span><br>
-                - ضریب تعیین (R²) سدیم: <span id="calc-r2-na">${r2Na.toFixed(4)}</span><br>
-                - ضریب تعیین (R²) پتاسیم: <span id="calc-r2-k">${r2K.toFixed(4)}</span>
-            `;
-            
-            // به‌روزرسانی بخش ارزیابی و نتایج
-            let evaluationText = `نتایج حاصل از این آزمایش نشان‌دهنده غلظت‌های سدیم (${naConc.toFixed(2)} ppm) و پتاسیم (${kConc.toFixed(2)} ppm) در نمونه خاک است. این مقادیر با استانداردهای خاک‌های کشاورزی مقایسه شدند. `;
-            if (naConc > 100) {
-                evaluationText += `غلظت سدیم بالا بوده و خاک ممکن است به شوری حساس باشد که نیاز به اقدامات اصلاحی مانند شستشوی خاک یا افزودن گچ کشاورزی دارد. `;
-            } else {
-                evaluationText += `غلظت سدیم در محدوده قابل قبول قرار دارد. `;
-            }
-            if (kConc < 150) {
-                evaluationText += `غلظت پتاسیم کمتر از حد مطلوب است که نشان‌دهنده نیاز به افزودن کودهای پتاسیمی مانند سولفات پتاسیم است. `;
-            } else {
-                evaluationText += `غلظت پتاسیم در محدوده مناسب برای رشد گیاهان قرار دارد. `;
-            }
-            evaluationText += `نسبت سدیم به پتاسیم (${naKRatio.toFixed(2)}) نیز ارزیابی شد. نسبت‌های بالاتر از ۰.۵ می‌توانند بر جذب پتاسیم توسط گیاه تأثیر منفی بگذارند.`;
-            document.getElementById("evaluation-results").innerHTML = evaluationText;
-            
-            // به‌روزرسانی پیشنهادات گزارش
-            let recommendationsReport = '<ul>';
-            if (naConc > 100) {
-                recommendationsReport += '<li>استفاده از گچ کشاورزی و شستشوی خاک برای کاهش شوری توصیه می‌شود.</li>';
-            }
-            if (kConc < 150) {
-                recommendationsReport += '<li>افزودن کودهای پتاسیمی مانند سولفات پتاسیم یا کلرید پتاسیم برای جبران کمبود پتاسیم.</li>';
-            }
-            recommendationsReport += `
-                <li>انجام آزمایش‌های دوره‌ای هر ۶ ماه برای پایش تغییرات غلظت عناصر در خاک.</li>
-                <li>مشاوره با متخصصان خاک‌شناسی برای تدوین برنامه کوددهی بهینه.</li>
-                <li>بررسی چرخه‌های آبیاری برای جلوگیری از تجمع نمک‌ها در خاک.</li>
-            `;
-            recommendationsReport += '</ul>';
-            document.getElementById("recommendations-report").innerHTML = recommendationsReport;
             
             // به‌روزرسانی داشبورد
             document.getElementById("dashboard-na").textContent = naConc.toFixed(2);
