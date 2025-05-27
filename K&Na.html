@@ -1,260 +1,1045 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاسبه غلظت سدیم و پتاسیم</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>سیستم آنالیز خاک هوشمند - اندازه‌گیری سدیم و پتاسیم</title>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Tahoma:wght@400;700&display=swap" rel="stylesheet">
+    
+     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            font-family: 'Tahoma', sans-serif;
-            background: #f0f4f8;
-            padding: 20px;
-            direction: rtl;
-            margin: 0;
+        :root {
+            --primary-color: #2e7d32;
+            --primary-light: #60ad5e;
+            --primary-dark: #005005;
+            --secondary-color: #ff8f00;
+            --background-color: #f5f9f5;
+            --card-color: #ffffff;
+            --text-color: #263238;
+            --text-light: #607d8b;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
         }
 
-        h2, h3 {
-            color: #333;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+             font-family: 'Vazirmatn',sans-serif;
+        }
+
+        body {
+           font-family: 'Vazirmatn',sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 20px 0;
             text-align: center;
+            border-bottom: 5px solid var(--secondary-color);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             margin-bottom: 15px;
         }
 
+        .logo i {
+            font-size: 32px;
+            color: var(--secondary-color);
+        }
+
+        .card {
+            background-color: var(--card-color);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--secondary-color);
+        }
+
         table {
-            border-collapse: collapse;
             width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            overflow: hidden; /* برای گرد کردن گوشه‌های جدول */
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 15px;
         }
 
         th, td {
-            border: 1px solid #ccc;
-            padding: 15px; /* فضای داخلی سلول‌ها */
+            padding: 15px;
             text-align: center;
-            font-size: 16px; /* اندازه فونت داخل جدول */
+            border: 1px solid #e0e0e0;
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: var(--primary-color);
             color: white;
+            font-weight: 500;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        tr:hover {
+            background-color: #e8f5e9;
         }
 
         input[type="number"] {
             width: 100%;
-            max-width: 150px;
-            height: 45px; /* افزایش ارتفاع ورودی */
-            padding: 10px; /* فضای داخلی ورودی */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: border-color 0.3s, box-shadow 0.3s; /* اضافه کردن سایه */
-            font-size: 16px; /* اندازه فونت ورودی */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* اضافه کردن سایه */
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: var(--transition);
+            text-align: center;
         }
 
         input[type="number"]:focus {
-            border-color: #4CAF50;
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* سایه در حالت فوکوس */
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
             outline: none;
         }
 
-        button {
-            width: 100%;
-            max-width: 200px;
-            height: 50px; /* افزایش ارتفاع دکمه */
-            padding: 10px;
-            background-color: #4CAF50;
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 4px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s; /* اضافه کردن انیمیشن */
-            font-size: 18px; /* اندازه فونت */
+            transition: var(--transition);
+            text-align: center;
+            width: 100%;
+            max-width: 250px;
             margin: 20px auto;
-            display: block;
         }
 
-        button:hover {
-            background-color: #388E3C;
-            transform: translateY(-2px); /* انیمیشن جابجایی */
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        #result {
-            background: #e3f2fd;
+        .btn i {
+            margin-left: 8px;
+        }
+
+        .result-container {
+            background-color: #e8f5e9;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             margin-top: 20px;
             text-align: center;
-            font-weight: bold;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* اضافه کردن سایه */
         }
 
-        canvas {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+        .result-title {
+            color: var(--primary-dark);
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .result-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 40px 0;
+        }
+
+        .report-section {
+            margin-top: 40px;
+        }
+
+        .report-section h3 {
+            color: var(--primary-dark);
+            font-size: 20px;
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .report-section h4 {
+            color: var(--primary-color);
+            font-size: 18px;
+            margin: 20px 0 10px;
+        }
+
+        .report-section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .report-section ul, .report-section ol {
+            margin: 15px 0;
+            padding-right: 20px;
+        }
+
+        .report-section li {
+            margin-bottom: 8px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab:hover:not(.active) {
+            color: var(--primary-dark);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
             display: block;
         }
 
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            font-size: 16px; /* افزایش اندازه فونت برچسب */
-            color: #555; /* رنگ ملایم‌تر */
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .export-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .export-btn:hover {
+            background-color: #e65100;
+            transform: translateY(-2px);
+        }
+
+        .sensor-status {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .sensor-card {
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 22%;
+            min-width: 200px;
+            text-align: center;
+            margin: 10px;
+        }
+
+        .sensor-icon {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .sensor-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .sensor-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .sensor-card {
+                width: 45%;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sensor-card {
+                width: 100%;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-bottom: none;
+                border-right: 3px solid transparent;
+            }
+            
+            .tab.active {
+                border-bottom: none;
+                border-right: 3px solid var(--primary-color);
+            }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h2>محاسبه غلظت واقعی سدیم و پتاسیم</h2>
-    <h3>جدول استاندارد سدیم</h3>
-    <table id="sodiumTable">
-        <thead>
-            <tr>
-                <th>غلظت استاندارد (ppm)</th>
-                <th>عدد دستگاه</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-        </tbody>
-    </table>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>سیستم هوشمند آنالیز خاک کشاورزی</h1>
+            </div>
+            <p>اندازه‌گیری دقیق غلظت سدیم و پتاسیم در خاک با فناوری پیشرفته</p>
+        </div>
+    </header>
 
-    <h3>جدول استاندارد پتاسیم</h3>
-    <table id="potassiumTable">
-        <thead>
-            <tr>
-                <th>غلظت استاندارد (ppm)</th>
-                <th>عدد دستگاه</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-            <tr><td><input type="number"></td><td><input type="number"></td></tr>
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" onclick="openTab('data-entry')">ورود داده‌ها</div>
+            <div class="tab" onclick="openTab('results')">نتایج آنالیز</div>
+            <div class="tab" onclick="openTab('report')">گزارش کار</div>
+            <div class="tab" onclick="openTab('dashboard')">داشبورد</div>
+        </div>
 
-    <h3>ورودی داده‌های نمونه خاک</h3>
-    <label>عدد دستگاه برای سدیم:</label>
-    <input type="number" id="naUnknown">
-    <label>ضریب رقت سدیم:</label>
-    <input type="number" id="naDilution">
-    <label>عدد دستگاه برای پتاسیم:</label>
-    <input type="number" id="kUnknown">
-    <label>ضریب رقت پتاسیم:</label>
-    <input type="number" id="kDilution">
-    
-    <button onclick="calculateConcentrations()">محاسبه</button>
+        <div id="data-entry" class="tab-content active">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-table"></i> داده‌های کالیبراسیون</h2>
+                
+                <div class="sensor-status">
+                    <div class="sensor-card">
+                        <div class="sensor-icon"><i class="fas fa-flask"></i></div>
+                        <div class="sensor-value" id="na-samples">0</div>
+                        <div class="sensor-label">نمونه‌های سدیم</div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-icon"><i class="fas fa-flask"></i></div>
+                        <div class="sensor-value" id="k-samples">0</div>
+                        <div class="sensor-label">نمونه‌های پتاسیم</div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="sensor-value" id="current-date">--/--/----</div>
+                        <div class="sensor-label">تاریخ آزمایش</div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-icon"><i class="fas fa-user"></i></div>
+                        <div class="sensor-value" id="operator">اپراتور</div>
+                        <div class="sensor-label">مسئول آزمایش</div>
+                    </div>
+                </div>
 
-    <div id="result"></div>
-    <canvas id="chartNa" width="400" height="200"></canvas>
-    <canvas id="chartK" width="400" height="200"></canvas>
+                <div class="row">
+                    <div class="col">
+                        <h3 class="card-title"><i class="fas fa-atom"></i> کالیبراسیون سدیم (Na)</h3>
+                        <table id="sodiumTable">
+                            <thead>
+                                <tr>
+                                    <th>غلظت استاندارد (ppm)</th>
+                                    <th>عدد دستگاه</th>
+                                    <th>واحد</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><input type="number" class="na-std" onchange="updateSampleCount()"></td><td><input type="number" class="na-read"></td><td>ppm</td></tr>
+                                <tr><td><input type="number" class="na-std" onchange="updateSampleCount()"></td><td><input type="number" class="na-read"></td><td>ppm</td></tr>
+                                <tr><td><input type="number" class="na-std" onchange="updateSampleCount()"></td><td><input type="number" class="na-read"></td><td>ppm</td></tr>
+                                <tr><td><input type="number" class="na-std" onchange="updateSampleCount()"></td><td><input type="number" class="na-read"></td><td>ppm</td></tr>
+                                <tr><td><input type="number" class="na-std" onchange="updateSampleCount()"></td><td><input type="number" class="na-read"></td><td>ppm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="col">
+                        <h3 class="card-title"><i class="fas fa-atom"></i> کالیبراسیون پتاسیم (K)</h3>
+                        <table id="potassiumTable">
+                            <thead>
+                                <tr>
+                                    <th>غلظت استاندارد (ppm)</th>
+                                    <th>عدد دستگاه</th>
+                                    <th>واحد</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><input type="number" class="k-std" onchange="updateSampleCount()"></td><td><input type="number" class="k-read"></td><td>ppm</td></tr>
+                                <tr><td><input type="number" class="k-std" onchange="updateSampleCount()"></td><td><input type="number" class="k-read"></td><td>ppm</td></tr>
+                                <tr><td><input type="number" class="k-std" onchange="updateSampleCount()"></td><td><input type="number" class="k-read"></td><td>ppm</td></tr>
+                                <tr><td><input type="number" class="k-std" onchange="updateSampleCount()"></td><td><input type="number" class="k-read"></td><td>ppm</td></tr>
+                                <tr><td><input type="number" class="k-std" onchange="updateSampleCount()"></td><td><input type="number" class="k-read"></td><td>ppm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-vial"></i> داده‌های نمونه خاک</h2>
+                
+                <div class="input-group">
+                    <label for="operator-name"><i class="fas fa-user"></i> نام اپراتور:</label>
+                    <input type="text" id="operator-name" placeholder="نام مسئول آزمایش را وارد کنید">
+                </div>
+                
+                <div class="input-group">
+                    <label for="sample-id"><i class="fas fa-barcode"></i> شناسه نمونه:</label>
+                    <input type="text" id="sample-id" placeholder="شناسه منحصر به فرد نمونه">
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <label for="naUnknown"><i class="fas fa-atom"></i> عدد دستگاه برای سدیم:</label>
+                            <input type="number" id="naUnknown" placeholder="عدد دستگاه را وارد کنید">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="naDilution"><i class="fas fa-water"></i> ضریب رقت سدیم:</label>
+                            <input type="number" id="naDilution" placeholder="ضریب رقت را وارد کنید" value="1">
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="input-group">
+                            <label for="kUnknown"><i class="fas fa-atom"></i> عدد دستگاه برای پتاسیم:</label>
+                            <input type="number" id="kUnknown" placeholder="عدد دستگاه را وارد کنید">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="kDilution"><i class="fas fa-water"></i> ضریب رقت پتاسیم:</label>
+                            <input type="number" id="kDilution" placeholder="ضریب رقت را وارد کنید" value="1">
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="calculateConcentrations()">
+                    <i class="fas fa-calculator"></i> محاسبه غلظت
+                </button>
+            </div>
+        </div>
+
+        <div id="results" class="tab-content">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-chart-line"></i> نتایج آنالیز خاک</h2>
+                
+                <div class="result-container">
+                    <div class="result-title">نتایج محاسبات</div>
+                    <div id="result-values">
+                        لطفاً ابتدا محاسبات را انجام دهید.
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="chartNa2D" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="chartK2D" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="export-buttons">
+                    <button class="export-btn" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf"></i> ذخیره به PDF
+                    </button>
+                    <button class="export-btn" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> ذخیره به Excel
+                    </button>
+                    <button class="export-btn" onclick="printReport()">
+                        <i class="fas fa-print"></i> چاپ گزارش
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="report" class="tab-content">
+            <div class="card report-section">
+                <h2 class="card-title"><i class="fas fa-file-alt"></i> گزارش کار آزمایش</h2>
+                
+                <div class="report-meta">
+                    <div><strong>تاریخ آزمایش:</strong> <span id="report-date">--/--/----</span></div>
+                    <div><strong>مسئول آزمایش:</strong> <span id="report-operator">---</span></div>
+                    <div><strong>شناسه نمونه:</strong> <span id="report-sample-id">---</span></div>
+                </div>
+                
+                <h3>۱. خلاصه اجرایی</h3>
+                <p id="executive-summary">
+                    این گزارش نتایج آزمایش اندازه‌گیری غلظت سدیم و پتاسیم در نمونه خاک را ارائه می‌دهد. آزمایش با استفاده از روش طیف‌سنجی نشر شعله انجام شده و نتایج بر اساس منحنی کالیبراسیون استاندارد محاسبه شده‌اند.
+                </p>
+                
+                <h3>۲. نتایج کلیدی</h3>
+                <div id="key-results">
+                    <p>لطفاً ابتدا محاسبات را انجام دهید.</p>
+                </div>
+                
+                <h3>۳. روش‌شناسی</h3>
+                <h4>۳.۱. وسایل و مواد مورد نیاز</h4>
+                <ul>
+                    <li>دستگاه اندازه‌گیری سدیم و پتاسیم (Flame Photometer یا ICP-OES)</li>
+                    <li>محلول‌های استاندارد Na و K با غلظت‌های مختلف</li>
+                    <li>نمونه خاک مورد آزمایش</li>
+                    <li>دستگاه استخراج خاک</li>
+                    <li>آب مقطر و مواد شیمیایی درجه آزمایشگاهی</li>
+                    <li>ظروف آزمایشگاهی استاندارد</li>
+                </ul>
+                
+                <h4>۳.۲. روش انجام آزمایش</h4>
+                <p>
+                    محلول‌های استاندارد با غلظت‌های مشخص (۵، ۱۰، ۲۰، ۴۰، ۸۰ ppm) برای هر دو عنصر تهیه شدند. این محلول‌ها در دستگاه مربوطه قرار داده شده و عدد دستگاه (Response Value) ثبت شد. با استفاده از داده‌های استاندارد، منحنی کالیبراسیون (غلظت بر حسب عدد دستگاه) رسم شد. نمونه خاک استخراج شده و محلول حاصل در دستگاه قرار داده شد. عدد دستگاه (R_unknown) برای هر عنصر ثبت شد. با استفاده از معادله رگرسیون و ضریب رقت (D)، غلظت واقعی در خاک محاسبه شد.
+                </p>
+                
+                <h3>۴. محاسبات</h3>
+                <p>
+                    معادله منحنی کالیبراسیون:<br>
+                    - سدیم: C_Na = a_Na × R + b_Na<br>
+                    - پتاسیم: C_K = a_K × R + b_K<br><br>
+                    غلظت واقعی محاسبه شده:<br>
+                    - سدیم: — ppm<br>
+                    - پتاسیم: — ppm
+                </p>
+                
+                <h3>۵. بحث و تحلیل</h3>
+                <p id="analysis">
+                    نتایج این آزمایش نشان می‌دهد که غلظت سدیم و پتاسیم در نمونه خاک در محدوده ... قرار دارد. این مقادیر با استانداردهای خاک‌های کشاورزی مقایسه شده و در صورت نیاز توصیه‌های اصلاحی ارائه شده است.
+                </p>
+                
+                <h3>۶. نتیجه‌گیری</h3>
+                <p id="conclusion">
+                    بر اساس نتایج به دست آمده، می‌توان در مورد وضعیت تغذیه‌ای خاک و نیاز به اصلاحات احتمالی تصمیم‌گیری نمود. این اطلاعات برای برنامه‌ریزی دقیق‌تر مدیریت مزرعه و افزایش بهره‌وری محصول ضروری است.
+                </p>
+                
+                <h3>۷. ضمائم</h3>
+                <ol>
+                    <li>منحنی‌های کالیبراسیون</li>
+                    <li>داده‌های خام آزمایش</li>
+                    <li>تصاویر دستگاه‌های استفاده شده</li>
+                </ol>
+                
+                <div class="export-buttons">
+                    <button class="export-btn" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf"></i> ذخیره گزارش PDF
+                    </button>
+                    <button class="export-btn" onclick="printReport()">
+                        <i class="fas fa-print"></i> چاپ گزارش
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard" class="tab-content">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-tachometer-alt"></i> داشبورد مدیریت خاک</h2>
+                
+                <div class="sensor-status">
+                    <div class="sensor-card">
+                        <div class="sensor-icon"><i class="fas fa-atom"></i></div>
+                        <div class="sensor-value" id="dashboard-na">--</div>
+                        <div class="sensor-label">غلظت سدیم (ppm)</div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-icon"><i class="fas fa-atom"></i></div>
+                        <div class="sensor-value" id="dashboard-k">--</div>
+                        <div class="sensor-label">غلظت پتاسیم (ppm)</div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-icon"><i class="fas fa-percentage"></i></div>
+                        <div class="sensor-value" id="dashboard-ratio">--</div>
+                        <div class="sensor-label">نسبت Na/K</div>
+                    </div>
+                    <div class="sensor-card">
+                        <div class="sensor-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="sensor-value" id="dashboard-status">--</div>
+                        <div class="sensor-label">وضعیت خاک</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="dashboard-chart" width="800" height="400"></canvas>
+                </div>
+                
+                <h3 class="card-title"><i class="fas fa-lightbulb"></i> توصیه‌های کشاورزی هوشمند</h3>
+                <div id="recommendations">
+                    <p>پس از انجام آزمایش و مشاهده نتایج، توصیه‌های هوشمند در این بخش نمایش داده خواهند شد.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
+        // تاریخ جاری
+        const now = new Date();
+        const persianDate = new Intl.DateTimeFormat('fa-IR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).format(now);
+        
+        document.getElementById('current-date').textContent = persianDate;
+        document.getElementById('report-date').textContent = persianDate;
+        
+        // تعداد نمونه‌های معتبر
+        function updateSampleCount() {
+            const naStdInputs = document.querySelectorAll('.na-std');
+            const kStdInputs = document.querySelectorAll('.k-std');
+            
+            let naCount = 0;
+            let kCount = 0;
+            
+            naStdInputs.forEach(input => {
+                if (input.value && !isNaN(input.value)) naCount++;
+            });
+            
+            kStdInputs.forEach(input => {
+                if (input.value && !isNaN(input.value)) kCount++;
+            });
+            
+            document.getElementById('na-samples').textContent = naCount;
+            document.getElementById('k-samples').textContent = kCount;
+        }
+        
+        // تغییر تب‌ها
+        function openTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            const tabButtons = document.querySelectorAll('.tab');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // دریافت داده‌های جدول
         function getTableData(tableId) {
             const rows = document.querySelectorAll(`#${tableId} tbody tr`);
             const standards = [];
             const readings = [];
-
+            
             rows.forEach(row => {
-                const std = parseFloat(row.cells[0].querySelector('input').value);
-                const read = parseFloat(row.cells[1].querySelector('input').value);
+                const stdInput = row.cells[0].querySelector('input');
+                const readInput = row.cells[1].querySelector('input');
+                
+                const std = parseFloat(stdInput.value);
+                const read = parseFloat(readInput.value);
+                
                 if (!isNaN(std) && !isNaN(read)) {
                     standards.push(std);
                     readings.push(read);
                 }
             });
+            
             return { standards, readings };
         }
-
+        
+        // محاسبه رگرسیون خطی
         function linearRegression(x, y) {
             const n = x.length;
             const sumX = x.reduce((a, b) => a + b, 0);
             const sumY = y.reduce((a, b) => a + b, 0);
             const sumXY = x.reduce((acc, xi, i) => acc + xi * y[i], 0);
             const sumXX = x.reduce((acc, xi) => acc + xi * xi, 0);
-
+            
             const a = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
             const b = (sumY - a * sumX) / n;
-
-            return { a, b };
+            
+            return { a, b, rSquared: calculateRSquared(x, y, a, b) };
         }
-
+        
+        // محاسبه R-squared
+        function calculateRSquared(x, y, a, b) {
+            const n = x.length;
+            const yMean = y.reduce((sum, val) => sum + val, 0) / n;
+            
+            let ssTot = 0;
+            let ssRes = 0;
+            
+            for (let i = 0; i < n; i++) {
+                const yPred = a * x[i] + b;
+                ssTot += Math.pow(y[i] - yMean, 2);
+                ssRes += Math.pow(y[i] - yPred, 2);
+            }
+            
+            return 1 - (ssRes / ssTot);
+        }
+        
+        // محاسبه غلظت‌ها
         function calculateConcentrations() {
+            // دریافت اطلاعات اپراتور و نمونه
+            const operatorName = document.getElementById('operator-name').value || 'نا مشخص';
+            const sampleId = document.getElementById('sample-id').value || 'ندارد';
+            
+            document.getElementById('operator').textContent = operatorName;
+            document.getElementById('report-operator').textContent = operatorName;
+            document.getElementById('report-sample-id').textContent = sampleId;
+            
+            // دریافت داده‌های کالیبراسیون
             const { standards: naStds, readings: naReads } = getTableData('sodiumTable');
             const { standards: kStds, readings: kReads } = getTableData('potassiumTable');
-
+            
+            // دریافت داده‌های نمونه
             const naUnknown = parseFloat(document.getElementById('naUnknown').value);
-            const naDilution = parseFloat(document.getElementById('naDilution').value);
+            const naDilution = parseFloat(document.getElementById('naDilution').value) || 1;
             const kUnknown = parseFloat(document.getElementById('kUnknown').value);
-            const kDilution = parseFloat(document.getElementById('kDilution').value);
-
-            const { a: aNa, b: bNa } = linearRegression(naReads, naStds);
-            const { a: aK, b: bK } = linearRegression(kReads, kStds);
-
+            const kDilution = parseFloat(document.getElementById('kDilution').value) || 1;
+            
+            // محاسبه رگرسیون
+            const { a: aNa, b: bNa, rSquared: r2Na } = linearRegression(naReads, naStds);
+            const { a: aK, b: bK, rSquared: r2K } = linearRegression(kReads, kStds);
+            
+            // محاسبه غلظت‌ها
             const naConc = (aNa * naUnknown + bNa) * naDilution;
             const kConc = (aK * kUnknown + bK) * kDilution;
-
-            document.getElementById("result").innerHTML = `
-                <strong>غلظت نهایی سدیم:</strong> ${naConc.toFixed(2)} ppm<br>
-                <strong>غلظت نهایی پتاسیم:</strong> ${kConc.toFixed(2)} ppm
+            const naKRatio = naConc / kConc;
+            
+            // نمایش نتایج
+            document.getElementById("result-values").innerHTML = `
+                <div class="result-value">غلظت سدیم: ${naConc.toFixed(2)} ppm</div>
+                <div class="result-value">غلظت پتاسیم: ${kConc.toFixed(2)} ppm</div>
+                <div style="margin-top: 20px;">
+                    <strong>ضریب تعیین (R²) سدیم:</strong> ${r2Na.toFixed(4)}<br>
+                    <strong>ضریب تعیین (R²) پتاسیم:</strong> ${r2K.toFixed(4)}
+                </div>
             `;
-
-            drawChart('chartNa', naReads, naStds, aNa, bNa, 'سدیم');
-            drawChart('chartK', kReads, kStds, aK, bK, 'پتاسیم');
+            
+            // به‌روزرسانی گزارش
+            document.getElementById("key-results").innerHTML = `
+                <ul>
+                    <li>غلظت سدیم در نمونه خاک: <strong>${naConc.toFixed(2)} ppm</strong></li>
+                    <li>غلظت پتاسیم در نمونه خاک: <strong>${kConc.toFixed(2)} ppm</strong></li>
+                    <li>نسبت سدیم به پتاسیم: <strong>${naKRatio.toFixed(2)}</strong></li>
+                    <li>کیفیت کالیبراسیون سدیم (R²): <strong>${r2Na.toFixed(4)}</strong></li>
+                    <li>کیفیت کالیبراسیون پتاسیم (R²): <strong>${r2K.toFixed(4)}</strong></li>
+                </ul>
+            `;
+            
+            // به‌روزرسانی داشبورد
+            document.getElementById("dashboard-na").textContent = naConc.toFixed(2);
+            document.getElementById("dashboard-k").textContent = kConc.toFixed(2);
+            document.getElementById("dashboard-ratio").textContent = naKRatio.toFixed(2);
+            
+            // ارزیابی وضعیت خاک
+            let soilStatus = '';
+            let statusColor = '';
+            
+            if (naConc > 100) {
+                soilStatus = 'شور';
+                statusColor = '#d32f2f';
+            } else if (kConc < 150) {
+                soilStatus = 'کمبود پتاسیم';
+                statusColor = '#ffa000';
+            } else if (naKRatio > 0.5) {
+                soilStatus = 'نیاز به اصلاح';
+                statusColor = '#ffa000';
+            } else {
+                soilStatus = 'مطلوب';
+                statusColor = '#388e3c';
+            }
+            
+            document.getElementById("dashboard-status").textContent = soilStatus;
+            document.getElementById("dashboard-status").style.color = statusColor;
+            
+            // تولید توصیه‌ها
+            let recommendations = '<ul>';
+            
+            if (naConc > 100) {
+                recommendations += '<li>خاک دارای شوری بالا است. توصیه می‌شود از روش‌های شستشوی خاک و استفاده از گچ کشاورزی استفاده شود.</li>';
+            }
+            
+            if (kConc < 150) {
+                recommendations += '<li>خاک دچار کمبود پتاسیم است. توصیه می‌شود از کودهای پتاسیمی مانند سولفات پتاسیم یا کلرید پتاسیم استفاده شود.</li>';
+            }
+            
+            if (naKRatio > 0.5) {
+                recommendations += '<li>نسبت سدیم به پتاسیم بالا است که می‌تواند بر جذب پتاسیم توسط گیاه تأثیر بگذارد.</li>';
+            }
+            
+            if (soilStatus === 'مطلوب') {
+                recommendations += '<li>خاک از نظر سدیم و پتاسیم در وضعیت مطلوب قرار دارد. برنامه کوددهی فعلی را ادامه دهید.</li>';
+            }
+            
+            recommendations += '</ul>';
+            document.getElementById("recommendations").innerHTML = recommendations;
+            
+            // رسم نمودارها
+            drawChart2D('chartNa2D', naReads, naStds, aNa, bNa, 'سدیم', naUnknown, naConc);
+            drawChart2D('chartK2D', kReads, kStds, aK, bK, 'پتاسیم', kUnknown, kConc);
+            drawDashboardChart(naConc, kConc);
+            
+            // رفتن به تب نتایج
+            openTab('results');
         }
-
-        function drawChart(canvasId, x, y, a, b, label) {
+        
+        // رسم نمودار 2D
+        function drawChart2D(canvasId, x, y, a, b, label, unknownX, unknownY) {
             const ctx = document.getElementById(canvasId).getContext('2d');
+            
+            // حذف نمودار قبلی اگر وجود دارد
+            if (window[canvasId + 'Chart']) {
+                window[canvasId + 'Chart'].destroy();
+            }
+            
             const regressionLine = x.map(val => a * val + b);
-
-            new Chart(ctx, {
+            const datasets = [
+                {
+                    label: `${label} - نقاط استاندارد`,
+                    data: y.map((yVal, i) => ({x: x[i], y: yVal})),
+                    borderColor: '#2e7d32',
+                    backgroundColor: '#2e7d32',
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    showLine: false
+                },
+                {
+                    label: `${label} - خط رگرسیون`,
+                    data: regressionLine.map((yVal, i) => ({x: x[i], y: yVal})),
+                    borderColor: '#ff8f00',
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    fill: false,
+                    pointRadius: 0
+                }
+            ];
+            
+            if (unknownX && !isNaN(unknownX)) {
+                datasets.push({
+                    label: `نمونه ناشناخته ${label}`,
+                    data: [{x: unknownX, y: unknownY}],
+                    borderColor: '#d32f2f',
+                    backgroundColor: '#d32f2f',
+                    pointRadius: 8,
+                    pointHoverRadius: 10,
+                    pointStyle: 'triangle'
+                });
+            }
+            
+            window[canvasId + 'Chart'] = new Chart(ctx, {
                 type: 'scatter',
                 data: {
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            rtl: true
+                        },
+                        title: {
+                            display: true,
+                            text: `منحنی کالیبراسیون ${label}`,
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${label}: ${context.parsed.y.toFixed(2)} ppm (خوانش: ${context.parsed.x.toFixed(2)})`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'عدد دستگاه'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'غلظت (ppm)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // رسم نمودار داشبورد
+        function drawDashboardChart(naConc, kConc) {
+            const ctx = document.getElementById('dashboard-chart').getContext('2d');
+            
+            // حذف نمودار قبلی اگر وجود دارد
+            if (window.dashboardChart) {
+                window.dashboardChart.destroy();
+            }
+            
+            const optimalNa = 50;
+            const optimalK = 200;
+            
+            window.dashboardChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['سدیم (Na)', 'پتاسیم (K)'],
                     datasets: [
                         {
-                            label: `${label} - نقاط استاندارد`,
-                            data: x.map((xi, i) => ({ x: xi, y: y[i] })),
-                            backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                            label: 'غلظت اندازه‌گیری شده',
+                            data: [naConc, kConc],
+                            backgroundColor: ['#5c6bc0', '#26a69a'],
+                            borderColor: ['#3949ab', '#00897b'],
+                            borderWidth: 1
                         },
                         {
-                            label: `${label} - منحنی رگرسیون`,
-                            data: x.map((xi, i) => ({ x: xi, y: regressionLine[i] })),
+                            label: 'محدوده مطلوب',
+                            data: [optimalNa, optimalK],
+                            backgroundColor: ['#9fa8da', '#80cbc4'],
+                            borderColor: ['#7986cb', '#4db6ac'],
+                            borderWidth: 1,
                             type: 'line',
-                            borderColor: 'red',
                             fill: false,
-                            borderWidth: 2
+                            pointRadius: 0
                         }
                     ]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top' },
-                        title: { display: true, text: `منحنی کالیبراسیون ${label}` }
+                        legend: {
+                            position: 'top',
+                            rtl: true
+                        },
+                        title: {
+                            display: true,
+                            text: 'مقایسه غلظت‌ها با محدوده مطلوب',
+                            font: {
+                                size: 16
+                            }
+                        }
                     },
                     scales: {
-                        x: { title: { display: true, text: 'عدد دستگاه' } },
-                        y: { title: { display: true, text: 'غلظت (ppm)' } }
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'غلظت (ppm)'
+                            }
+                        }
                     }
                 }
             });
         }
+        
+        // توابع صادرات (نمادین)
+        function exportToPDF() {
+            alert('این قابلیت در نسخه کامل سیستم فعال خواهد شد. گزارش به PDF تبدیل می‌شود.');
+        }
+        
+        function exportToExcel() {
+            alert('این قابلیت در نسخه کامل سیستم فعال خواهد شد. داده‌ها به Excel صادر می‌شوند.');
+        }
+        
+        function printReport() {
+            window.print();
+        }
+        
+        // بارگذاری اولیه
+        updateSampleCount();
     </script>
 </body>
 </html>
